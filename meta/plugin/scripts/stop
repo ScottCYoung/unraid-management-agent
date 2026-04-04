@@ -1,22 +1,25 @@
 #!/bin/bash
+PLUGIN="unraid-management-agent"
+CRON_FILE="/etc/cron.d/$PLUGIN-watchdog"
 
-PROG="unraid-management-agent"
-running=$(pidof $PROG | wc -w)
+running=$(pidof $PLUGIN | wc -w)
 
-# Gracefully stop the application
+# Remove watchdog cron before stopping so it doesn't restart us mid-shutdown
+rm -f "$CRON_FILE"
+/usr/bin/killall -HUP crond 2>/dev/null || true
+
 if [ $running -ge 1 ]; then
-  TIMER=0
-  while $(killall $PROG 2>/dev/null); do
-    sleep 1
-    TIMER=$((TIMER + 1))
-    if [ $TIMER -ge 30 ]; then
-      # Force kill if graceful shutdown takes too long
-      killall -9 $PROG
-      sleep 1
-      break
-    fi
-  done
-  echo "Unraid Management Agent stopped"
+    TIMER=0
+    while killall $PLUGIN 2>/dev/null; do
+        sleep 1
+        TIMER=$((TIMER + 1))
+        if [ $TIMER -ge 30 ]; then
+            killall -9 $PLUGIN
+            sleep 1
+            break
+        fi
+    done
+    echo "$PLUGIN stopped"
 else
-  echo "Unraid Management Agent was not running"
+    echo "$PLUGIN was not running"
 fi
