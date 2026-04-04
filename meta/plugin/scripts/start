@@ -81,37 +81,22 @@ LOW_POWER_MODE=$(sanitize_bool "$LOW_POWER_MODE")
 READ_ONLY_MODE=$(sanitize_bool "$READ_ONLY_MODE")
 DISABLE_COLLECTORS=$(sanitize_csv "$DISABLE_COLLECTORS")
 
-INTERVAL_SYSTEM=$(sanitize_int "$INTERVAL_SYSTEM")
-INTERVAL_ARRAY=$(sanitize_int "$INTERVAL_ARRAY")
-INTERVAL_DISK=$(sanitize_int "$INTERVAL_DISK")
-INTERVAL_DOCKER=$(sanitize_int "$INTERVAL_DOCKER")
-INTERVAL_VM=$(sanitize_int "$INTERVAL_VM")
-INTERVAL_UPS=$(sanitize_int "$INTERVAL_UPS")
-INTERVAL_NUT=$(sanitize_int "$INTERVAL_NUT")
-INTERVAL_GPU=$(sanitize_int "$INTERVAL_GPU")
-INTERVAL_SHARES=$(sanitize_int "$INTERVAL_SHARES")
-INTERVAL_NETWORK=$(sanitize_int "$INTERVAL_NETWORK")
-INTERVAL_HARDWARE=$(sanitize_int "$INTERVAL_HARDWARE")
-INTERVAL_ZFS=$(sanitize_int "$INTERVAL_ZFS")
-INTERVAL_UNASSIGNED=$(sanitize_int "$INTERVAL_UNASSIGNED")
-INTERVAL_NOTIFICATION=$(sanitize_int "$INTERVAL_NOTIFICATION")
-INTERVAL_REGISTRATION=$(sanitize_int "$INTERVAL_REGISTRATION")
-INTERVAL_FAN_CONTROL=$(sanitize_int "$INTERVAL_FAN_CONTROL")
-INTERVAL_TUNING=$(sanitize_int "$INTERVAL_TUNING")
+for var in INTERVAL_SYSTEM INTERVAL_ARRAY INTERVAL_DISK INTERVAL_DOCKER \
+           INTERVAL_VM INTERVAL_UPS INTERVAL_NUT INTERVAL_GPU INTERVAL_SHARES \
+           INTERVAL_NETWORK INTERVAL_HARDWARE INTERVAL_ZFS INTERVAL_UNASSIGNED \
+           INTERVAL_NOTIFICATION INTERVAL_REGISTRATION INTERVAL_FAN_CONTROL \
+           INTERVAL_TUNING; do
+    eval "$var=\$(sanitize_int \"\$$var\")"
+done
 
-MQTT_ENABLED=$(sanitize_bool "$MQTT_ENABLED")
-MQTT_BROKER=$(sanitize_str "$MQTT_BROKER")
+for var in MQTT_ENABLED MQTT_HOME_ASSISTANT MQTT_USE_TLS MQTT_INSECURE_SKIP_VERIFY MQTT_RETAIN; do
+    eval "$var=\$(sanitize_bool \"\$$var\")"
+done
+for var in MQTT_BROKER MQTT_USERNAME MQTT_PASSWORD MQTT_CLIENT_ID MQTT_TOPIC_PREFIX MQTT_HA_PREFIX; do
+    eval "$var=\$(sanitize_str \"\$$var\")"
+done
 MQTT_PORT=$(sanitize_int "$MQTT_PORT");           MQTT_PORT="${MQTT_PORT:-1883}"
-MQTT_USERNAME=$(sanitize_str "$MQTT_USERNAME")
-MQTT_PASSWORD=$(sanitize_str "$MQTT_PASSWORD")
-MQTT_CLIENT_ID=$(sanitize_str "$MQTT_CLIENT_ID")
-MQTT_TOPIC_PREFIX=$(sanitize_str "$MQTT_TOPIC_PREFIX")
-MQTT_HOME_ASSISTANT=$(sanitize_bool "$MQTT_HOME_ASSISTANT")
-MQTT_HA_PREFIX=$(sanitize_str "$MQTT_HA_PREFIX")
-MQTT_USE_TLS=$(sanitize_bool "$MQTT_USE_TLS")
-MQTT_INSECURE_SKIP_VERIFY=$(sanitize_bool "$MQTT_INSECURE_SKIP_VERIFY")
 MQTT_QOS=$(sanitize_int "$MQTT_QOS")
-MQTT_RETAIN=$(sanitize_bool "$MQTT_RETAIN")
 
 # ── Watchdog cron ─────────────────────────────────────────────
 WATCHDOG_ENABLED=$(sanitize_bool "$WATCHDOG_ENABLED")
@@ -124,11 +109,10 @@ esac
 
 if [ "$WATCHDOG_ENABLED" = "true" ]; then
     echo "*/$WATCHDOG_INTERVAL * * * * root /usr/local/emhttp/plugins/$PLUGIN/scripts/watchdog" > "$CRON_FILE"
-    /usr/bin/killall -HUP crond 2>/dev/null || true
 else
     rm -f "$CRON_FILE"
-    /usr/bin/killall -HUP crond 2>/dev/null || true
 fi
+/usr/bin/killall -HUP crond 2>/dev/null || true
 
 # ── Build extra CLI flags ─────────────────────────────────────
 EXTRA_FLAGS=""

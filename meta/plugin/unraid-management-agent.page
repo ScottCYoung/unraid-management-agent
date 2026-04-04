@@ -206,9 +206,10 @@ $log_tail = !empty($log_lines)
 /* ── Compact form rows ── */
 .uma-row { display: flex; align-items: center; gap: 10px; padding: 4px 0; font-size: 13px; }
 .uma-row label, .uma-row .uma-lbl { min-width: 120px; color: var(--text-secondary,#aaa); font-size: 12px; }
-.uma-row input[type="text"], .uma-row input[type="number"], .uma-row input[type="password"] { flex: 1; padding: 3px 8px; font-size: 12px; background: var(--input-bg-color,transparent); border: 1px solid var(--input-border-color,#555); border-radius: 3px; color: var(--text-color,inherit); }
+.uma-row input[type="text"], .uma-row input[type="number"], .uma-row input[type="password"], .uma-row select { font-size: 12px; background: var(--input-bg-color,transparent); border: 1px solid var(--input-border-color,#555); border-radius: 3px; color: var(--text-color,inherit); }
+.uma-row input[type="text"], .uma-row input[type="number"], .uma-row input[type="password"] { flex: 1; padding: 3px 8px; }
 .uma-row input.narrow { max-width: 100px; }
-.uma-row select { padding: 3px 6px; font-size: 12px; background: var(--input-bg-color,transparent); border: 1px solid var(--input-border-color,#555); border-radius: 3px; color: var(--text-color,inherit); }
+.uma-row select { padding: 3px 6px; }
 
 /* ── Connection snippets ── */
 .uma-conn-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 12px; }
@@ -224,10 +225,12 @@ $log_tail = !empty($log_lines)
 .uma-collector-label { min-width: 110px; font-size: 12px; }
 .uma-collector-select { width: 110px; padding: 2px 4px; font-size: 11px; border: 1px solid var(--input-border-color,#555); border-radius: 3px; background: var(--input-bg-color,transparent); color: var(--text-color,inherit); }
 .uma-collector-select:disabled { opacity: 0.35; }
+.uma-collector-spacer { width: 38px; display: inline-block; }
 
 /* ── Crash info ── */
-.uma-crash-ok   { color: var(--green-500,#4CAF50); font-weight: bold; font-size: 12px; }
-.uma-crash-warn { color: var(--red-500,#f44);      font-weight: bold; font-size: 12px; }
+.uma-crash-ok, .uma-crash-warn { font-weight: bold; font-size: 12px; }
+.uma-crash-ok   { color: var(--green-500,#4CAF50); }
+.uma-crash-warn { color: var(--red-500,#f44); }
 
 /* ── Log panel (inline on dashboard) ── */
 .uma-log-pre { background: #111; color: #ccc; font-family: monospace; font-size: 10px; padding: 8px; border-radius: 4px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; border: 1px solid #333; margin: 0; max-height: 280px; flex: 1; }
@@ -244,9 +247,11 @@ $log_tail = !empty($log_lines)
 .uma-modal-close:hover { color: #fff; }
 
 /* ── Inline help override ── */
-#tab-collectors > blockquote.inline_help,
-#tab-advanced > blockquote.inline_help,
-#tab-dashboard > blockquote.inline_help { margin-left: 0 !important; margin-right: 0 !important; padding: 12px 16px !important; max-width: none !important; width: auto !important; box-sizing: border-box; }
+.uma-panel > blockquote.inline_help { margin-left: 0 !important; margin-right: 0 !important; padding: 12px 16px !important; max-width: none !important; width: auto !important; box-sizing: border-box; }
+
+/* ── Endpoint code ── */
+.uma-endpoint-row { gap: 6px; }
+.uma-endpoint-code { font-size: 11px; color: var(--text-color,#ccc); }
 
 /* ── Info box ── */
 .uma-info-box { background: rgba(66,133,244,0.08); border-left: 3px solid #4285F4; border-radius: 0 4px 4px 0; padding: 6px 10px; font-size: 11px; margin: 4px 0; }
@@ -338,21 +343,21 @@ $log_tail = !empty($log_lines)
 <div class="uma-card" style="margin-bottom:0;">
     <div class="uma-card-title"><i class="fa fa-plug"></i> Endpoints</div>
     <div id="uma-endpoints-card" style="<?= $running ? '' : 'opacity:0.4;' ?>">
-        <div class="uma-row" style="gap:6px;">
+        <div class="uma-row uma-endpoint-row">
             <span class="uma-lbl">API</span>
-            <code style="font-size:11px;color:var(--text-color,#ccc);"><?= $base_url ?>/api/v1</code>
+            <code class="uma-endpoint-code"><?= $base_url ?>/api/v1</code>
         </div>
-        <div class="uma-row" style="gap:6px;">
+        <div class="uma-row uma-endpoint-row">
             <span class="uma-lbl">WebSocket</span>
-            <code style="font-size:11px;color:var(--text-color,#ccc);">ws://<?= $addr_esc ?>:<?= $port_esc ?>/api/v1/ws</code>
+            <code class="uma-endpoint-code">ws://<?= $addr_esc ?>:<?= $port_esc ?>/api/v1/ws</code>
         </div>
-        <div class="uma-row" style="gap:6px;">
+        <div class="uma-row uma-endpoint-row">
             <span class="uma-lbl">MCP</span>
-            <code style="font-size:11px;color:var(--text-color,#ccc);"><?= $base_url ?>/mcp</code>
+            <code class="uma-endpoint-code"><?= $base_url ?>/mcp</code>
         </div>
-        <div class="uma-row" style="gap:6px;">
+        <div class="uma-row uma-endpoint-row">
             <span class="uma-lbl">Metrics</span>
-            <code style="font-size:11px;color:var(--text-color,#ccc);"><?= $base_url ?>/metrics</code>
+            <code class="uma-endpoint-code"><?= $base_url ?>/metrics</code>
         </div>
     </div>
 </div>
@@ -463,22 +468,22 @@ Displays the last 20 lines of <code>/var/log/unraid-management-agent.log</code>.
 
     <div class="uma-section-header">Internal</div>
     <div class="uma-collector-row">
-        <span style="width:38px;display:inline-block;"></span>
+        <span class="uma-collector-spacer"></span>
         <span class="uma-collector-label">Notifications</span>
         <select name="INTERVAL_NOTIFICATION" class="uma-collector-select"><?= intervalOptions($interval_notification,'standard') ?></select>
     </div>
     <div class="uma-collector-row">
-        <span style="width:38px;display:inline-block;"></span>
+        <span class="uma-collector-spacer"></span>
         <span class="uma-collector-label">License</span>
         <select name="INTERVAL_REGISTRATION" class="uma-collector-select"><?= intervalOptions($interval_registration,'slow') ?></select>
     </div>
     <div class="uma-collector-row">
-        <span style="width:38px;display:inline-block;"></span>
+        <span class="uma-collector-spacer"></span>
         <span class="uma-collector-label">Fan Control</span>
         <select name="INTERVAL_FAN_CONTROL" class="uma-collector-select"><?= intervalOptions($interval_fan_control,'fast') ?></select>
     </div>
     <div class="uma-collector-row">
-        <span style="width:38px;display:inline-block;"></span>
+        <span class="uma-collector-spacer"></span>
         <span class="uma-collector-label">Tuning</span>
         <select name="INTERVAL_TUNING" class="uma-collector-select"><?= intervalOptions($interval_tuning,'standard') ?></select>
     </div>
@@ -807,7 +812,8 @@ function serviceControl(action) {
     var btn     = document.getElementById('uma-btn-startstop');
     var restart = document.getElementById('uma-btn-restart');
     btn.disabled = restart.disabled = true;
-    btn.value = action === 'stop' ? 'Stopping…' : action === 'start' ? 'Starting…' : 'Restarting…';
+    var labels = {stop: 'Stopping…', start: 'Starting…', restart: 'Restarting…'};
+    btn.value = labels[action] || 'Working…';
     $.post('/plugins/<?= $plugin ?>/include/exec.php', {action: action}, function() {
         setTimeout(pollStatus, 2500);
     }, 'json').fail(function() {
@@ -840,34 +846,16 @@ function updateServiceStatus(running) {
     if (ep)   ep.style.opacity   = running ? '1'    : '0.4';
 }
 
-// ── Watchdog visibility ────────────────────────────────────────────────────
-function toggleWatchdog() {
-    var on = document.getElementById('watchdog_cb').checked;
-    document.getElementById('watchdog_enabled_val').value = on ? 'true' : 'false';
-    document.getElementById('watchdog_fields').style.display = on ? 'block' : 'none';
+// ── Toggle checkbox → hidden value + field visibility ─────────────────────
+function toggleSection(checkboxId, hiddenId, fieldsId) {
+    var on = document.getElementById(checkboxId).checked;
+    document.getElementById(hiddenId).value = on ? 'true' : 'false';
+    if (fieldsId) document.getElementById(fieldsId).style.display = on ? 'block' : 'none';
 }
-
-// ── MQTT visibility ────────────────────────────────────────────────────────
-function toggleMQTTFields() {
-    var on = document.getElementById('mqtt_enabled_cb').checked;
-    document.getElementById('mqtt_enabled_val').value = on ? 'true' : 'false';
-    document.getElementById('mqtt_fields').style.display = on ? 'block' : 'none';
-    var cards = document.querySelectorAll('#mqtt_ha_tls_card, #mqtt_tls_card');
-    cards.forEach(function(c) {
-        c.style.opacity = on ? '1' : '0.4';
-        c.style.pointerEvents = on ? 'auto' : 'none';
-    });
-}
-function toggleMQTTHA() {
-    var on = document.getElementById('mqtt_ha_cb').checked;
-    document.getElementById('mqtt_ha_val').value = on ? 'true' : 'false';
-    document.getElementById('mqtt_ha_fields').style.display = on ? 'block' : 'none';
-}
-function toggleMQTTTLS() {
-    var on = document.getElementById('mqtt_tls_cb').checked;
-    document.getElementById('mqtt_tls_val').value = on ? 'true' : 'false';
-    document.getElementById('mqtt_tls_fields').style.display = on ? 'block' : 'none';
-}
+function toggleWatchdog()   { toggleSection('watchdog_cb',     'watchdog_enabled_val', 'watchdog_fields'); }
+function toggleMQTTFields() { toggleSection('mqtt_enabled_cb', 'mqtt_enabled_val',     'mqtt_fields'); }
+function toggleMQTTHA()     { toggleSection('mqtt_ha_cb',      'mqtt_ha_val',          'mqtt_ha_fields'); }
+function toggleMQTTTLS()    { toggleSection('mqtt_tls_cb',     'mqtt_tls_val',         'mqtt_tls_fields'); }
 
 // ── Collector toggles → DISABLE_COLLECTORS ────────────────────────────────
 function rebuildDisableCollectors() {
@@ -882,23 +870,25 @@ function rebuildDisableCollectors() {
 function umaCopy(elemId, btn) {
     var text = document.getElementById(elemId).innerText;
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function() {
-            var orig = btn.value; btn.value = 'Copied!';
-            setTimeout(function() { btn.value = orig; }, 1500);
-        });
+        navigator.clipboard.writeText(text);
     } else {
         var ta = document.createElement('textarea');
         ta.value = text; document.body.appendChild(ta);
         ta.select(); document.execCommand('copy');
         document.body.removeChild(ta);
-        var orig = btn.value; btn.value = 'Copied!';
-        setTimeout(function() { btn.value = orig; }, 1500);
     }
+    var orig = btn.value; btn.value = 'Copied!';
+    setTimeout(function() { btn.value = orig; }, 1500);
 }
 
 // ── Connections modal ─────────────────────────────────────────────────────
-function openConnModal()  { document.getElementById('uma-conn-modal').classList.add('open'); document.getElementById('uma-conn-backdrop').classList.add('open'); }
-function closeConnModal() { document.getElementById('uma-conn-modal').classList.remove('open'); document.getElementById('uma-conn-backdrop').classList.remove('open'); }
+function setConnModal(open) {
+    var method = open ? 'add' : 'remove';
+    document.getElementById('uma-conn-modal').classList[method]('open');
+    document.getElementById('uma-conn-backdrop').classList[method]('open');
+}
+function openConnModal()  { setConnModal(true); }
+function closeConnModal() { setConnModal(false); }
 
 // ── Log refresh ───────────────────────────────────────────────────────────
 function refreshLog() {

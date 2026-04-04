@@ -2,13 +2,11 @@
 PLUGIN="unraid-management-agent"
 CRON_FILE="/etc/cron.d/$PLUGIN-watchdog"
 
-running=$(pidof $PLUGIN | wc -w)
-
 # Remove watchdog cron before stopping so it doesn't restart us mid-shutdown
 rm -f "$CRON_FILE"
 /usr/bin/killall -HUP crond 2>/dev/null || true
 
-if [ $running -ge 1 ]; then
+if pidof $PLUGIN >/dev/null 2>&1; then
     TIMER=0
     while killall $PLUGIN 2>/dev/null; do
         sleep 1

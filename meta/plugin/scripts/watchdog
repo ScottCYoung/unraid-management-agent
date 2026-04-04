@@ -59,14 +59,14 @@ if [ -f "$CRASH_LOG" ]; then
     done < "$CRASH_LOG"
 fi
 
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+
 if [ $RECENT_CRASHES -ge $MAX_CRASHES ]; then
-    TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
     echo "[$TIMESTAMP] Throttled: $RECENT_CRASHES crashes in last ${THROTTLE_WINDOW}s — skipping restart" >> "$CRASH_LOG"
     exit 0
 fi
 
 # ── Agent is not running — log the crash and restart ──────────
-TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 echo "[$TIMESTAMP] $PLUGIN not running — restarting (recent crashes: $RECENT_CRASHES)" >> "$CRASH_LOG"
 
 "$INSTALL_DIR/scripts/start" >> "$CRASH_LOG" 2>&1
