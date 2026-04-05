@@ -81,6 +81,16 @@ switch ($action) {
     case 'status':
         // Just check status, no action
         break;
+    case 'log':
+        // Return tail of agent log with ANSI codes stripped (safe: path is hardcoded)
+        $log_file = "/var/log/$plugin.log";
+        $log_lines = [];
+        if (file_exists($log_file)) {
+            $log_lines = array_slice(file($log_file, FILE_IGNORE_NEW_LINES), -20);
+        }
+        $log_raw = !empty($log_lines) ? implode("\n", $log_lines) : 'No log entries yet.';
+        $response['log'] = preg_replace('/\x1b\[[0-9;]*m/', '', $log_raw);
+        break;
     default:
         http_response_code(400);
         echo json_encode(['error' => 'Invalid action']);
