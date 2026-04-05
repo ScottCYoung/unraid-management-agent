@@ -33,8 +33,9 @@ if [ "$WATCHDOG_ENABLED" != "true" ]; then
     exit 0
 fi
 
-# Nothing to do if agent is running
+# Nothing to do if agent is running — record heartbeat and exit
 if pidof "$PLUGIN" > /dev/null 2>&1; then
+    touch "/var/run/$PLUGIN-watchdog.heartbeat"
     exit 0
 fi
 
