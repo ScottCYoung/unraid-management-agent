@@ -47,7 +47,7 @@ if [ -f "$CRASH_LOG" ]; then
     while IFS= read -r line; do
         case "$line" in
             *"not running"*)
-                # Extract timestamp: [2026-04-04 10:18:04]
+                # Parse ISO timestamp from log line
                 TS_STR=$(echo "$line" | grep -oP '^\[\K[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}')
                 if [ -n "$TS_STR" ]; then
                     TS_EPOCH=$(date -d "$TS_STR" +%s 2>/dev/null)

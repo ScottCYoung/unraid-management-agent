@@ -26,7 +26,6 @@ switch ($action) {
         exec("$scripts_dir/start 2>&1", $output, $rc);
         $response['output'] = implode("\n", $output);
         $response['rc'] = $rc;
-        // Brief poll to confirm startup (3 x 300ms = 0.9s max)
         for ($i = 0; $i < 3; $i++) {
             usleep(300000);
             exec("pidof $plugin 2>/dev/null", $pids, $pid_rc);
@@ -38,7 +37,6 @@ switch ($action) {
         exec("$scripts_dir/stop 2>&1", $output, $rc);
         $response['output'] = implode("\n", $output);
         $response['rc'] = $rc;
-        // Brief poll to confirm shutdown (3 x 300ms = 0.9s max)
         for ($i = 0; $i < 3; $i++) {
             usleep(300000);
             exec("pidof $plugin 2>/dev/null", $pids, $pid_rc);
@@ -54,14 +52,13 @@ switch ($action) {
             $response['error'] = 'Stop failed';
             break;
         }
-        // Poll until stopped or timeout (3 x 300ms = 0.9s max)
         for ($i = 0; $i < 3; $i++) {
             usleep(300000);
             exec("pidof $plugin 2>/dev/null", $check_pids, $check_rc);
             if ($check_rc !== 0 || empty($check_pids)) break;
             $check_pids = [];
         }
-        // Abort if process is still running after stop
+        // Safeguard: ensure process fully terminated before restart
         exec("pidof $plugin 2>/dev/null", $guard_pids, $guard_rc);
         if ($guard_rc === 0 && !empty($guard_pids)) {
             $response['error'] = 'Stop succeeded but process still running';
@@ -70,7 +67,6 @@ switch ($action) {
         exec("$scripts_dir/start 2>&1", $output, $rc);
         $response['start_output'] = implode("\n", $output);
         $response['start_rc'] = $rc;
-        // Brief poll to confirm startup (3 x 300ms = 0.9s max)
         for ($i = 0; $i < 3; $i++) {
             usleep(300000);
             exec("pidof $plugin 2>/dev/null", $pids, $pid_rc);

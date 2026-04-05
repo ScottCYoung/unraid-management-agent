@@ -119,7 +119,6 @@ $cron_file = "/etc/cron.d/$plugin-watchdog";
 $cron_active = file_exists($cron_file);
 
 // ── Health assessment ────────────────────────────────────────────────────────
-// Watchdog health
 $wd_health = 'disabled';
 $wd_health_msg = 'Watchdog is off. The agent will not auto-restart if it crashes.';
 if ($watchdog_enabled === 'true') {
@@ -141,7 +140,6 @@ if ($watchdog_enabled === 'true') {
     }
 }
 
-// Agent health
 $agent_health_msg = '';
 if ($running) {
     $agent_health_msg = 'The agent is running and serving all enabled endpoints. ';
