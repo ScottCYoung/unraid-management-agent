@@ -1,5 +1,5 @@
 VERSION := $(shell cat VERSION)
-BINARY := unraid-management-agent
+BINARY := unraid-agent-dev
 BUILD_DIR := build
 PLUGIN_DIR := meta/plugin
 DATE := $(shell date '+%Y.%m.%d')

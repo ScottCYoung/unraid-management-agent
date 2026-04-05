@@ -5,7 +5,7 @@
  * Authentication and CSRF are handled by Unraid's local_prepend.php auto-prepend.
  */
 
-$plugin = "unraid-management-agent";
+$plugin = "unraid-agent-dev";
 $scripts_dir = "/usr/local/emhttp/plugins/$plugin/scripts";
 
 header('Content-Type: application/json');

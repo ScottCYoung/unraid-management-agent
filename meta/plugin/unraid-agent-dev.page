@@ -1,6 +1,6 @@
 Menu="Utilities"
-Title="Unraid Management Agent"
-Icon="/plugins/unraid-management-agent/images/unraid-management-agent.png"
+Title="Unraid Agent Dev"
+Icon="/plugins/unraid-agent-dev/images/unraid-management-agent.png"
 ---
 <?PHP
 /* Copyright 2026, Unraid Management Agent.
@@ -10,7 +10,7 @@ Icon="/plugins/unraid-management-agent/images/unraid-management-agent.png"
  * as published by the Free Software Foundation.
  */
 
-$plugin      = "unraid-management-agent";
+$plugin      = "unraid-agent-dev";
 $config_file = "/boot/config/plugins/$plugin/config.cfg";
 
 $config = [];
