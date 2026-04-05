@@ -82,14 +82,13 @@ switch ($action) {
         // Just check status, no action
         break;
     case 'log':
-        // Return tail of agent log with ANSI codes stripped (safe: path is hardcoded)
+        // Return raw log tail — JS ansiToHtml() handles color conversion client-side
         $log_file = "/var/log/$plugin.log";
         $log_lines = [];
         if (file_exists($log_file)) {
             $log_lines = array_slice(file($log_file, FILE_IGNORE_NEW_LINES), -20);
         }
-        $log_raw = !empty($log_lines) ? implode("\n", $log_lines) : 'No log entries yet.';
-        $response['log'] = preg_replace('/\x1b\[[0-9;]*m/', '', $log_raw);
+        $response['log'] = !empty($log_lines) ? implode("\n", $log_lines) : 'No log entries yet.';
         break;
     default:
         http_response_code(400);
