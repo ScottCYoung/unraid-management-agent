@@ -1,0 +1,80 @@
+#!/bin/bash
+# Watchdog for unraid-management-agent.
+# Checks if the agent is running and restarts it if not.
+# Invoked by cron; interval/enable controlled by WATCHDOG_ENABLED/WATCHDOG_INTERVAL.
+#
+# Restart throttle: if the agent has crashed MAX_CRASHES times within
+# THROTTLE_WINDOW seconds, the watchdog backs off and stops restarting
+# until the window expires. This prevents infinite restart loops from
+# a misconfigured or broken binary.
+
+PLUGIN="unraid-agent-dev"
+CONFIG_FILE="/boot/config/plugins/$PLUGIN/config.cfg"
+CRASH_LOG="/var/log/$PLUGIN-crash.log"
+INSTALL_DIR="/usr/local/emhttp/plugins/$PLUGIN"
+
+MAX_CRASHES=5
+THROTTLE_WINDOW=300  # 5 minutes
+MAX_LOG_LINES=500    # rotate crash log when it exceeds this
+
+# Rotate crash log if too large (prevents RAM exhaustion on tmpfs)
+if [ -f "$CRASH_LOG" ]; then
+    LINE_COUNT=$(wc -l < "$CRASH_LOG" 2>/dev/null || echo 0)
+    if [ "$LINE_COUNT" -gt "$MAX_LOG_LINES" ]; then
+        tail -n 200 "$CRASH_LOG" > "${CRASH_LOG}.tmp" && mv "${CRASH_LOG}.tmp" "$CRASH_LOG"
+    fi
+fi
+
+# Load config
+[ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
+
+WATCHDOG_ENABLED="${WATCHDOG_ENABLED:-false}"
+if [ "$WATCHDOG_ENABLED" != "true" ]; then
+    exit 0
+fi
+
+# Nothing to do if agent is running — record heartbeat and exit
+if pidof "$PLUGIN" > /dev/null 2>&1; then
+    touch "/var/run/$PLUGIN-watchdog.heartbeat"
+    exit 0
+fi
+
+# ── Restart throttle ──────────────────────────────────────────
+# Count recent "not running" entries within the throttle window
+NOW=$(date +%s)
+RECENT_CRASHES=0
+if [ -f "$CRASH_LOG" ]; then
+    while IFS= read -r line; do
+        case "$line" in
+            *"not running"*)
+                # Parse ISO timestamp from log line
+                TS_STR=$(echo "$line" | grep -oP '^\[\K[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}')
+                if [ -n "$TS_STR" ]; then
+                    TS_EPOCH=$(date -d "$TS_STR" +%s 2>/dev/null)
+                    if [ -n "$TS_EPOCH" ] && [ $((NOW - TS_EPOCH)) -lt $THROTTLE_WINDOW ]; then
+                        RECENT_CRASHES=$((RECENT_CRASHES + 1))
+                    fi
+                fi
+                ;;
+        esac
+    done < "$CRASH_LOG"
+fi
+
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+
+if [ $RECENT_CRASHES -ge $MAX_CRASHES ]; then
+    echo "[$TIMESTAMP] Throttled: $RECENT_CRASHES crashes in last ${THROTTLE_WINDOW}s — skipping restart" >> "$CRASH_LOG"
+    exit 0
+fi
+
+# ── Agent is not running — log the crash and restart ──────────
+echo "[$TIMESTAMP] $PLUGIN not running — restarting (recent crashes: $RECENT_CRASHES)" >> "$CRASH_LOG"
+
+"$INSTALL_DIR/scripts/start" >> "$CRASH_LOG" 2>&1
+
+sleep 3
+if pidof "$PLUGIN" > /dev/null 2>&1; then
+    echo "[$TIMESTAMP] Restart successful (pid: $(pidof $PLUGIN))" >> "$CRASH_LOG"
+else
+    echo "[$TIMESTAMP] Restart FAILED" >> "$CRASH_LOG"
+fi

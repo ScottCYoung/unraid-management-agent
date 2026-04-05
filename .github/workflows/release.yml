@@ -168,11 +168,13 @@ jobs:
           # Update root PLG file
           sed -i "s/<!ENTITY md5.*\".*\">/<!ENTITY md5         \"$MD5\">/" unraid-management-agent.plg
 
-          echo "✅ Updated PLG file"
+          echo "✅ Updated PLG files"
 
           # Verify updates
           echo "Root PLG MD5:"
           grep "ENTITY md5" unraid-management-agent.plg
+          echo "Dev PLG MD5:"
+          grep "ENTITY md5" unraid-agent-dev.plg
 
       - name: Commit and push PLG updates
         run: |
@@ -180,22 +182,25 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           # Check if there are changes
-          if git diff --quiet unraid-management-agent.plg; then
-            echo "No changes to PLG file"
+          if git diff --quiet unraid-management-agent.plg unraid-agent-dev.plg; then
+            echo "No changes to PLG files"
           else
             # Fetch and rebase on main to ensure we're up to date
             git fetch origin main
             git checkout main
             git pull origin main
 
-            # Refresh the root PLG file with the final release MD5
+            # Refresh PLG files with the final release MD5
             MD5="${{ steps.checksum.outputs.md5 }}"
+            VERSION="${{ steps.version.outputs.version }}"
             sed -i "s/<!ENTITY md5.*\".*\">/<!ENTITY md5         \"$MD5\">/" unraid-management-agent.plg
+            sed -i "s/<!ENTITY md5.*\".*\">/<!ENTITY md5         \"$MD5\">/" unraid-agent-dev.plg
+            sed -i "s/<!ENTITY version.*\".*\">/<!ENTITY version     \"$VERSION\">/" unraid-agent-dev.plg
 
-            git add unraid-management-agent.plg
+            git add unraid-management-agent.plg unraid-agent-dev.plg
             git commit -m "chore: update PLG MD5 hash for v${{ steps.version.outputs.version }} [skip ci]"
             git push origin main
-            echo "✅ Committed and pushed PLG update"
+            echo "✅ Committed and pushed PLG updates"
           fi
 
       - name: Release Summary

@@ -1,0 +1,208 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+    <!ENTITY name        "unraid-agent-dev">
+    <!ENTITY author      "ScottCYoung">
+    <!ENTITY version     "2026.04.04">
+    <!ENTITY gitURL      "https://github.com/ScottCYoung/unraid-management-agent">
+    <!ENTITY pluginURL   "&gitURL;/raw/main/unraid-agent-dev.plg">
+    <!ENTITY supportURL  "&gitURL;/issues">
+    <!ENTITY launch      "Settings/unraid-agent-dev">
+    <!ENTITY bundle      "&name;-&version;.tgz">
+    <!ENTITY bundleURL   "&gitURL;/releases/download/v&version;/&bundle;">
+    <!ENTITY md5         "">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" icon="server" min="7.2.0" pluginURL="&pluginURL;" support="&supportURL;" project="&gitURL;" readme="&gitURL;#readme">
+
+<DESCRIPTION>
+Personal dev fork of unraid-management-agent. Monitor and control your Unraid system via REST API, WebSocket, MCP, Prometheus, and MQTT. Includes watchdog, enhanced settings UI, and security fixes.
+</DESCRIPTION>
+
+<CHANGES>
+See CHANGELOG.md for full release notes:
+https://github.com/ScottCYoung/unraid-management-agent/blob/main/CHANGELOG.md
+</CHANGES>
+
+<!-- Verify Unraid version compatibility -->
+<FILE Run="/bin/bash">
+<INLINE>
+<![CDATA[
+#!/bin/bash
+
+if [ -f /etc/unraid-version ]; then
+    source /etc/unraid-version
+    major_version=$(echo "$version" | cut -d'.' -f1)
+    minor_version=$(echo "$version" | cut -d'.' -f2)
+    if [ "$major_version" -lt 6 ] || ([ "$major_version" -eq 6 ] && [ "$minor_version" -lt 9 ]); then
+        echo "ERROR: This plugin requires Unraid 6.9.0 or higher (your version: $version)"
+        exit 1
+    fi
+    echo "✓ Unraid version check passed (version: $version)"
+else
+    echo "⚠ Warning: Could not verify Unraid version — proceeding"
+fi
+
+exit 0
+]]>
+</INLINE>
+</FILE>
+
+<!-- Download the plugin bundle -->
+<FILE Name="/boot/config/plugins/&name;/&bundle;">
+<URL>&bundleURL;</URL>
+<MD5>&md5;</MD5>
+</FILE>
+
+<!-- Install default configuration -->
+<FILE Name="/boot/config/plugins/&name;/config.cfg">
+<INLINE>
+<![CDATA[
+# Unraid Agent Dev Configuration
+
+SERVICE="enable"
+PORT="8043"
+ENABLE_CORS="yes"
+LOG_LEVEL="info"
+WATCHDOG_ENABLED="false"
+WATCHDOG_INTERVAL="5"
+INTERVAL_SYSTEM="15"
+INTERVAL_ARRAY="30"
+INTERVAL_DISK="30"
+INTERVAL_DOCKER="30"
+INTERVAL_VM="30"
+INTERVAL_UPS="60"
+INTERVAL_GPU="60"
+INTERVAL_SHARES="60"
+INTERVAL_NETWORK="30"
+INTERVAL_ZFS="30"
+INTERVAL_NOTIFICATION="30"
+INTERVAL_HARDWARE="300"
+INTERVAL_REGISTRATION="300"
+INTERVAL_UNASSIGNED="60"
+]]>
+</INLINE>
+</FILE>
+
+<!-- Installation script -->
+<FILE Run="/bin/bash">
+<INLINE>
+<![CDATA[
+#!/bin/bash
+
+PLUGIN_NAME="unraid-agent-dev"
+CONFIG_DIR="/boot/config/plugins/${PLUGIN_NAME}"
+INSTALL_DIR="/usr/local/emhttp/plugins/${PLUGIN_NAME}"
+
+BUNDLE=$(ls ${CONFIG_DIR}/${PLUGIN_NAME}-*.tgz 2>/dev/null | sort -V | tail -n 1)
+if [ -z "$BUNDLE" ]; then
+    echo "✗ Error: No plugin bundle found in ${CONFIG_DIR}"
+    exit 1
+fi
+
+VERSION=$(basename "$BUNDLE" .tgz | sed "s/${PLUGIN_NAME}-//")
+
+echo ""
+echo "========================================="
+echo " Installing ${PLUGIN_NAME} v${VERSION}"
+echo "========================================="
+echo ""
+
+running=$(pidof ${PLUGIN_NAME} | wc -w)
+
+if [ $running -ge 1 ]; then
+    echo "Stopping existing service..."
+    killall ${PLUGIN_NAME} 2>/dev/null
+    sleep 2
+fi
+
+echo "Removing old plugin files..."
+rm -rf ${INSTALL_DIR}/* 2>/dev/null
+mkdir -p ${INSTALL_DIR}
+
+echo "Cleaning up old bundles..."
+rm -f $(ls ${CONFIG_DIR}/${PLUGIN_NAME}*.tgz 2>/dev/null | grep -v "${VERSION}.tgz")
+
+echo "Extracting plugin bundle..."
+if tar -xzf ${BUNDLE} -C / 2>&1; then
+    echo "✓ Bundle extracted successfully"
+else
+    echo "✗ Failed to extract bundle"
+    exit 1
+fi
+
+echo "Setting permissions..."
+chmod +x ${INSTALL_DIR}/${PLUGIN_NAME} 2>/dev/null
+chmod +x ${INSTALL_DIR}/scripts/* 2>/dev/null
+
+if [ ! -f "${INSTALL_DIR}/${PLUGIN_NAME}" ]; then
+    echo "✗ Binary not found after installation"
+    exit 1
+fi
+echo "✓ Binary installed"
+
+if [ $running -ge 1 ] || [ ! -f "${CONFIG_DIR}/.installed" ]; then
+    echo "Starting service..."
+    ${INSTALL_DIR}/scripts/start
+    sleep 2
+    if pidof ${PLUGIN_NAME} > /dev/null; then
+        echo "✓ Service started successfully"
+    else
+        echo "⚠ Service may not have started. Check logs: /var/log/${PLUGIN_NAME}.log"
+    fi
+fi
+
+touch ${CONFIG_DIR}/.installed
+
+echo ""
+echo "========================================="
+echo " ${PLUGIN_NAME} v${VERSION} installed"
+echo " API: http://localhost:8043"
+echo " Logs: /var/log/${PLUGIN_NAME}.log"
+echo "========================================="
+echo ""
+]]>
+</INLINE>
+</FILE>
+
+<!-- Removal script -->
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+<![CDATA[
+#!/bin/bash
+
+PLUGIN_NAME="unraid-agent-dev"
+INSTALL_DIR="/usr/local/emhttp/plugins/${PLUGIN_NAME}"
+CONFIG_DIR="/boot/config/plugins/${PLUGIN_NAME}"
+LOG_FILE="/var/log/${PLUGIN_NAME}.log"
+
+echo ""
+echo "========================================="
+echo " Removing ${PLUGIN_NAME}"
+echo "========================================="
+echo ""
+
+echo "Stopping service..."
+if [ -f "${INSTALL_DIR}/scripts/stop" ]; then
+    ${INSTALL_DIR}/scripts/stop
+else
+    killall ${PLUGIN_NAME} 2>/dev/null
+fi
+sleep 2
+
+if pidof ${PLUGIN_NAME} > /dev/null; then
+    killall -9 ${PLUGIN_NAME} 2>/dev/null
+fi
+
+rm -rf ${INSTALL_DIR} && echo "✓ Removed plugin directory" || echo "✗ Failed to remove plugin directory"
+rm -rf ${CONFIG_DIR}  && echo "✓ Removed config directory"  || echo "✗ Failed to remove config directory"
+rm -f  ${LOG_FILE}    && echo "✓ Removed log file"          || true
+
+echo ""
+echo "✓ Removal complete"
+echo ""
+]]>
+</INLINE>
+</FILE>
+
+</PLUGIN>
