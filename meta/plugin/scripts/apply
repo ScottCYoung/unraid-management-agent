@@ -1,10 +1,12 @@
 #!/bin/bash
-# Apply configuration changes — restarts the service if running.
+# Apply configuration changes — updates watchdog cron in-place and only
+# restarts the agent if non-watchdog config changed (to avoid fan spin-up).
 # Called by Unraid's /update.php after config file is saved (#command).
 
-PLUGIN="unraid-management-agent"
+PLUGIN="unraid-agent-dev"
 SCRIPTS_DIR="/usr/local/emhttp/plugins/$PLUGIN/scripts"
 CONFIG_FILE="/boot/config/plugins/$PLUGIN/config.cfg"
+CRON_FILE="/etc/cron.d/$PLUGIN-watchdog"
 
 # Ensure config file has restrictive permissions (contains MQTT password)
 if [ -f "$CONFIG_FILE" ]; then
@@ -14,8 +16,49 @@ if [ -f "$CONFIG_FILE" ]; then
     fi
 fi
 
-# Only restart if the service is currently running
+# ── Always update watchdog cron (cheap, no restart needed) ────
+source "$CONFIG_FILE"
+WATCHDOG_ENABLED="${WATCHDOG_ENABLED:-false}"
+WATCHDOG_INTERVAL="${WATCHDOG_INTERVAL:-5}"
+# Validate interval
+case "$WATCHDOG_INTERVAL" in
+    1|2|5|10|15|30) ;;
+    *) WATCHDOG_INTERVAL=5 ;;
+esac
+
+if [ "$WATCHDOG_ENABLED" = "true" ]; then
+    echo "*/$WATCHDOG_INTERVAL * * * * root /usr/local/emhttp/plugins/$PLUGIN/scripts/watchdog" > "$CRON_FILE"
+else
+    rm -f "$CRON_FILE"
+fi
+/usr/bin/killall -HUP crond 2>/dev/null || true
+
+# ── Check if non-watchdog config changed ──────────────────────
+# Compare current running config vs new config (excluding WATCHDOG fields)
+NEEDS_RESTART=false
 if pidof "$PLUGIN" > /dev/null 2>&1; then
+    # Build a snapshot of config without WATCHDOG lines for comparison
+    RUNNING_HASH=""
+    NEW_HASH=""
+    RUNNING_CFG="/tmp/$PLUGIN-running.cfg"
+
+    if [ -f "$RUNNING_CFG" ]; then
+        RUNNING_HASH=$(grep -v '^WATCHDOG_' "$RUNNING_CFG" | sort | md5sum)
+        NEW_HASH=$(grep -v '^WATCHDOG_' "$CONFIG_FILE" | sort | md5sum)
+        if [ "$RUNNING_HASH" != "$NEW_HASH" ]; then
+            NEEDS_RESTART=true
+        fi
+    else
+        # No snapshot exists (first apply since boot) — restart to be safe
+        NEEDS_RESTART=true
+    fi
+fi
+
+# Save current config as the running snapshot
+cp "$CONFIG_FILE" "/tmp/$PLUGIN-running.cfg" 2>/dev/null
+
+# ── Restart agent only if needed ──────────────────────────────
+if [ "$NEEDS_RESTART" = "true" ]; then
     "$SCRIPTS_DIR/stop"
     stop_rc=$?
 
@@ -24,7 +67,6 @@ if pidof "$PLUGIN" > /dev/null 2>&1; then
         exit $stop_rc
     fi
 
-    # Poll until stopped or timeout (5 attempts x 500ms = 2.5s max)
     for _ in {1..5}; do
         if ! pidof "$PLUGIN" > /dev/null 2>&1; then
             break
@@ -32,7 +74,6 @@ if pidof "$PLUGIN" > /dev/null 2>&1; then
         usleep 500000 2>/dev/null || sleep 0.5
     done
 
-    # Final check — abort if still running
     if pidof "$PLUGIN" > /dev/null 2>&1; then
         echo "Error: service did not stop within timeout" >&2
         exit 1

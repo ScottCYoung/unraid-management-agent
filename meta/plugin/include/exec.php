@@ -5,7 +5,7 @@
  * Authentication and CSRF are handled by Unraid's local_prepend.php auto-prepend.
  */
 
-$plugin = "unraid-management-agent";
+$plugin = "unraid-agent-dev";
 $scripts_dir = "/usr/local/emhttp/plugins/$plugin/scripts";
 
 header('Content-Type: application/json');
@@ -26,7 +26,6 @@ switch ($action) {
         exec("$scripts_dir/start 2>&1", $output, $rc);
         $response['output'] = implode("\n", $output);
         $response['rc'] = $rc;
-        // Brief poll to confirm startup (3 x 300ms = 0.9s max)
         for ($i = 0; $i < 3; $i++) {
             usleep(300000);
             exec("pidof $plugin 2>/dev/null", $pids, $pid_rc);
@@ -38,7 +37,6 @@ switch ($action) {
         exec("$scripts_dir/stop 2>&1", $output, $rc);
         $response['output'] = implode("\n", $output);
         $response['rc'] = $rc;
-        // Brief poll to confirm shutdown (3 x 300ms = 0.9s max)
         for ($i = 0; $i < 3; $i++) {
             usleep(300000);
             exec("pidof $plugin 2>/dev/null", $pids, $pid_rc);
@@ -54,14 +52,13 @@ switch ($action) {
             $response['error'] = 'Stop failed';
             break;
         }
-        // Poll until stopped or timeout (3 x 300ms = 0.9s max)
         for ($i = 0; $i < 3; $i++) {
             usleep(300000);
             exec("pidof $plugin 2>/dev/null", $check_pids, $check_rc);
             if ($check_rc !== 0 || empty($check_pids)) break;
             $check_pids = [];
         }
-        // Abort if process is still running after stop
+        // Safeguard: ensure process fully terminated before restart
         exec("pidof $plugin 2>/dev/null", $guard_pids, $guard_rc);
         if ($guard_rc === 0 && !empty($guard_pids)) {
             $response['error'] = 'Stop succeeded but process still running';
@@ -70,7 +67,6 @@ switch ($action) {
         exec("$scripts_dir/start 2>&1", $output, $rc);
         $response['start_output'] = implode("\n", $output);
         $response['start_rc'] = $rc;
-        // Brief poll to confirm startup (3 x 300ms = 0.9s max)
         for ($i = 0; $i < 3; $i++) {
             usleep(300000);
             exec("pidof $plugin 2>/dev/null", $pids, $pid_rc);
@@ -80,6 +76,15 @@ switch ($action) {
         break;
     case 'status':
         // Just check status, no action
+        break;
+    case 'log':
+        // Return raw log tail — JS ansiToHtml() handles color conversion client-side
+        $log_file = "/var/log/$plugin.log";
+        $log_lines = [];
+        if (file_exists($log_file)) {
+            $log_lines = array_slice(file($log_file, FILE_IGNORE_NEW_LINES), -20);
+        }
+        $response['log'] = !empty($log_lines) ? implode("\n", $log_lines) : 'No log entries yet.';
         break;
     default:
         http_response_code(400);
