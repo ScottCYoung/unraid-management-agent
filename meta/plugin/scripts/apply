@@ -3,7 +3,7 @@
 # restarts the agent if non-watchdog config changed (to avoid fan spin-up).
 # Called by Unraid's /update.php after config file is saved (#command).
 
-PLUGIN="unraid-management-agent"
+PLUGIN="unraid-agent-dev"
 SCRIPTS_DIR="/usr/local/emhttp/plugins/$PLUGIN/scripts"
 CONFIG_FILE="/boot/config/plugins/$PLUGIN/config.cfg"
 CRON_FILE="/etc/cron.d/$PLUGIN-watchdog"

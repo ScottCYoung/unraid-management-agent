@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2026.04.04] - 2026-04-04
+
+### Added
+
+- **Watchdog**: crash-restart daemon with 5-crash/5-min throttle, cron scheduling, heartbeat file, and health panel in settings UI
+- **Settings UI**: expose all config flags (CORS, log level, low power, read-only, full MQTT options), watchdog controls, agent + watchdog health assessment panel with contextual messages
+- **Security**: sanitize all config inputs in `start` and `apply` scripts, fix shell injection vectors in variable handling
+
+### Fixed
+
+- **Log refresh**: AJAX POST handler in `exec.php` now correctly serves log tail; JavaScript updated to POST (was GET)
+- **ANSI colors**: log API response preserves ANSI escape codes for client-side color rendering
+- **Dashboard UX**: health status display and settings page improvements
+
 ## [2026.03.06] - 2026-03-30
 
 ### Added

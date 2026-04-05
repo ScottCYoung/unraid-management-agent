@@ -1,5 +1,5 @@
 #!/bin/bash
-PLUGIN="unraid-management-agent"
+PLUGIN="unraid-agent-dev"
 CRON_FILE="/etc/cron.d/$PLUGIN-watchdog"
 
 # Remove watchdog cron before stopping so it doesn't restart us mid-shutdown

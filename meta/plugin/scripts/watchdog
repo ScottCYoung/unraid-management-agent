@@ -8,7 +8,7 @@
 # until the window expires. This prevents infinite restart loops from
 # a misconfigured or broken binary.
 
-PLUGIN="unraid-management-agent"
+PLUGIN="unraid-agent-dev"
 CONFIG_FILE="/boot/config/plugins/$PLUGIN/config.cfg"
 CRASH_LOG="/var/log/$PLUGIN-crash.log"
 INSTALL_DIR="/usr/local/emhttp/plugins/$PLUGIN"

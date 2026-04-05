@@ -1,5 +1,5 @@
 #!/bin/bash
-PLUGIN="unraid-management-agent"
+PLUGIN="unraid-agent-dev"
 CONFIG_FILE="/boot/config/plugins/$PLUGIN/config.cfg"
 PROG="/usr/local/emhttp/plugins/$PLUGIN/$PLUGIN"
 LOGS_DIR="/var/log"
