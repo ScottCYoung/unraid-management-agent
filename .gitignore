@@ -49,6 +49,7 @@ Thumbs.db
 tmp/
 temp/
 .worktrees/
+worktrees/
 
 # ============================================
 # SECURITY: Sensitive Configuration Files
@@ -60,34 +61,75 @@ scripts/*.local.sh
 scripts/*-local.sh
 ansible/inventory.yml
 ansible/.vault-password-file
+ansible/vault.yml
+ansible/*.vault
 config.local.*
 *.credentials
 *.secrets
 
 # Environment files
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+
+# Private keys and certificates
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+id_ecdsa*
+id_dsa*
+*.pub
+known_hosts
+
+# Auth / secret files
+.htpasswd
+.htaccess
+*.token
+*.apikey
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
 
 # Backup files that might contain sensitive data
 *.bak
 *.backup
+*.orig
+
+# ============================================
+# BUILD / COVERAGE ARTIFACTS
+# ============================================
+
+coverage.html
 
 # Documentation work files (replaced with single-line placeholders)
 DOCUMENTATION_QUALITY_ASSESSMENT.md
 DOCUMENTATION_IMPROVEMENT_PLAN.md
 PHASE_1_COMPLETION_SUMMARY.md
 PHASE_2_COMPLETION_SUMMARY.md
+
 # Pre-commit
 .pre-commit-cache/
+
+# ============================================
+# AI / TOOLING LOCAL STATE
+# ============================================
 
 # Claude/AI Assistant local settings
 .claude/settings.local.json
 .claude/*.local.json
 
-# Specify tool cache/memory (if it generates local state)
-.specify/memory/
-.specify/.cache/
+# Planning / workspace dirs (GSD, etc.)
+.planning/
+.specify/
 
 # AI scratch directory (temporary AI working files)
 .ai-scratch/*
