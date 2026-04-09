@@ -5,7 +5,7 @@
  * the MQTT password is never sent back to the browser for security).
  */
 
-$plugin = "unraid-management-agent";
+$plugin = "unraid-agent-dev";
 $cfg_path = "/boot/config/plugins/$plugin/config.cfg";
 
 // Preserve MQTT password: the form never sends the stored password, so

@@ -894,7 +894,7 @@ Encrypts the MQTT connection. Default port for TLS is 8883. Skip Verify only wit
     </div>
     <div class="uma-conn-row">
         <span class="uma-conn-label">Claude Desktop</span>
-        <code id="cc-desktop" class="uma-conn-code">{"mcpServers":{"unraid":{"command":"/usr/local/emhttp/plugins/unraid-management-agent/unraid-management-agent","args":["mcp-stdio"]}}}</code>
+        <code id="cc-desktop" class="uma-conn-code">{"mcpServers":{"unraid":{"command":"/usr/local/emhttp/plugins/unraid-agent-dev/unraid-agent-dev","args":["mcp-stdio"]}}}</code>
         <input type="button" class="uma-copy-btn" value="Copy" onclick="umaCopy('cc-desktop',this)">
     </div>
     <div class="uma-conn-row">
