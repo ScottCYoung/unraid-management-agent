@@ -121,9 +121,18 @@ func (s *Server) Initialize() error {
 	s.registerTuningTools()
 
 	// Create the Streamable HTTP handler (implements MCP 2025-06-18 transport)
+	// CrossOriginProtection bypass is needed because MCP clients (Claude Code,
+	// Cursor, etc.) send Origin headers that don't match the server's Host,
+	// causing Go 1.26's net/http.CrossOriginProtection to reject them.
+	cop := &http.CrossOriginProtection{}
+	cop.AddInsecureBypassPattern("/")
 	s.httpHandler = mcp.NewStreamableHTTPHandler(
 		func(_ *http.Request) *mcp.Server { return s.mcpServer },
-		nil,
+		&mcp.StreamableHTTPOptions{
+			JSONResponse:               true,
+			DisableLocalhostProtection: true,
+			CrossOriginProtection:      cop,
+		},
 	)
 
 	logger.Info("MCP server initialized with official SDK (protocol 2025-06-18), tools, resources, and prompts")
@@ -166,7 +175,24 @@ func (s *Server) GetHTTPHandler() http.Handler {
 			http.Error(w, "MCP server not initialized", http.StatusInternalServerError)
 		})
 	}
-	return s.httpHandler
+	// Wrap with Accept header normalization for MCP clients that don't send
+	// the required media types. The Go SDK's StreamableHTTPHandler requires
+	// "application/json" and "text/event-stream" on POST, and "text/event-stream"
+	// on GET. Some clients (e.g., Claude Code) may omit these.
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		accept := r.Header.Get("Accept")
+		switch r.Method {
+		case http.MethodPost:
+			if !strings.Contains(accept, "application/json") || !strings.Contains(accept, "text/event-stream") {
+				r.Header.Set("Accept", "application/json, text/event-stream")
+			}
+		case http.MethodGet:
+			if !strings.Contains(accept, "text/event-stream") {
+				r.Header.Set("Accept", "text/event-stream")
+			}
+		}
+		s.httpHandler.ServeHTTP(w, r)
+	})
 }
 
 // GetMCPServer returns the underlying MCP server instance.

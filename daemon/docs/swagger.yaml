@@ -1,6 +1,6 @@
 basePath: /api/v1
 definitions:
-  dto.AccessURL:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AccessURL:
     properties:
       ipv4:
         type: string
@@ -12,7 +12,7 @@ definitions:
         description: '"lan", "wan", "wireguard", "mdns", "ipv6", "other"'
         type: string
     type: object
-  dto.AlertEvent:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertEvent:
     properties:
       fired_at:
         type: string
@@ -30,16 +30,16 @@ definitions:
         description: '"firing" or "resolved"'
         type: string
     type: object
-  dto.AlertHistoryResponse:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertHistoryResponse:
     properties:
       events:
         items:
-          $ref: '#/definitions/dto.AlertEvent'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertEvent'
         type: array
       total:
         type: integer
     type: object
-  dto.AlertRule:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule:
     properties:
       channels:
         description: shoutrrr URLs or "unraid" for local notification
@@ -65,7 +65,7 @@ definitions:
         description: '"info", "warning", "critical"'
         type: string
     type: object
-  dto.AlertStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertStatus:
     properties:
       eval_count:
         type: integer
@@ -83,14 +83,14 @@ definitions:
         description: '"ok", "pending", "firing"'
         type: string
     type: object
-  dto.AlertsStatusResponse:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertsStatusResponse:
     properties:
       statuses:
         items:
-          $ref: '#/definitions/dto.AlertStatus'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertStatus'
         type: array
     type: object
-  dto.ArrayStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ArrayStatus:
     properties:
       free_bytes:
         example: 54975581388800
@@ -125,7 +125,7 @@ definitions:
         example: 45.5
         type: number
     type: object
-  dto.BIOSInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BIOSInfo:
     properties:
       address:
         example: "0xF0000"
@@ -153,7 +153,7 @@ definitions:
         example: "1.4"
         type: string
     type: object
-  dto.BaseboardInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BaseboardInfo:
     properties:
       asset_tag:
         example: To be filled by O.E.M.
@@ -181,7 +181,7 @@ definitions:
         example: "1.02"
         type: string
     type: object
-  dto.CPUCacheInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUCacheInfo:
     properties:
       associativity:
         type: string
@@ -210,7 +210,7 @@ definitions:
       system_type:
         type: string
     type: object
-  dto.CPUGovernorRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUGovernorRequest:
     properties:
       governor:
         example: performance
@@ -218,7 +218,7 @@ definitions:
     required:
     - governor
     type: object
-  dto.CPUHardwareInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUHardwareInfo:
     properties:
       asset_tag:
         example: To Be Filled By O.E.M.
@@ -274,7 +274,7 @@ definitions:
         example: 1.0 V
         type: string
     type: object
-  dto.CPUPowerState:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUPowerState:
     properties:
       available_governors:
         example:
@@ -299,16 +299,16 @@ definitions:
         example: 800
         type: integer
     type: object
-  dto.CollectorIntervalRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorIntervalRequest:
     properties:
       interval:
         description: seconds
         type: integer
     type: object
-  dto.CollectorResponse:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse:
     properties:
       collector:
-        $ref: '#/definitions/dto.CollectorStatus'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorStatus'
       message:
         type: string
       success:
@@ -316,7 +316,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.CollectorStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorStatus:
     properties:
       enabled:
         type: boolean
@@ -336,11 +336,11 @@ definitions:
         description: '"running", "stopped", "disabled", "registered"'
         type: string
     type: object
-  dto.CollectorsStatusResponse:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorsStatusResponse:
     properties:
       collectors:
         items:
-          $ref: '#/definitions/dto.CollectorStatus'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorStatus'
         type: array
       disabled_count:
         type: integer
@@ -351,14 +351,14 @@ definitions:
       total:
         type: integer
     type: object
-  dto.ContainerBulkUpdateResult:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerBulkUpdateResult:
     properties:
       failed:
         example: 1
         type: integer
       results:
         items:
-          $ref: '#/definitions/dto.ContainerUpdateResult'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateResult'
         type: array
       skipped:
         example: 1
@@ -369,7 +369,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.ContainerInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerInfo:
     properties:
       cpu_percent:
         example: 5.2
@@ -416,7 +416,7 @@ definitions:
         type: array
       ports:
         items:
-          $ref: '#/definitions/dto.PortMapping'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PortMapping'
         type: array
       restart_policy:
         example: unless-stopped
@@ -437,10 +437,10 @@ definitions:
         type: string
       volume_mappings:
         items:
-          $ref: '#/definitions/dto.VolumeMapping'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VolumeMapping'
         type: array
     type: object
-  dto.ContainerLogs:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerLogs:
     properties:
       container_id:
         example: abc123def456
@@ -459,7 +459,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.ContainerSizeInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerSizeInfo:
     properties:
       container_id:
         example: abc123def456
@@ -482,7 +482,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.ContainerUpdateInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateInfo:
     properties:
       container_id:
         example: abc123def456
@@ -503,7 +503,7 @@ definitions:
         example: true
         type: boolean
     type: object
-  dto.ContainerUpdateResult:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateResult:
     properties:
       container_id:
         example: abc123def456
@@ -530,11 +530,11 @@ definitions:
         example: true
         type: boolean
     type: object
-  dto.ContainerUpdatesResult:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdatesResult:
     properties:
       containers:
         items:
-          $ref: '#/definitions/dto.ContainerUpdateInfo'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateInfo'
         type: array
       timestamp:
         type: string
@@ -545,7 +545,7 @@ definitions:
         example: 2
         type: integer
     type: object
-  dto.DiskCacheInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskCacheInfo:
     properties:
       dirty_background_ratio:
         example: 10
@@ -560,7 +560,7 @@ definitions:
         example: 200
         type: integer
     type: object
-  dto.DiskCacheRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskCacheRequest:
     properties:
       dirty_background_ratio:
         example: 10
@@ -575,7 +575,7 @@ definitions:
         example: 500
         type: integer
     type: object
-  dto.DiskInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskInfo:
     properties:
       device:
         example: sda
@@ -628,7 +628,7 @@ definitions:
         type: integer
       smart_attributes:
         additionalProperties:
-          $ref: '#/definitions/dto.SMARTAttribute'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SMARTAttribute'
         description: Enhanced SMART attributes
         type: object
       smart_errors:
@@ -675,7 +675,7 @@ definitions:
         example: 50000
         type: integer
     type: object
-  dto.DiskSettings:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskSettings:
     properties:
       default_filesystem:
         description: Default filesystem type (xfs, btrfs, etc.)
@@ -695,7 +695,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.DiskSettingsExtended:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskSettingsExtended:
     description: Extended disk settings with temperature thresholds from Unraid configuration
     properties:
       critical_utilization_percent:
@@ -749,7 +749,7 @@ definitions:
         example: 70
         type: integer
     type: object
-  dto.DockerAggregateStats:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DockerAggregateStats:
     properties:
       memory_usage_percent:
         example: 25
@@ -775,7 +775,7 @@ definitions:
         example: 8192
         type: number
     type: object
-  dto.DockerSettings:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DockerSettings:
     properties:
       custom_networks:
         items:
@@ -790,14 +790,14 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.FanControlConfig:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlConfig:
     properties:
       control_enabled:
         example: false
         type: boolean
       control_method:
         allOf:
-        - $ref: '#/definitions/dto.FanControlMethod'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlMethod'
         example: hwmon
       enabled:
         example: true
@@ -806,9 +806,9 @@ definitions:
         example: 5
         type: integer
       safety:
-        $ref: '#/definitions/dto.FanSafetyConfig'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanSafetyConfig'
     type: object
-  dto.FanControlMethod:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlMethod:
     enum:
     - hwmon
     - ipmi
@@ -816,7 +816,7 @@ definitions:
     x-enum-varnames:
     - FanMethodHwmon
     - FanMethodIPMI
-  dto.FanControlMode:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlMode:
     enum:
     - automatic
     - manual
@@ -826,24 +826,24 @@ definitions:
     - FanModeAutomatic
     - FanModeManual
     - FanModeOff
-  dto.FanControlStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlStatus:
     properties:
       config:
-        $ref: '#/definitions/dto.FanControlConfig'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlConfig'
       fans:
         items:
-          $ref: '#/definitions/dto.FanDevice'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanDevice'
         type: array
       profiles:
         items:
-          $ref: '#/definitions/dto.FanProfile'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfile'
         type: array
       summary:
-        $ref: '#/definitions/dto.FanControlSummary'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlSummary'
       timestamp:
         type: string
     type: object
-  dto.FanControlSummary:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlSummary:
     properties:
       controllable_fans:
         example: 2
@@ -856,7 +856,7 @@ definitions:
         example: 3
         type: integer
     type: object
-  dto.FanCurvePoint:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanCurvePoint:
     properties:
       speed_percent:
         example: 30
@@ -865,7 +865,7 @@ definitions:
         example: 40
         type: number
     type: object
-  dto.FanDevice:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanDevice:
     properties:
       active_profile:
         example: balanced
@@ -884,7 +884,7 @@ definitions:
         type: string
       mode:
         allOf:
-        - $ref: '#/definitions/dto.FanControlMode'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlMode'
         example: automatic
       name:
         example: CPU Fan
@@ -902,7 +902,7 @@ definitions:
         example: /sys/class/hwmon/hwmon0/temp1_input
         type: string
     type: object
-  dto.FanInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanInfo:
     properties:
       name:
         example: CPU Fan
@@ -911,7 +911,7 @@ definitions:
         example: 1200
         type: integer
     type: object
-  dto.FanModeRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanModeRequest:
     properties:
       fan_id:
         example: hwmon0_fan1
@@ -920,14 +920,14 @@ definitions:
         example: manual
         type: string
     type: object
-  dto.FanProfile:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfile:
     properties:
       built_in:
         example: true
         type: boolean
       curve_points:
         items:
-          $ref: '#/definitions/dto.FanCurvePoint'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanCurvePoint'
         type: array
       description:
         example: Balanced cooling and noise
@@ -936,11 +936,11 @@ definitions:
         example: balanced
         type: string
     type: object
-  dto.FanProfileCreateRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfileCreateRequest:
     properties:
       curve_points:
         items:
-          $ref: '#/definitions/dto.FanCurvePoint'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanCurvePoint'
         type: array
       description:
         example: Custom quiet profile
@@ -949,7 +949,7 @@ definitions:
         example: custom_quiet
         type: string
     type: object
-  dto.FanProfileRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfileRequest:
     properties:
       fan_id:
         example: hwmon0_fan1
@@ -961,7 +961,7 @@ definitions:
         example: /sys/class/hwmon/hwmon0/temp1_input
         type: string
     type: object
-  dto.FanSafetyConfig:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanSafetyConfig:
     properties:
       critical_temp_celsius:
         example: 90
@@ -973,7 +973,7 @@ definitions:
         example: 20
         type: integer
     type: object
-  dto.FanSpeedRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanSpeedRequest:
     properties:
       fan_id:
         example: hwmon0_fan1
@@ -982,7 +982,7 @@ definitions:
         example: 50
         type: integer
     type: object
-  dto.FlashDriveHealth:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FlashDriveHealth:
     description: USB flash boot drive health information
     properties:
       device:
@@ -1028,7 +1028,7 @@ definitions:
         example: SanDisk
         type: string
     type: object
-  dto.GPUMetrics:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.GPUMetrics:
     properties:
       available:
         example: true
@@ -1092,28 +1092,28 @@ definitions:
         example: nvidia
         type: string
     type: object
-  dto.HardwareInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HardwareInfo:
     properties:
       baseboard:
-        $ref: '#/definitions/dto.BaseboardInfo'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BaseboardInfo'
       bios:
-        $ref: '#/definitions/dto.BIOSInfo'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BIOSInfo'
       cache:
         items:
-          $ref: '#/definitions/dto.CPUCacheInfo'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUCacheInfo'
         type: array
       cpu:
-        $ref: '#/definitions/dto.CPUHardwareInfo'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUHardwareInfo'
       memory_array:
-        $ref: '#/definitions/dto.MemoryArrayInfo'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryArrayInfo'
       memory_devices:
         items:
-          $ref: '#/definitions/dto.MemoryDeviceInfo'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryDeviceInfo'
         type: array
       timestamp:
         type: string
     type: object
-  dto.HealthCheck:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck:
     properties:
       enabled:
         description: Enabled determines whether this health check is active.
@@ -1145,10 +1145,10 @@ definitions:
         type: integer
       type:
         allOf:
-        - $ref: '#/definitions/dto.HealthCheckType'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckType'
         description: 'Type is the probe type: "http", "tcp", "container", or "ping".'
     type: object
-  dto.HealthCheckEvent:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckEvent:
     properties:
       check_id:
         description: CheckID is the health check identifier.
@@ -1169,14 +1169,14 @@ definitions:
         description: Timestamp is when the event occurred.
         type: string
     type: object
-  dto.HealthCheckHistoryResponse:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckHistoryResponse:
     properties:
       events:
         items:
-          $ref: '#/definitions/dto.HealthCheckEvent'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckEvent'
         type: array
     type: object
-  dto.HealthCheckStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckStatus:
     properties:
       check_id:
         description: CheckID is the health check identifier.
@@ -1186,7 +1186,7 @@ definitions:
         type: string
       check_type:
         allOf:
-        - $ref: '#/definitions/dto.HealthCheckType'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckType'
         description: CheckType is the probe type.
       consecutive_fails:
         description: ConsecutiveFails is the number of consecutive probe failures.
@@ -1212,7 +1212,7 @@ definitions:
         description: Target is the probe target.
         type: string
     type: object
-  dto.HealthCheckType:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckType:
     enum:
     - http
     - tcp
@@ -1224,14 +1224,14 @@ definitions:
     - HealthCheckTCP
     - HealthCheckContainer
     - HealthCheckPing
-  dto.HealthChecksStatusResponse:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthChecksStatusResponse:
     properties:
       checks:
         items:
-          $ref: '#/definitions/dto.HealthCheckStatus'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckStatus'
         type: array
     type: object
-  dto.InotifyInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.InotifyInfo:
     properties:
       max_queued_events:
         example: 16384
@@ -1243,7 +1243,7 @@ definitions:
         example: 524288
         type: integer
     type: object
-  dto.InotifyLimitsRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.InotifyLimitsRequest:
     properties:
       max_queued_events:
         example: 16384
@@ -1259,7 +1259,7 @@ definitions:
     - max_user_instances
     - max_user_watches
     type: object
-  dto.LogFileContent:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.LogFileContent:
     properties:
       content:
         type: string
@@ -1278,7 +1278,7 @@ definitions:
       total_lines:
         type: integer
     type: object
-  dto.MQTTPublishRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTPublishRequest:
     properties:
       payload: {}
       qos:
@@ -1291,7 +1291,7 @@ definitions:
         example: custom/topic
         type: string
     type: object
-  dto.MQTTStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTStatus:
     properties:
       broker:
         example: tcp://localhost:1883
@@ -1327,7 +1327,7 @@ definitions:
         example: 3600
         type: integer
     type: object
-  dto.MQTTTestResponse:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTTestResponse:
     properties:
       broker_info:
         type: string
@@ -1349,7 +1349,7 @@ definitions:
         example: false
         type: boolean
     type: object
-  dto.MemoryArrayInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryArrayInfo:
     properties:
       error_correction_type:
         type: string
@@ -1362,7 +1362,7 @@ definitions:
       use:
         type: string
     type: object
-  dto.MemoryDeviceInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryDeviceInfo:
     properties:
       asset_tag:
         type: string
@@ -1401,7 +1401,7 @@ definitions:
       type_detail:
         type: string
     type: object
-  dto.MoverSettings:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MoverSettings:
     description: Mover configuration, schedule, and current status
     properties:
       active:
@@ -1423,7 +1423,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.NICOffloadInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NICOffloadInfo:
     properties:
       generic_receive_offload:
         example: "on"
@@ -1453,7 +1453,7 @@ definitions:
         example: "on"
         type: string
     type: object
-  dto.NICRingBufferInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NICRingBufferInfo:
     properties:
       rx_current:
         example: 256
@@ -1468,7 +1468,7 @@ definitions:
         example: 4096
         type: integer
     type: object
-  dto.NUTConfig:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTConfig:
     properties:
       battery_level:
         description: Low battery threshold
@@ -1503,7 +1503,7 @@ definitions:
         description: e.g., "ups"
         type: string
     type: object
-  dto.NUTDevice:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTDevice:
     properties:
       available:
         type: boolean
@@ -1512,13 +1512,13 @@ definitions:
       name:
         type: string
     type: object
-  dto.NUTResponse:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTResponse:
     properties:
       config:
-        $ref: '#/definitions/dto.NUTConfig'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTConfig'
       devices:
         items:
-          $ref: '#/definitions/dto.NUTDevice'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTDevice'
         type: array
       installed:
         description: Is NUT plugin installed?
@@ -1527,11 +1527,11 @@ definitions:
         description: Is NUT service running?
         type: boolean
       status:
-        $ref: '#/definitions/dto.NUTStatus'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTStatus'
       timestamp:
         type: string
     type: object
-  dto.NUTStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTStatus:
     properties:
       alarms:
         description: Active alarms if any
@@ -1659,16 +1659,16 @@ definitions:
       vendor_id:
         type: string
     type: object
-  dto.NetworkAccessURLs:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkAccessURLs:
     properties:
       timestamp:
         type: string
       urls:
         items:
-          $ref: '#/definitions/dto.AccessURL'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AccessURL'
         type: array
     type: object
-  dto.NetworkConfig:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkConfig:
     properties:
       bond_slaves:
         description: If bond
@@ -1700,7 +1700,7 @@ definitions:
         description: If VLAN
         type: integer
     type: object
-  dto.NetworkInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkInfo:
     properties:
       advertised_auto_negotiation:
         example: true
@@ -1815,7 +1815,7 @@ definitions:
         example: g
         type: string
     type: object
-  dto.NetworkServiceInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo:
     description: Status information for a single network service
     properties:
       description:
@@ -1839,16 +1839,16 @@ definitions:
         example: true
         type: boolean
     type: object
-  dto.NetworkServicesStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServicesStatus:
     description: Status of all Unraid network services (SMB, NFS, FTP, SSH, etc.)
     properties:
       afp:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: Apple Filing Protocol (via Avahi)
       avahi:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: Discovery Services
       enabled_services:
         description: Services enabled
@@ -1856,19 +1856,19 @@ definitions:
         type: integer
       ftp:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: FTP server
       netbios:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: NetBIOS name service
       nfs:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: NFS file sharing
       ntp:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: NTP time sync
       running_services:
         description: Services currently running
@@ -1876,19 +1876,19 @@ definitions:
         type: integer
       smb:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: File Sharing Services
       ssh:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: Remote Access Services
       syslog_server:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: Syslog remote server
       telnet:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: Telnet server
       timestamp:
         type: string
@@ -1898,18 +1898,18 @@ definitions:
         type: integer
       upnp:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: System Services
       wireguard:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: VPN Services
       wsd:
         allOf:
-        - $ref: '#/definitions/dto.NetworkServiceInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo'
         description: Web Services Discovery
     type: object
-  dto.Notification:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Notification:
     properties:
       description:
         example: The array has been successfully started
@@ -1940,7 +1940,7 @@ definitions:
         example: unread
         type: string
     type: object
-  dto.NotificationCounts:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationCounts:
     properties:
       alert:
         example: 0
@@ -1955,34 +1955,34 @@ definitions:
         example: 2
         type: integer
     type: object
-  dto.NotificationList:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationList:
     properties:
       notifications:
         items:
-          $ref: '#/definitions/dto.Notification'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Notification'
         type: array
       overview:
-        $ref: '#/definitions/dto.NotificationOverview'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationOverview'
       timestamp:
         type: string
     type: object
-  dto.NotificationOverview:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationOverview:
     properties:
       archive:
-        $ref: '#/definitions/dto.NotificationCounts'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationCounts'
       unread:
-        $ref: '#/definitions/dto.NotificationCounts'
+        $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationCounts'
     type: object
-  dto.ParityCheckHistory:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParityCheckHistory:
     properties:
       records:
         items:
-          $ref: '#/definitions/dto.ParityCheckRecord'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParityCheckRecord'
         type: array
       timestamp:
         type: string
     type: object
-  dto.ParityCheckRecord:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParityCheckRecord:
     properties:
       action:
         description: '"Parity-Check", "Parity-Sync", "Read-Check", "Clear"'
@@ -2006,7 +2006,7 @@ definitions:
         description: '"OK", "Canceled", or error count'
         type: string
     type: object
-  dto.ParitySchedule:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParitySchedule:
     description: Parity check schedule configuration
     properties:
       correcting:
@@ -2052,14 +2052,14 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.PluginBulkUpdateResult:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginBulkUpdateResult:
     properties:
       failed:
         example: 0
         type: integer
       results:
         items:
-          $ref: '#/definitions/dto.PluginUpdateResult'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginUpdateResult'
         type: array
       succeeded:
         example: 3
@@ -2067,7 +2067,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.PluginInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginInfo:
     description: Information about an installed Unraid plugin
     properties:
       author:
@@ -2106,12 +2106,12 @@ definitions:
         example: 2025.10.27
         type: string
     type: object
-  dto.PluginList:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginList:
     description: List of installed Unraid plugins
     properties:
       plugins:
         items:
-          $ref: '#/definitions/dto.PluginInfo'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginInfo'
         type: array
       timestamp:
         type: string
@@ -2122,7 +2122,7 @@ definitions:
         example: 2
         type: integer
     type: object
-  dto.PluginUpdateResult:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginUpdateResult:
     properties:
       message:
         example: Updated successfully
@@ -2142,7 +2142,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.PortMapping:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PortMapping:
     properties:
       private_port:
         example: 32400
@@ -2154,7 +2154,7 @@ definitions:
         example: tcp
         type: string
     type: object
-  dto.ProcessInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ProcessInfo:
     properties:
       command:
         example: /usr/bin/docker
@@ -2190,11 +2190,11 @@ definitions:
         example: 1073741824
         type: integer
     type: object
-  dto.ProcessList:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ProcessList:
     properties:
       processes:
         items:
-          $ref: '#/definitions/dto.ProcessInfo'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ProcessInfo'
         type: array
       timestamp:
         type: string
@@ -2202,7 +2202,7 @@ definitions:
         example: 150
         type: integer
     type: object
-  dto.Registration:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Registration:
     properties:
       expiration:
         description: License expiration date
@@ -2226,7 +2226,7 @@ definitions:
         description: Update expiration date
         type: string
     type: object
-  dto.Response:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response:
     properties:
       data: {}
       error:
@@ -2241,7 +2241,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.SMARTAttribute:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SMARTAttribute:
     properties:
       id:
         example: 5
@@ -2265,7 +2265,7 @@ definitions:
         example: 100
         type: integer
     type: object
-  dto.ServiceStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ServiceStatus:
     description: Docker and VM Manager service enabled status
     properties:
       docker_autostart:
@@ -2287,7 +2287,7 @@ definitions:
         example: false
         type: boolean
     type: object
-  dto.ShareConfig:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareConfig:
     properties:
       allocator:
         description: '"highwater", "mostfree", "fillup"'
@@ -2324,7 +2324,7 @@ definitions:
         description: '"yes", "no", "only", "prefer"'
         type: string
     type: object
-  dto.ShareInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareInfo:
     properties:
       cache_pool:
         description: 'Cache pool settings (Issue #53)'
@@ -2383,7 +2383,7 @@ definitions:
         example: 5368709120000
         type: integer
     type: object
-  dto.SystemInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemInfo:
     properties:
       agent_version:
         example: 2025.12.1
@@ -2410,7 +2410,7 @@ definitions:
         type: object
       cpu_power_state:
         allOf:
-        - $ref: '#/definitions/dto.CPUPowerState'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUPowerState'
         description: CPU Power State (scaling governor)
       cpu_power_watts:
         description: CPU package power in watts (only present when Intel RAPL is available)
@@ -2433,7 +2433,7 @@ definitions:
       fans:
         description: Additional Metrics
         items:
-          $ref: '#/definitions/dto.FanInfo'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanInfo'
         type: array
       hostname:
         example: tower
@@ -2491,7 +2491,7 @@ definitions:
       temperatures:
         description: All Temperature Sensors
         items:
-          $ref: '#/definitions/dto.TemperatureReading'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TemperatureReading'
         type: array
       timestamp:
         type: string
@@ -2502,7 +2502,7 @@ definitions:
         example: 6.12.6
         type: string
     type: object
-  dto.SystemSettings:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemSettings:
     properties:
       date_format:
         type: string
@@ -2522,7 +2522,7 @@ definitions:
       timezone:
         type: string
     type: object
-  dto.TemperatureReading:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TemperatureReading:
     properties:
       name:
         example: coretemp_Core_0
@@ -2539,34 +2539,34 @@ definitions:
         example: 45
         type: number
     type: object
-  dto.TuningInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TuningInfo:
     properties:
       disk_cache:
         allOf:
-        - $ref: '#/definitions/dto.DiskCacheInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskCacheInfo'
         description: Disk Cache (vm.dirty_* parameters)
       inotify:
         allOf:
-        - $ref: '#/definitions/dto.InotifyInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.InotifyInfo'
         description: Inotify limits
       nic_offloads:
         additionalProperties:
-          $ref: '#/definitions/dto.NICOffloadInfo'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NICOffloadInfo'
         description: NIC Offload settings per interface
         type: object
       nic_ring_buffers:
         additionalProperties:
-          $ref: '#/definitions/dto.NICRingBufferInfo'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NICRingBufferInfo'
         description: NIC Ring Buffers per interface
         type: object
       timestamp:
         type: string
       turbo_boost:
         allOf:
-        - $ref: '#/definitions/dto.TurboBoostInfo'
+        - $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TurboBoostInfo'
         description: CPU Power Management
     type: object
-  dto.TurboBoostInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TurboBoostInfo:
     properties:
       available:
         example: true
@@ -2578,7 +2578,7 @@ definitions:
         example: intel
         type: string
     type: object
-  dto.TurboBoostRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TurboBoostRequest:
     properties:
       enabled:
         example: true
@@ -2586,7 +2586,7 @@ definitions:
     required:
     - enabled
     type: object
-  dto.UPSStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UPSStatus:
     properties:
       battery_charge_percent:
         example: 100
@@ -2615,7 +2615,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.UnassignedDevice:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedDevice:
     properties:
       auto_mount:
         description: Configuration
@@ -2633,7 +2633,7 @@ definitions:
       partitions:
         description: Partition information
         items:
-          $ref: '#/definitions/dto.UnassignedPartition'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedPartition'
         type: array
       pass_through:
         type: boolean
@@ -2659,20 +2659,20 @@ definitions:
       writes:
         type: integer
     type: object
-  dto.UnassignedDeviceList:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedDeviceList:
     properties:
       devices:
         items:
-          $ref: '#/definitions/dto.UnassignedDevice'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedDevice'
         type: array
       remote_shares:
         items:
-          $ref: '#/definitions/dto.UnassignedRemoteShare'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedRemoteShare'
         type: array
       timestamp:
         type: string
     type: object
-  dto.UnassignedPartition:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedPartition:
     properties:
       filesystem:
         description: '"ntfs", "ext4", "xfs", "btrfs", "exfat", "hfsplus", "apfs"'
@@ -2703,7 +2703,7 @@ definitions:
       used_bytes:
         type: integer
     type: object
-  dto.UnassignedRemoteShare:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedRemoteShare:
     properties:
       auto_mount:
         description: Configuration
@@ -2749,7 +2749,7 @@ definitions:
       used_bytes:
         type: integer
     type: object
-  dto.UpdateStatus:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UpdateStatus:
     description: Unraid OS and plugin update availability
     properties:
       current_version:
@@ -2768,7 +2768,7 @@ definitions:
       plugins_with_updates:
         description: Plugin update status
         items:
-          $ref: '#/definitions/dto.PluginInfo'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginInfo'
         type: array
       timestamp:
         type: string
@@ -2776,14 +2776,14 @@ definitions:
         example: 18
         type: integer
     type: object
-  dto.UserScriptExecuteRequest:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteRequest:
     properties:
       background:
         type: boolean
       wait:
         type: boolean
     type: object
-  dto.UserScriptExecuteResponse:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteResponse:
     properties:
       error:
         type: string
@@ -2796,7 +2796,7 @@ definitions:
       success:
         type: boolean
     type: object
-  dto.UserScriptInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptInfo:
     properties:
       description:
         type: string
@@ -2809,7 +2809,7 @@ definitions:
       path:
         type: string
     type: object
-  dto.VMInfo:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMInfo:
     properties:
       autostart:
         example: false
@@ -2865,7 +2865,7 @@ definitions:
       timestamp:
         type: string
     type: object
-  dto.VMSettings:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSettings:
     properties:
       default_settings:
         additionalProperties:
@@ -2884,7 +2884,7 @@ definitions:
           type: string
         type: array
     type: object
-  dto.VMSnapshot:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSnapshot:
     properties:
       created_at:
         example: "2025-02-16T10:30:00Z"
@@ -2908,14 +2908,14 @@ definitions:
         example: Windows 11
         type: string
     type: object
-  dto.VMSnapshotList:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSnapshotList:
     properties:
       count:
         example: 3
         type: integer
       snapshots:
         items:
-          $ref: '#/definitions/dto.VMSnapshot'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSnapshot'
         type: array
       timestamp:
         type: string
@@ -2923,7 +2923,7 @@ definitions:
         example: Windows 11
         type: string
     type: object
-  dto.VolumeMapping:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VolumeMapping:
     properties:
       container_path:
         example: /config
@@ -2935,7 +2935,7 @@ definitions:
         example: rw
         type: string
     type: object
-  dto.ZFSARCStats:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSARCStats:
     properties:
       hit_ratio_percent:
         description: Hit Ratios
@@ -2996,7 +2996,7 @@ definitions:
         example: 53.3
         type: number
     type: object
-  dto.ZFSDataset:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSDataset:
     properties:
       available_bytes:
         description: Space available
@@ -3045,7 +3045,7 @@ definitions:
         example: 53687091200
         type: integer
     type: object
-  dto.ZFSDevice:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSDevice:
     properties:
       checksum_errors:
         example: 0
@@ -3069,7 +3069,7 @@ definitions:
         example: 0
         type: integer
     type: object
-  dto.ZFSPool:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSPool:
     properties:
       allocated_bytes:
         description: Space allocated
@@ -3169,7 +3169,7 @@ definitions:
       vdevs:
         description: VDEVs (Virtual Devices)
         items:
-          $ref: '#/definitions/dto.ZFSVdev'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSVdev'
         type: array
       version:
         description: ZFS pool version
@@ -3179,7 +3179,7 @@ definitions:
         example: 0
         type: integer
     type: object
-  dto.ZFSSnapshot:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSSnapshot:
     properties:
       creation_time:
         description: When snapshot was created
@@ -3203,7 +3203,7 @@ definitions:
         example: 1073741824
         type: integer
     type: object
-  dto.ZFSVdev:
+  github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSVdev:
     properties:
       checksum_errors:
         example: 0
@@ -3211,7 +3211,7 @@ definitions:
       devices:
         description: Underlying devices (for mirror/raidz)
         items:
-          $ref: '#/definitions/dto.ZFSDevice'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSDevice'
         type: array
       name:
         description: vdev name (e.g., "raidz1-0", "mirror-1", or disk name)
@@ -3257,7 +3257,7 @@ paths:
           description: Firing alerts
           schema:
             items:
-              $ref: '#/definitions/dto.AlertStatus'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertStatus'
             type: array
       summary: Get firing alerts
       tags:
@@ -3271,7 +3271,7 @@ paths:
         "200":
           description: Alert event history
           schema:
-            $ref: '#/definitions/dto.AlertHistoryResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertHistoryResponse'
       summary: Get alert history
       tags:
       - Alerts
@@ -3285,7 +3285,7 @@ paths:
           description: List of alert rules
           schema:
             items:
-              $ref: '#/definitions/dto.AlertRule'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule'
             type: array
       summary: List all alert rules
       tags:
@@ -3300,14 +3300,14 @@ paths:
         name: rule
         required: true
         schema:
-          $ref: '#/definitions/dto.AlertRule'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule'
       produces:
       - application/json
       responses:
         "201":
           description: Rule created successfully
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
@@ -3338,7 +3338,7 @@ paths:
         "200":
           description: Rule deleted successfully
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "404":
           description: Rule not found
           schema:
@@ -3362,7 +3362,7 @@ paths:
         "200":
           description: Alert rule
           schema:
-            $ref: '#/definitions/dto.AlertRule'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule'
         "404":
           description: Rule not found
           schema:
@@ -3387,14 +3387,14 @@ paths:
         name: rule
         required: true
         schema:
-          $ref: '#/definitions/dto.AlertRule'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule'
       produces:
       - application/json
       responses:
         "200":
           description: Rule updated successfully
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
@@ -3419,7 +3419,7 @@ paths:
         "200":
           description: Alert statuses
           schema:
-            $ref: '#/definitions/dto.AlertsStatusResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertsStatusResponse'
       summary: Get alert status
       tags:
       - Alerts
@@ -3432,7 +3432,7 @@ paths:
         "200":
           description: Array status
           schema:
-            $ref: '#/definitions/dto.ArrayStatus'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ArrayStatus'
       summary: Get array status
       tags:
       - Array
@@ -3445,11 +3445,11 @@ paths:
         "200":
           description: Parity check history
           schema:
-            $ref: '#/definitions/dto.ParityCheckHistory'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParityCheckHistory'
         "500":
           description: Failed to get parity check history
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get parity check history
       tags:
       - Array
@@ -3462,11 +3462,11 @@ paths:
         "200":
           description: Parity check paused
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to pause parity check
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Pause parity check
       tags:
       - Array
@@ -3479,11 +3479,11 @@ paths:
         "200":
           description: Parity check resumed
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to resume parity check
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Resume parity check
       tags:
       - Array
@@ -3496,11 +3496,11 @@ paths:
         "200":
           description: Parity check schedule
           schema:
-            $ref: '#/definitions/dto.ParitySchedule'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParitySchedule'
         "500":
           description: Failed to get schedule
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get parity check schedule
       tags:
       - Array
@@ -3518,11 +3518,11 @@ paths:
         "200":
           description: Parity check started
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to start parity check
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Start parity check
       tags:
       - Array
@@ -3535,11 +3535,11 @@ paths:
         "200":
           description: Parity check stopped
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to stop parity check
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Stop parity check
       tags:
       - Array
@@ -3552,11 +3552,11 @@ paths:
         "200":
           description: Array started
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to start array
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Start array
       tags:
       - Array
@@ -3569,11 +3569,11 @@ paths:
         "200":
           description: Array stopped
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to stop array
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Stop array
       tags:
       - Array
@@ -3592,15 +3592,15 @@ paths:
         "200":
           description: Collector status
           schema:
-            $ref: '#/definitions/dto.CollectorResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse'
         "404":
           description: Collector not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "503":
           description: Collector management not available
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get specific collector status
       tags:
       - Collectors
@@ -3619,19 +3619,19 @@ paths:
         "200":
           description: Collector disabled
           schema:
-            $ref: '#/definitions/dto.CollectorResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "404":
           description: Collector not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "503":
           description: Collector management not available
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Disable collector
       tags:
       - Collectors
@@ -3650,19 +3650,19 @@ paths:
         "200":
           description: Collector enabled
           schema:
-            $ref: '#/definitions/dto.CollectorResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "404":
           description: Collector not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "503":
           description: Collector management not available
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Enable collector
       tags:
       - Collectors
@@ -3682,26 +3682,26 @@ paths:
         name: interval
         required: true
         schema:
-          $ref: '#/definitions/dto.CollectorIntervalRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorIntervalRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Interval updated
           schema:
-            $ref: '#/definitions/dto.CollectorResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "404":
           description: Collector not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "503":
           description: Collector management not available
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Update collector interval
       tags:
       - Collectors
@@ -3715,7 +3715,7 @@ paths:
         "200":
           description: Collectors status
           schema:
-            $ref: '#/definitions/dto.CollectorsStatusResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorsStatusResponse'
       summary: Get all collectors status
       tags:
       - Collectors
@@ -3730,22 +3730,22 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.CPUGovernorRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUGovernorRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Governor set
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to set governor
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Set CPU scaling governor
       tags:
       - CPU
@@ -3759,7 +3759,7 @@ paths:
           description: List of disks
           schema:
             items:
-              $ref: '#/definitions/dto.DiskInfo'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskInfo'
             type: array
       summary: Get all disks
       tags:
@@ -3780,11 +3780,11 @@ paths:
         "200":
           description: Disk information
           schema:
-            $ref: '#/definitions/dto.DiskInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskInfo'
         "404":
           description: Disk not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get specific disk
       tags:
       - Disks
@@ -3798,7 +3798,7 @@ paths:
           description: List of containers
           schema:
             items:
-              $ref: '#/definitions/dto.ContainerInfo'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerInfo'
             type: array
       summary: Get all Docker containers
       tags:
@@ -3819,11 +3819,11 @@ paths:
         "200":
           description: Container information
           schema:
-            $ref: '#/definitions/dto.ContainerInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerInfo'
         "404":
           description: Container not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get specific Docker container
       tags:
       - Docker
@@ -3843,15 +3843,15 @@ paths:
         "200":
           description: Container update status
           schema:
-            $ref: '#/definitions/dto.ContainerUpdateInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateInfo'
         "400":
           description: Invalid container reference
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to check update
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Check a specific container for updates
       tags:
       - Docker
@@ -3883,15 +3883,15 @@ paths:
         "200":
           description: Container logs
           schema:
-            $ref: '#/definitions/dto.ContainerLogs'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerLogs'
         "400":
           description: Invalid container reference
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to get logs
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get Docker container logs
       tags:
       - Docker
@@ -3910,15 +3910,15 @@ paths:
         "200":
           description: Container paused
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid container ID
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to pause container
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Pause Docker container
       tags:
       - Docker
@@ -3937,15 +3937,15 @@ paths:
         "200":
           description: Container restarted
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid container ID
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to restart container
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Restart Docker container
       tags:
       - Docker
@@ -3964,15 +3964,15 @@ paths:
         "200":
           description: Container size information
           schema:
-            $ref: '#/definitions/dto.ContainerSizeInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerSizeInfo'
         "400":
           description: Invalid container reference
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to get container size
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get container size
       tags:
       - Docker
@@ -3991,15 +3991,15 @@ paths:
         "200":
           description: Container started
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid container ID
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to start container
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Start Docker container
       tags:
       - Docker
@@ -4018,15 +4018,15 @@ paths:
         "200":
           description: Container stopped
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid container ID
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to stop container
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Stop Docker container
       tags:
       - Docker
@@ -4045,15 +4045,15 @@ paths:
         "200":
           description: Container unpaused
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid container ID
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to unpause container
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Unpause Docker container
       tags:
       - Docker
@@ -4072,15 +4072,15 @@ paths:
         "200":
           description: Container update result
           schema:
-            $ref: '#/definitions/dto.ContainerUpdateResult'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateResult'
         "400":
           description: Invalid container reference
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to update container
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Update a specific container
       tags:
       - Docker
@@ -4094,11 +4094,11 @@ paths:
         "200":
           description: Aggregate stats
           schema:
-            $ref: '#/definitions/dto.DockerAggregateStats'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DockerAggregateStats'
         "500":
           description: Internal error
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get Docker aggregate stats
       tags:
       - Docker
@@ -4112,11 +4112,11 @@ paths:
         "200":
           description: Bulk update results
           schema:
-            $ref: '#/definitions/dto.ContainerBulkUpdateResult'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerBulkUpdateResult'
         "500":
           description: Failed to update containers
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Update all containers
       tags:
       - Docker
@@ -4129,11 +4129,11 @@ paths:
         "200":
           description: Container update status
           schema:
-            $ref: '#/definitions/dto.ContainerUpdatesResult'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdatesResult'
         "500":
           description: Failed to check updates
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Check all containers for updates
       tags:
       - Docker
@@ -4146,7 +4146,7 @@ paths:
         "200":
           description: Fan control status
           schema:
-            $ref: '#/definitions/dto.FanControlStatus'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlStatus'
       summary: Get fan control status
       tags:
       - Fans
@@ -4162,22 +4162,22 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.FanControlConfig'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlConfig'
       produces:
       - application/json
       responses:
         "200":
           description: Configuration updated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to update configuration
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Update fan control configuration
       tags:
       - Fans
@@ -4190,11 +4190,11 @@ paths:
         "200":
           description: Defaults restored
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to restore defaults
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Restore fan defaults
       tags:
       - Fans
@@ -4209,22 +4209,22 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.FanModeRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanModeRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Mode set
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to set mode
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Set fan control mode
       tags:
       - Fans
@@ -4239,22 +4239,22 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.FanProfileRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfileRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Profile assigned
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to assign profile
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Assign fan profile
       tags:
       - Fans
@@ -4269,22 +4269,22 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.FanProfileCreateRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfileCreateRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Profile created
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to create profile
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Create fan profile
       tags:
       - Fans
@@ -4300,22 +4300,22 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.FanSpeedRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanSpeedRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Speed set
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to set speed
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Set fan speed
       tags:
       - Fans
@@ -4329,7 +4329,7 @@ paths:
           description: List of GPU metrics
           schema:
             items:
-              $ref: '#/definitions/dto.GPUMetrics'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.GPUMetrics'
             type: array
       summary: Get GPU metrics
       tags:
@@ -4343,7 +4343,7 @@ paths:
         "200":
           description: Baseboard information
           schema:
-            $ref: '#/definitions/dto.BaseboardInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BaseboardInfo'
         "404":
           description: Baseboard info not available
           schema:
@@ -4362,7 +4362,7 @@ paths:
         "200":
           description: BIOS information
           schema:
-            $ref: '#/definitions/dto.BIOSInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BIOSInfo'
         "404":
           description: BIOS info not available
           schema:
@@ -4382,7 +4382,7 @@ paths:
           description: CPU cache information
           schema:
             items:
-              $ref: '#/definitions/dto.CPUCacheInfo'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUCacheInfo'
             type: array
         "404":
           description: Cache info not available
@@ -4402,7 +4402,7 @@ paths:
         "200":
           description: CPU information
           schema:
-            $ref: '#/definitions/dto.CPUHardwareInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUHardwareInfo'
         "404":
           description: CPU info not available
           schema:
@@ -4422,7 +4422,7 @@ paths:
         "200":
           description: Hardware information
           schema:
-            $ref: '#/definitions/dto.HardwareInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HardwareInfo'
       summary: Get full hardware information
       tags:
       - Hardware
@@ -4435,7 +4435,7 @@ paths:
         "200":
           description: Memory array information
           schema:
-            $ref: '#/definitions/dto.MemoryArrayInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryArrayInfo'
         "404":
           description: Memory array info not available
           schema:
@@ -4455,7 +4455,7 @@ paths:
           description: Memory device information
           schema:
             items:
-              $ref: '#/definitions/dto.MemoryDeviceInfo'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryDeviceInfo'
             type: array
         "404":
           description: Memory device info not available
@@ -4491,7 +4491,7 @@ paths:
           description: List of health checks
           schema:
             items:
-              $ref: '#/definitions/dto.HealthCheck'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck'
             type: array
       summary: List health checks
       tags:
@@ -4506,18 +4506,18 @@ paths:
         name: check
         required: true
         schema:
-          $ref: '#/definitions/dto.HealthCheck'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Create health check
       tags:
       - HealthChecks
@@ -4536,11 +4536,11 @@ paths:
         "200":
           description: Deleted
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "404":
           description: Not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Delete health check
       tags:
       - HealthChecks
@@ -4558,11 +4558,11 @@ paths:
         "200":
           description: Health check details
           schema:
-            $ref: '#/definitions/dto.HealthCheck'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck'
         "404":
           description: Health check not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get health check
       tags:
       - HealthChecks
@@ -4581,22 +4581,22 @@ paths:
         name: check
         required: true
         schema:
-          $ref: '#/definitions/dto.HealthCheck'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck'
       produces:
       - application/json
       responses:
         "200":
           description: Updated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "404":
           description: Not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Update health check
       tags:
       - HealthChecks
@@ -4615,11 +4615,11 @@ paths:
         "200":
           description: Check result
           schema:
-            $ref: '#/definitions/dto.HealthCheckStatus'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckStatus'
         "404":
           description: Not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Run health check
       tags:
       - HealthChecks
@@ -4632,7 +4632,7 @@ paths:
         "200":
           description: Health check events
           schema:
-            $ref: '#/definitions/dto.HealthCheckHistoryResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckHistoryResponse'
       summary: Get health check history
       tags:
       - HealthChecks
@@ -4645,7 +4645,7 @@ paths:
         "200":
           description: Health check statuses
           schema:
-            $ref: '#/definitions/dto.HealthChecksStatusResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthChecksStatusResponse'
       summary: Get health check statuses
       tags:
       - HealthChecks
@@ -4671,7 +4671,7 @@ paths:
         "200":
           description: Log content or list
           schema:
-            $ref: '#/definitions/dto.LogFileContent'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.LogFileContent'
         "500":
           description: Error reading logs
           schema:
@@ -4704,19 +4704,19 @@ paths:
         "200":
           description: Log content
           schema:
-            $ref: '#/definitions/dto.LogFileContent'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.LogFileContent'
         "400":
           description: Invalid filename
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "404":
           description: Log file not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Error reading log
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get specific log file
       tags:
       - Logs
@@ -4744,22 +4744,22 @@ paths:
         name: message
         required: true
         schema:
-          $ref: '#/definitions/dto.MQTTPublishRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTPublishRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Message published
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to publish
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Publish custom MQTT message
       tags:
       - MQTT
@@ -4772,7 +4772,7 @@ paths:
         "200":
           description: MQTT status
           schema:
-            $ref: '#/definitions/dto.MQTTStatus'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTStatus'
       summary: Get MQTT status
       tags:
       - MQTT
@@ -4785,11 +4785,11 @@ paths:
         "200":
           description: Test successful
           schema:
-            $ref: '#/definitions/dto.MQTTTestResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTTestResponse'
         "500":
           description: Test failed
           schema:
-            $ref: '#/definitions/dto.MQTTTestResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTTestResponse'
       summary: Test MQTT connection
       tags:
       - MQTT
@@ -4803,7 +4803,7 @@ paths:
           description: List of network interfaces
           schema:
             items:
-              $ref: '#/definitions/dto.NetworkInfo'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkInfo'
             type: array
       summary: Get network interfaces
       tags:
@@ -4823,11 +4823,11 @@ paths:
         "200":
           description: Network configuration
           schema:
-            $ref: '#/definitions/dto.NetworkConfig'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkConfig'
         "404":
           description: Interface not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get network interface configuration
       tags:
       - Configuration
@@ -4841,7 +4841,7 @@ paths:
         "200":
           description: Network access URLs
           schema:
-            $ref: '#/definitions/dto.NetworkAccessURLs'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkAccessURLs'
       summary: Get network access URLs
       tags:
       - Network
@@ -4860,7 +4860,7 @@ paths:
         "200":
           description: Notifications with overview
           schema:
-            $ref: '#/definitions/dto.NotificationList'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationList'
       summary: Get all notifications
       tags:
       - Notifications
@@ -4955,7 +4955,7 @@ paths:
         "200":
           description: Notification details
           schema:
-            $ref: '#/definitions/dto.Notification'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Notification'
         "404":
           description: Notification not found
           schema:
@@ -5063,7 +5063,7 @@ paths:
         "200":
           description: Notification counts by category
           schema:
-            $ref: '#/definitions/dto.NotificationOverview'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationOverview'
       summary: Get notification counts
       tags:
       - Notifications
@@ -5090,7 +5090,7 @@ paths:
         "200":
           description: NUT status
           schema:
-            $ref: '#/definitions/dto.NUTResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTResponse'
       summary: Get NUT status
       tags:
       - UPS
@@ -5104,11 +5104,11 @@ paths:
         "200":
           description: List of installed plugins
           schema:
-            $ref: '#/definitions/dto.PluginList'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginList'
         "500":
           description: Failed to get plugins
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get installed plugins list
       tags:
       - Plugins
@@ -5127,15 +5127,15 @@ paths:
         "200":
           description: Plugin updated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid plugin name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to update plugin
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Update a specific plugin
       tags:
       - Plugins
@@ -5149,12 +5149,12 @@ paths:
           description: Plugins with available updates
           schema:
             items:
-              $ref: '#/definitions/dto.PluginInfo'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginInfo'
             type: array
         "500":
           description: Failed to check updates
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Check for plugin updates
       tags:
       - Plugins
@@ -5167,11 +5167,11 @@ paths:
         "200":
           description: Plugin update results
           schema:
-            $ref: '#/definitions/dto.PluginBulkUpdateResult'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginBulkUpdateResult'
         "500":
           description: Failed to update plugins
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Update all plugins
       tags:
       - Plugins
@@ -5193,11 +5193,11 @@ paths:
         "200":
           description: Process list
           schema:
-            $ref: '#/definitions/dto.ProcessList'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ProcessList'
         "500":
           description: Failed to list processes
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: List running processes
       tags:
       - System
@@ -5210,7 +5210,7 @@ paths:
         "200":
           description: Registration information
           schema:
-            $ref: '#/definitions/dto.Registration'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Registration'
       summary: Get registration status
       tags:
       - System
@@ -5249,15 +5249,15 @@ paths:
         "200":
           description: Service action completed
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid service or action
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to execute action
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Control an Unraid service
       tags:
       - Services
@@ -5271,11 +5271,11 @@ paths:
         "200":
           description: Extended disk settings with temp thresholds
           schema:
-            $ref: '#/definitions/dto.DiskSettingsExtended'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskSettingsExtended'
         "500":
           description: Failed to get settings
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get extended disk settings with temperature thresholds
       tags:
       - Configuration
@@ -5288,11 +5288,11 @@ paths:
         "200":
           description: Disk settings
           schema:
-            $ref: '#/definitions/dto.DiskSettings'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskSettings'
         "500":
           description: Failed to get settings
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get disk settings
       tags:
       - Configuration
@@ -5305,11 +5305,11 @@ paths:
         "200":
           description: Docker settings
           schema:
-            $ref: '#/definitions/dto.DockerSettings'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DockerSettings'
         "500":
           description: Failed to get settings
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get Docker settings
       tags:
       - Configuration
@@ -5322,11 +5322,11 @@ paths:
         "200":
           description: Mover settings and status
           schema:
-            $ref: '#/definitions/dto.MoverSettings'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MoverSettings'
         "500":
           description: Failed to get settings
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get mover schedule and status
       tags:
       - Configuration
@@ -5340,11 +5340,11 @@ paths:
         "200":
           description: Network services status
           schema:
-            $ref: '#/definitions/dto.NetworkServicesStatus'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServicesStatus'
         "500":
           description: Failed to get network services status
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get network services status
       tags:
       - Configuration
@@ -5358,11 +5358,11 @@ paths:
         "200":
           description: Service enabled status
           schema:
-            $ref: '#/definitions/dto.ServiceStatus'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ServiceStatus'
         "500":
           description: Failed to get status
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get Docker and VM service enabled status
       tags:
       - Configuration
@@ -5375,11 +5375,11 @@ paths:
         "200":
           description: System settings
           schema:
-            $ref: '#/definitions/dto.SystemSettings'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemSettings'
         "500":
           description: Failed to get settings
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get system settings
       tags:
       - Configuration
@@ -5393,22 +5393,22 @@ paths:
         name: settings
         required: true
         schema:
-          $ref: '#/definitions/dto.SystemSettings'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemSettings'
       produces:
       - application/json
       responses:
         "200":
           description: Settings updated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to update
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Update system settings
       tags:
       - Configuration
@@ -5421,11 +5421,11 @@ paths:
         "200":
           description: VM settings
           schema:
-            $ref: '#/definitions/dto.VMSettings'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSettings'
         "500":
           description: Failed to get settings
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get VM settings
       tags:
       - Configuration
@@ -5439,7 +5439,7 @@ paths:
           description: List of shares
           schema:
             items:
-              $ref: '#/definitions/dto.ShareInfo'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareInfo'
             type: array
       summary: Get all shares
       tags:
@@ -5459,15 +5459,15 @@ paths:
         "200":
           description: Share configuration
           schema:
-            $ref: '#/definitions/dto.ShareConfig'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareConfig'
         "400":
           description: Invalid share name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "404":
           description: Share not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get share configuration
       tags:
       - Configuration
@@ -5486,22 +5486,22 @@ paths:
         name: config
         required: true
         schema:
-          $ref: '#/definitions/dto.ShareConfig'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareConfig'
       produces:
       - application/json
       responses:
         "200":
           description: Configuration updated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to update
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Update share configuration
       tags:
       - Configuration
@@ -5515,7 +5515,7 @@ paths:
         "200":
           description: System information
           schema:
-            $ref: '#/definitions/dto.SystemInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemInfo'
       summary: Get system information
       tags:
       - System
@@ -5528,11 +5528,11 @@ paths:
         "200":
           description: Flash drive health information
           schema:
-            $ref: '#/definitions/dto.FlashDriveHealth'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FlashDriveHealth'
         "500":
           description: Failed to get flash health
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get USB flash drive health
       tags:
       - System
@@ -5545,11 +5545,11 @@ paths:
         "200":
           description: Reboot initiated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to initiate reboot
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Reboot system
       tags:
       - System
@@ -5562,11 +5562,11 @@ paths:
         "200":
           description: Shutdown initiated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to initiate shutdown
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Shutdown system
       tags:
       - System
@@ -5580,12 +5580,12 @@ paths:
           description: Temperature readings
           schema:
             items:
-              $ref: '#/definitions/dto.TemperatureReading'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TemperatureReading'
             type: array
         "500":
           description: Internal error
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get all temperature sensors
       tags:
       - System
@@ -5599,11 +5599,11 @@ paths:
         "200":
           description: Tuning parameters
           schema:
-            $ref: '#/definitions/dto.TuningInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TuningInfo'
         "500":
           description: Internal error
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get system tuning parameters
       tags:
       - Tuning
@@ -5618,26 +5618,26 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.DiskCacheRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskCacheRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Disk cache updated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Internal server error applying tuning
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "503":
           description: Tuning controller not available
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Set disk cache parameters
       tags:
       - Tuning
@@ -5652,26 +5652,26 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.InotifyLimitsRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.InotifyLimitsRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Inotify limits updated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Internal server error applying tuning
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "503":
           description: Tuning controller not available
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Set inotify limits
       tags:
       - Tuning
@@ -5686,26 +5686,26 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/dto.TurboBoostRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TurboBoostRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Turbo boost set
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid request
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Internal server error applying tuning
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "503":
           description: Tuning controller not available
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Set turbo boost state
       tags:
       - Tuning
@@ -5718,7 +5718,7 @@ paths:
         "200":
           description: Unassigned devices and remote shares
           schema:
-            $ref: '#/definitions/dto.UnassignedDeviceList'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedDeviceList'
       summary: Get all unassigned devices
       tags:
       - Unassigned Devices
@@ -5759,11 +5759,11 @@ paths:
         "200":
           description: Update availability status
           schema:
-            $ref: '#/definitions/dto.UpdateStatus'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UpdateStatus'
         "500":
           description: Failed to get update status
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get update availability status
       tags:
       - Updates
@@ -5776,7 +5776,7 @@ paths:
         "200":
           description: UPS status
           schema:
-            $ref: '#/definitions/dto.UPSStatus'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UPSStatus'
       summary: Get UPS status
       tags:
       - UPS
@@ -5790,12 +5790,12 @@ paths:
           description: List of user scripts
           schema:
             items:
-              $ref: '#/definitions/dto.UserScriptInfo'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptInfo'
             type: array
         "500":
           description: Failed to list scripts
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get user scripts
       tags:
       - User Scripts
@@ -5814,18 +5814,18 @@ paths:
         in: body
         name: options
         schema:
-          $ref: '#/definitions/dto.UserScriptExecuteRequest'
+          $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteRequest'
       produces:
       - application/json
       responses:
         "200":
           description: Execution result
           schema:
-            $ref: '#/definitions/dto.UserScriptExecuteResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteResponse'
         "500":
           description: Failed to execute
           schema:
-            $ref: '#/definitions/dto.UserScriptExecuteResponse'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteResponse'
       summary: Execute user script
       tags:
       - User Scripts
@@ -5839,7 +5839,7 @@ paths:
           description: List of VMs
           schema:
             items:
-              $ref: '#/definitions/dto.VMInfo'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMInfo'
             type: array
       summary: Get all VMs
       tags:
@@ -5860,11 +5860,11 @@ paths:
         "200":
           description: VM information
           schema:
-            $ref: '#/definitions/dto.VMInfo'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMInfo'
         "404":
           description: VM not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get specific VM
       tags:
       - VMs
@@ -5888,15 +5888,15 @@ paths:
         "200":
           description: VM cloned successfully
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid parameters
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to clone VM
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Clone a virtual machine
       tags:
       - VMs
@@ -5916,15 +5916,15 @@ paths:
         "200":
           description: VM force stopped
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid VM name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to force stop VM
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Force stop VM
       tags:
       - VMs
@@ -5943,15 +5943,15 @@ paths:
         "200":
           description: VM hibernated
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid VM name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to hibernate VM
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Hibernate VM
       tags:
       - VMs
@@ -5970,15 +5970,15 @@ paths:
         "200":
           description: VM paused
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid VM name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to pause VM
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Pause VM
       tags:
       - VMs
@@ -5997,15 +5997,15 @@ paths:
         "200":
           description: VM restarted
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid VM name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to restart VM
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Restart VM
       tags:
       - VMs
@@ -6024,15 +6024,15 @@ paths:
         "200":
           description: VM resumed
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid VM name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to resume VM
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Resume VM
       tags:
       - VMs
@@ -6060,15 +6060,15 @@ paths:
         "200":
           description: Snapshot created
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid parameters
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to create snapshot
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Create a VM snapshot
       tags:
       - VMs
@@ -6087,15 +6087,15 @@ paths:
         "200":
           description: Snapshot list
           schema:
-            $ref: '#/definitions/dto.VMSnapshotList'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSnapshotList'
         "400":
           description: Invalid VM name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to list snapshots
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: List VM snapshots
       tags:
       - VMs
@@ -6119,15 +6119,15 @@ paths:
         "200":
           description: Snapshot deleted
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid parameters
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to delete snapshot
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Delete a VM snapshot
       tags:
       - VMs
@@ -6152,15 +6152,15 @@ paths:
         "200":
           description: Snapshot restored
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid parameters
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to restore snapshot
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Restore a VM snapshot
       tags:
       - VMs
@@ -6179,15 +6179,15 @@ paths:
         "200":
           description: VM started
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid VM name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to start VM
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Start VM
       tags:
       - VMs
@@ -6206,15 +6206,15 @@ paths:
         "200":
           description: VM stopped
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "400":
           description: Invalid VM name
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
         "500":
           description: Failed to stop VM
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Stop VM
       tags:
       - VMs
@@ -6259,7 +6259,7 @@ paths:
         "200":
           description: ZFS ARC statistics
           schema:
-            $ref: '#/definitions/dto.ZFSARCStats'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSARCStats'
       summary: Get ZFS ARC statistics
       tags:
       - ZFS
@@ -6273,7 +6273,7 @@ paths:
           description: List of ZFS datasets
           schema:
             items:
-              $ref: '#/definitions/dto.ZFSDataset'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSDataset'
             type: array
       summary: Get all ZFS datasets
       tags:
@@ -6288,7 +6288,7 @@ paths:
           description: List of ZFS pools
           schema:
             items:
-              $ref: '#/definitions/dto.ZFSPool'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSPool'
             type: array
       summary: Get all ZFS pools
       tags:
@@ -6308,11 +6308,11 @@ paths:
         "200":
           description: ZFS pool information
           schema:
-            $ref: '#/definitions/dto.ZFSPool'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSPool'
         "404":
           description: Pool not found
           schema:
-            $ref: '#/definitions/dto.Response'
+            $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response'
       summary: Get specific ZFS pool
       tags:
       - ZFS
@@ -6326,7 +6326,7 @@ paths:
           description: List of ZFS snapshots
           schema:
             items:
-              $ref: '#/definitions/dto.ZFSSnapshot'
+              $ref: '#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSSnapshot'
             type: array
       summary: Get all ZFS snapshots
       tags:

@@ -38,7 +38,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.AlertStatus"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertStatus"
                             }
                         }
                     }
@@ -59,7 +59,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Alert event history",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlertHistoryResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertHistoryResponse"
                         }
                     }
                 }
@@ -81,7 +81,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.AlertRule"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule"
                             }
                         }
                     }
@@ -106,7 +106,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.AlertRule"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule"
                         }
                     }
                 ],
@@ -114,7 +114,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Rule created successfully",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
@@ -161,7 +161,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Alert rule",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlertRule"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule"
                         }
                     },
                     "404": {
@@ -201,7 +201,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.AlertRule"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule"
                         }
                     }
                 ],
@@ -209,7 +209,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Rule updated successfully",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
@@ -254,7 +254,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Rule deleted successfully",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "404": {
@@ -283,7 +283,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Alert statuses",
                         "schema": {
-                            "$ref": "#/definitions/dto.AlertsStatusResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertsStatusResponse"
                         }
                     }
                 }
@@ -303,7 +303,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Array status",
                         "schema": {
-                            "$ref": "#/definitions/dto.ArrayStatus"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ArrayStatus"
                         }
                     }
                 }
@@ -323,13 +323,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Parity check history",
                         "schema": {
-                            "$ref": "#/definitions/dto.ParityCheckHistory"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParityCheckHistory"
                         }
                     },
                     "500": {
                         "description": "Failed to get parity check history",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -349,13 +349,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Parity check paused",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to pause parity check",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -375,13 +375,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Parity check resumed",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to resume parity check",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -401,13 +401,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Parity check schedule",
                         "schema": {
-                            "$ref": "#/definitions/dto.ParitySchedule"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParitySchedule"
                         }
                     },
                     "500": {
                         "description": "Failed to get schedule",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -435,13 +435,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Parity check started",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to start parity check",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -461,13 +461,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Parity check stopped",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to stop parity check",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -487,13 +487,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Array started",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to start array",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -513,13 +513,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Array stopped",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to stop array",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -539,7 +539,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Collectors status",
                         "schema": {
-                            "$ref": "#/definitions/dto.CollectorsStatusResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorsStatusResponse"
                         }
                     }
                 }
@@ -568,19 +568,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Collector status",
                         "schema": {
-                            "$ref": "#/definitions/dto.CollectorResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse"
                         }
                     },
                     "404": {
                         "description": "Collector not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "503": {
                         "description": "Collector management not available",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -609,25 +609,25 @@ const docTemplate = `{
                     "200": {
                         "description": "Collector disabled",
                         "schema": {
-                            "$ref": "#/definitions/dto.CollectorResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "404": {
                         "description": "Collector not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "503": {
                         "description": "Collector management not available",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -656,25 +656,25 @@ const docTemplate = `{
                     "200": {
                         "description": "Collector enabled",
                         "schema": {
-                            "$ref": "#/definitions/dto.CollectorResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "404": {
                         "description": "Collector not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "503": {
                         "description": "Collector management not available",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -707,7 +707,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.CollectorIntervalRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorIntervalRequest"
                         }
                     }
                 ],
@@ -715,25 +715,25 @@ const docTemplate = `{
                     "200": {
                         "description": "Interval updated",
                         "schema": {
-                            "$ref": "#/definitions/dto.CollectorResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "404": {
                         "description": "Collector not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "503": {
                         "description": "Collector management not available",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -759,7 +759,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.CPUGovernorRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUGovernorRequest"
                         }
                     }
                 ],
@@ -767,19 +767,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Governor set",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to set governor",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -801,7 +801,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.DiskInfo"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskInfo"
                             }
                         }
                     }
@@ -831,13 +831,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Disk information",
                         "schema": {
-                            "$ref": "#/definitions/dto.DiskInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskInfo"
                         }
                     },
                     "404": {
                         "description": "Disk not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -859,7 +859,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.ContainerInfo"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerInfo"
                             }
                         }
                     }
@@ -880,13 +880,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Aggregate stats",
                         "schema": {
-                            "$ref": "#/definitions/dto.DockerAggregateStats"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DockerAggregateStats"
                         }
                     },
                     "500": {
                         "description": "Internal error",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -906,13 +906,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Bulk update results",
                         "schema": {
-                            "$ref": "#/definitions/dto.ContainerBulkUpdateResult"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerBulkUpdateResult"
                         }
                     },
                     "500": {
                         "description": "Failed to update containers",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -932,13 +932,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Container update status",
                         "schema": {
-                            "$ref": "#/definitions/dto.ContainerUpdatesResult"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdatesResult"
                         }
                     },
                     "500": {
                         "description": "Failed to check updates",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -967,13 +967,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Container information",
                         "schema": {
-                            "$ref": "#/definitions/dto.ContainerInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerInfo"
                         }
                     },
                     "404": {
                         "description": "Container not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1002,19 +1002,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Container update status",
                         "schema": {
-                            "$ref": "#/definitions/dto.ContainerUpdateInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateInfo"
                         }
                     },
                     "400": {
                         "description": "Invalid container reference",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to check update",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1061,19 +1061,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Container logs",
                         "schema": {
-                            "$ref": "#/definitions/dto.ContainerLogs"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerLogs"
                         }
                     },
                     "400": {
                         "description": "Invalid container reference",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to get logs",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1102,19 +1102,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Container paused",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid container ID",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to pause container",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1143,19 +1143,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Container restarted",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid container ID",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to restart container",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1184,19 +1184,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Container size information",
                         "schema": {
-                            "$ref": "#/definitions/dto.ContainerSizeInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerSizeInfo"
                         }
                     },
                     "400": {
                         "description": "Invalid container reference",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to get container size",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1225,19 +1225,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Container started",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid container ID",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to start container",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1266,19 +1266,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Container stopped",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid container ID",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to stop container",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1307,19 +1307,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Container unpaused",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid container ID",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to unpause container",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1348,19 +1348,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Container update result",
                         "schema": {
-                            "$ref": "#/definitions/dto.ContainerUpdateResult"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateResult"
                         }
                     },
                     "400": {
                         "description": "Invalid container reference",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to update container",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1380,7 +1380,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Fan control status",
                         "schema": {
-                            "$ref": "#/definitions/dto.FanControlStatus"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlStatus"
                         }
                     }
                 }
@@ -1406,7 +1406,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.FanControlConfig"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlConfig"
                         }
                     }
                 ],
@@ -1414,19 +1414,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Configuration updated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to update configuration",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1446,13 +1446,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Defaults restored",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to restore defaults",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1478,7 +1478,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.FanModeRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanModeRequest"
                         }
                     }
                 ],
@@ -1486,19 +1486,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Mode set",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to set mode",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1524,7 +1524,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.FanProfileRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfileRequest"
                         }
                     }
                 ],
@@ -1532,19 +1532,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Profile assigned",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to assign profile",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1570,7 +1570,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.FanProfileCreateRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfileCreateRequest"
                         }
                     }
                 ],
@@ -1578,19 +1578,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Profile created",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to create profile",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1616,7 +1616,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.FanSpeedRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanSpeedRequest"
                         }
                     }
                 ],
@@ -1624,19 +1624,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Speed set",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to set speed",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1658,7 +1658,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.GPUMetrics"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.GPUMetrics"
                             }
                         }
                     }
@@ -1679,7 +1679,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Baseboard information",
                         "schema": {
-                            "$ref": "#/definitions/dto.BaseboardInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BaseboardInfo"
                         }
                     },
                     "404": {
@@ -1708,7 +1708,7 @@ const docTemplate = `{
                     "200": {
                         "description": "BIOS information",
                         "schema": {
-                            "$ref": "#/definitions/dto.BIOSInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BIOSInfo"
                         }
                     },
                     "404": {
@@ -1739,7 +1739,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.CPUCacheInfo"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUCacheInfo"
                             }
                         }
                     },
@@ -1769,7 +1769,7 @@ const docTemplate = `{
                     "200": {
                         "description": "CPU information",
                         "schema": {
-                            "$ref": "#/definitions/dto.CPUHardwareInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUHardwareInfo"
                         }
                     },
                     "404": {
@@ -1798,7 +1798,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Hardware information",
                         "schema": {
-                            "$ref": "#/definitions/dto.HardwareInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HardwareInfo"
                         }
                     }
                 }
@@ -1818,7 +1818,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Memory array information",
                         "schema": {
-                            "$ref": "#/definitions/dto.MemoryArrayInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryArrayInfo"
                         }
                     },
                     "404": {
@@ -1849,7 +1849,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.MemoryDeviceInfo"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryDeviceInfo"
                             }
                         }
                     },
@@ -1904,7 +1904,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.HealthCheck"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck"
                             }
                         }
                     }
@@ -1929,7 +1929,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.HealthCheck"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck"
                         }
                     }
                 ],
@@ -1937,13 +1937,13 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -1963,7 +1963,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Health check events",
                         "schema": {
-                            "$ref": "#/definitions/dto.HealthCheckHistoryResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckHistoryResponse"
                         }
                     }
                 }
@@ -1983,7 +1983,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Health check statuses",
                         "schema": {
-                            "$ref": "#/definitions/dto.HealthChecksStatusResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthChecksStatusResponse"
                         }
                     }
                 }
@@ -2012,13 +2012,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Health check details",
                         "schema": {
-                            "$ref": "#/definitions/dto.HealthCheck"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck"
                         }
                     },
                     "404": {
                         "description": "Health check not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2049,7 +2049,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.HealthCheck"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck"
                         }
                     }
                 ],
@@ -2057,19 +2057,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Updated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "404": {
                         "description": "Not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2096,13 +2096,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Deleted",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "404": {
                         "description": "Not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2131,13 +2131,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Check result",
                         "schema": {
-                            "$ref": "#/definitions/dto.HealthCheckStatus"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckStatus"
                         }
                     },
                     "404": {
                         "description": "Not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2177,7 +2177,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Log content or list",
                         "schema": {
-                            "$ref": "#/definitions/dto.LogFileContent"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.LogFileContent"
                         }
                     },
                     "500": {
@@ -2227,25 +2227,25 @@ const docTemplate = `{
                     "200": {
                         "description": "Log content",
                         "schema": {
-                            "$ref": "#/definitions/dto.LogFileContent"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.LogFileContent"
                         }
                     },
                     "400": {
                         "description": "Invalid filename",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "404": {
                         "description": "Log file not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Error reading log",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2291,7 +2291,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.MQTTPublishRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTPublishRequest"
                         }
                     }
                 ],
@@ -2299,19 +2299,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Message published",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to publish",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2331,7 +2331,7 @@ const docTemplate = `{
                     "200": {
                         "description": "MQTT status",
                         "schema": {
-                            "$ref": "#/definitions/dto.MQTTStatus"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTStatus"
                         }
                     }
                 }
@@ -2351,13 +2351,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Test successful",
                         "schema": {
-                            "$ref": "#/definitions/dto.MQTTTestResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTTestResponse"
                         }
                     },
                     "500": {
                         "description": "Test failed",
                         "schema": {
-                            "$ref": "#/definitions/dto.MQTTTestResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTTestResponse"
                         }
                     }
                 }
@@ -2379,7 +2379,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.NetworkInfo"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkInfo"
                             }
                         }
                     }
@@ -2400,7 +2400,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Network access URLs",
                         "schema": {
-                            "$ref": "#/definitions/dto.NetworkAccessURLs"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkAccessURLs"
                         }
                     }
                 }
@@ -2429,13 +2429,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Network configuration",
                         "schema": {
-                            "$ref": "#/definitions/dto.NetworkConfig"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkConfig"
                         }
                     },
                     "404": {
                         "description": "Interface not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2463,7 +2463,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Notifications with overview",
                         "schema": {
-                            "$ref": "#/definitions/dto.NotificationList"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationList"
                         }
                     }
                 }
@@ -2606,7 +2606,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Notification counts by category",
                         "schema": {
-                            "$ref": "#/definitions/dto.NotificationOverview"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationOverview"
                         }
                     }
                 }
@@ -2656,7 +2656,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Notification details",
                         "schema": {
-                            "$ref": "#/definitions/dto.Notification"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Notification"
                         }
                     },
                     "404": {
@@ -2812,7 +2812,7 @@ const docTemplate = `{
                     "200": {
                         "description": "NUT status",
                         "schema": {
-                            "$ref": "#/definitions/dto.NUTResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTResponse"
                         }
                     }
                 }
@@ -2832,13 +2832,13 @@ const docTemplate = `{
                     "200": {
                         "description": "List of installed plugins",
                         "schema": {
-                            "$ref": "#/definitions/dto.PluginList"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginList"
                         }
                     },
                     "500": {
                         "description": "Failed to get plugins",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2860,14 +2860,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.PluginInfo"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginInfo"
                             }
                         }
                     },
                     "500": {
                         "description": "Failed to check updates",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2887,13 +2887,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Plugin update results",
                         "schema": {
-                            "$ref": "#/definitions/dto.PluginBulkUpdateResult"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginBulkUpdateResult"
                         }
                     },
                     "500": {
                         "description": "Failed to update plugins",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2922,19 +2922,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Plugin updated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid plugin name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to update plugin",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2968,13 +2968,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Process list",
                         "schema": {
-                            "$ref": "#/definitions/dto.ProcessList"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ProcessList"
                         }
                     },
                     "500": {
                         "description": "Failed to list processes",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -2994,7 +2994,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Registration information",
                         "schema": {
-                            "$ref": "#/definitions/dto.Registration"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Registration"
                         }
                     }
                 }
@@ -3051,19 +3051,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Service action completed",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid service or action",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to execute action",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3083,13 +3083,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Extended disk settings with temp thresholds",
                         "schema": {
-                            "$ref": "#/definitions/dto.DiskSettingsExtended"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskSettingsExtended"
                         }
                     },
                     "500": {
                         "description": "Failed to get settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3109,13 +3109,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Disk settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.DiskSettings"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskSettings"
                         }
                     },
                     "500": {
                         "description": "Failed to get settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3135,13 +3135,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Docker settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.DockerSettings"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DockerSettings"
                         }
                     },
                     "500": {
                         "description": "Failed to get settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3161,13 +3161,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Mover settings and status",
                         "schema": {
-                            "$ref": "#/definitions/dto.MoverSettings"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MoverSettings"
                         }
                     },
                     "500": {
                         "description": "Failed to get settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3187,13 +3187,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Network services status",
                         "schema": {
-                            "$ref": "#/definitions/dto.NetworkServicesStatus"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServicesStatus"
                         }
                     },
                     "500": {
                         "description": "Failed to get network services status",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3213,13 +3213,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Service enabled status",
                         "schema": {
-                            "$ref": "#/definitions/dto.ServiceStatus"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ServiceStatus"
                         }
                     },
                     "500": {
                         "description": "Failed to get status",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3239,13 +3239,13 @@ const docTemplate = `{
                     "200": {
                         "description": "System settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.SystemSettings"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemSettings"
                         }
                     },
                     "500": {
                         "description": "Failed to get settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3269,7 +3269,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.SystemSettings"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemSettings"
                         }
                     }
                 ],
@@ -3277,19 +3277,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Settings updated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to update",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3309,13 +3309,13 @@ const docTemplate = `{
                     "200": {
                         "description": "VM settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.VMSettings"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSettings"
                         }
                     },
                     "500": {
                         "description": "Failed to get settings",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3337,7 +3337,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.ShareInfo"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareInfo"
                             }
                         }
                     }
@@ -3367,19 +3367,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Share configuration",
                         "schema": {
-                            "$ref": "#/definitions/dto.ShareConfig"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareConfig"
                         }
                     },
                     "400": {
                         "description": "Invalid share name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "404": {
                         "description": "Share not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3410,7 +3410,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.ShareConfig"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareConfig"
                         }
                     }
                 ],
@@ -3418,19 +3418,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Configuration updated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to update",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3450,7 +3450,7 @@ const docTemplate = `{
                     "200": {
                         "description": "System information",
                         "schema": {
-                            "$ref": "#/definitions/dto.SystemInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemInfo"
                         }
                     }
                 }
@@ -3470,13 +3470,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Flash drive health information",
                         "schema": {
-                            "$ref": "#/definitions/dto.FlashDriveHealth"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FlashDriveHealth"
                         }
                     },
                     "500": {
                         "description": "Failed to get flash health",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3496,13 +3496,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Reboot initiated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to initiate reboot",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3522,13 +3522,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Shutdown initiated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to initiate shutdown",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3550,14 +3550,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.TemperatureReading"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TemperatureReading"
                             }
                         }
                     },
                     "500": {
                         "description": "Internal error",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3577,13 +3577,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Tuning parameters",
                         "schema": {
-                            "$ref": "#/definitions/dto.TuningInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TuningInfo"
                         }
                     },
                     "500": {
                         "description": "Internal error",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3609,7 +3609,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.DiskCacheRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskCacheRequest"
                         }
                     }
                 ],
@@ -3617,25 +3617,25 @@ const docTemplate = `{
                     "200": {
                         "description": "Disk cache updated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Internal server error applying tuning",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "503": {
                         "description": "Tuning controller not available",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3661,7 +3661,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.InotifyLimitsRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.InotifyLimitsRequest"
                         }
                     }
                 ],
@@ -3669,25 +3669,25 @@ const docTemplate = `{
                     "200": {
                         "description": "Inotify limits updated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Internal server error applying tuning",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "503": {
                         "description": "Tuning controller not available",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3713,7 +3713,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dto.TurboBoostRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TurboBoostRequest"
                         }
                     }
                 ],
@@ -3721,25 +3721,25 @@ const docTemplate = `{
                     "200": {
                         "description": "Turbo boost set",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid request",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Internal server error applying tuning",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "503": {
                         "description": "Tuning controller not available",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3759,7 +3759,7 @@ const docTemplate = `{
                     "200": {
                         "description": "Unassigned devices and remote shares",
                         "schema": {
-                            "$ref": "#/definitions/dto.UnassignedDeviceList"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedDeviceList"
                         }
                     }
                 }
@@ -3821,13 +3821,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Update availability status",
                         "schema": {
-                            "$ref": "#/definitions/dto.UpdateStatus"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UpdateStatus"
                         }
                     },
                     "500": {
                         "description": "Failed to get update status",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3847,7 +3847,7 @@ const docTemplate = `{
                     "200": {
                         "description": "UPS status",
                         "schema": {
-                            "$ref": "#/definitions/dto.UPSStatus"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UPSStatus"
                         }
                     }
                 }
@@ -3869,14 +3869,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.UserScriptInfo"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptInfo"
                             }
                         }
                     },
                     "500": {
                         "description": "Failed to list scripts",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -3908,7 +3908,7 @@ const docTemplate = `{
                         "name": "options",
                         "in": "body",
                         "schema": {
-                            "$ref": "#/definitions/dto.UserScriptExecuteRequest"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteRequest"
                         }
                     }
                 ],
@@ -3916,13 +3916,13 @@ const docTemplate = `{
                     "200": {
                         "description": "Execution result",
                         "schema": {
-                            "$ref": "#/definitions/dto.UserScriptExecuteResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteResponse"
                         }
                     },
                     "500": {
                         "description": "Failed to execute",
                         "schema": {
-                            "$ref": "#/definitions/dto.UserScriptExecuteResponse"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteResponse"
                         }
                     }
                 }
@@ -3944,7 +3944,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.VMInfo"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMInfo"
                             }
                         }
                     }
@@ -3974,13 +3974,13 @@ const docTemplate = `{
                     "200": {
                         "description": "VM information",
                         "schema": {
-                            "$ref": "#/definitions/dto.VMInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMInfo"
                         }
                     },
                     "404": {
                         "description": "VM not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4016,19 +4016,19 @@ const docTemplate = `{
                     "200": {
                         "description": "VM cloned successfully",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid parameters",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to clone VM",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4057,19 +4057,19 @@ const docTemplate = `{
                     "200": {
                         "description": "VM force stopped",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid VM name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to force stop VM",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4098,19 +4098,19 @@ const docTemplate = `{
                     "200": {
                         "description": "VM hibernated",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid VM name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to hibernate VM",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4139,19 +4139,19 @@ const docTemplate = `{
                     "200": {
                         "description": "VM paused",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid VM name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to pause VM",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4180,19 +4180,19 @@ const docTemplate = `{
                     "200": {
                         "description": "VM restarted",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid VM name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to restart VM",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4221,19 +4221,19 @@ const docTemplate = `{
                     "200": {
                         "description": "VM resumed",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid VM name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to resume VM",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4275,19 +4275,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Snapshot created",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid parameters",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to create snapshot",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4316,19 +4316,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Snapshot list",
                         "schema": {
-                            "$ref": "#/definitions/dto.VMSnapshotList"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSnapshotList"
                         }
                     },
                     "400": {
                         "description": "Invalid VM name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to list snapshots",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4364,19 +4364,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Snapshot deleted",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid parameters",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to delete snapshot",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4412,19 +4412,19 @@ const docTemplate = `{
                     "200": {
                         "description": "Snapshot restored",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid parameters",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to restore snapshot",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4453,19 +4453,19 @@ const docTemplate = `{
                     "200": {
                         "description": "VM started",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid VM name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to start VM",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4494,19 +4494,19 @@ const docTemplate = `{
                     "200": {
                         "description": "VM stopped",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "400": {
                         "description": "Invalid VM name",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     },
                     "500": {
                         "description": "Failed to stop VM",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4536,7 +4536,7 @@ const docTemplate = `{
                     "200": {
                         "description": "ZFS ARC statistics",
                         "schema": {
-                            "$ref": "#/definitions/dto.ZFSARCStats"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSARCStats"
                         }
                     }
                 }
@@ -4558,7 +4558,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.ZFSDataset"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSDataset"
                             }
                         }
                     }
@@ -4581,7 +4581,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.ZFSPool"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSPool"
                             }
                         }
                     }
@@ -4611,13 +4611,13 @@ const docTemplate = `{
                     "200": {
                         "description": "ZFS pool information",
                         "schema": {
-                            "$ref": "#/definitions/dto.ZFSPool"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSPool"
                         }
                     },
                     "404": {
                         "description": "Pool not found",
                         "schema": {
-                            "$ref": "#/definitions/dto.Response"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response"
                         }
                     }
                 }
@@ -4639,7 +4639,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/dto.ZFSSnapshot"
+                                "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSSnapshot"
                             }
                         }
                     }
@@ -4648,7 +4648,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "dto.AccessURL": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AccessURL": {
             "type": "object",
             "properties": {
                 "ipv4": {
@@ -4666,7 +4666,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.AlertEvent": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertEvent": {
             "type": "object",
             "properties": {
                 "fired_at": {
@@ -4693,13 +4693,13 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.AlertHistoryResponse": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertHistoryResponse": {
             "type": "object",
             "properties": {
                 "events": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.AlertEvent"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertEvent"
                     }
                 },
                 "total": {
@@ -4707,7 +4707,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.AlertRule": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertRule": {
             "type": "object",
             "properties": {
                 "channels": {
@@ -4744,7 +4744,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.AlertStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertStatus": {
             "type": "object",
             "properties": {
                 "eval_count": {
@@ -4771,18 +4771,18 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.AlertsStatusResponse": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertsStatusResponse": {
             "type": "object",
             "properties": {
                 "statuses": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.AlertStatus"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AlertStatus"
                     }
                 }
             }
         },
-        "dto.ArrayStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ArrayStatus": {
             "type": "object",
             "properties": {
                 "free_bytes": {
@@ -4830,7 +4830,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.BIOSInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BIOSInfo": {
             "type": "object",
             "properties": {
                 "address": {
@@ -4869,7 +4869,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.BaseboardInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BaseboardInfo": {
             "type": "object",
             "properties": {
                 "asset_tag": {
@@ -4908,7 +4908,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CPUCacheInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUCacheInfo": {
             "type": "object",
             "properties": {
                 "associativity": {
@@ -4952,7 +4952,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CPUGovernorRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUGovernorRequest": {
             "type": "object",
             "required": [
                 "governor"
@@ -4964,7 +4964,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CPUHardwareInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUHardwareInfo": {
             "type": "object",
             "properties": {
                 "asset_tag": {
@@ -5041,7 +5041,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CPUPowerState": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUPowerState": {
             "type": "object",
             "properties": {
                 "available_governors": {
@@ -5076,7 +5076,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CollectorIntervalRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorIntervalRequest": {
             "type": "object",
             "properties": {
                 "interval": {
@@ -5085,11 +5085,11 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CollectorResponse": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorResponse": {
             "type": "object",
             "properties": {
                 "collector": {
-                    "$ref": "#/definitions/dto.CollectorStatus"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorStatus"
                 },
                 "message": {
                     "type": "string"
@@ -5102,7 +5102,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CollectorStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorStatus": {
             "type": "object",
             "properties": {
                 "enabled": {
@@ -5131,13 +5131,13 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.CollectorsStatusResponse": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorsStatusResponse": {
             "type": "object",
             "properties": {
                 "collectors": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.CollectorStatus"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CollectorStatus"
                     }
                 },
                 "disabled_count": {
@@ -5154,7 +5154,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ContainerBulkUpdateResult": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerBulkUpdateResult": {
             "type": "object",
             "properties": {
                 "failed": {
@@ -5164,7 +5164,7 @@ const docTemplate = `{
                 "results": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.ContainerUpdateResult"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateResult"
                     }
                 },
                 "skipped": {
@@ -5180,7 +5180,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ContainerInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerInfo": {
             "type": "object",
             "properties": {
                 "cpu_percent": {
@@ -5244,7 +5244,7 @@ const docTemplate = `{
                 "ports": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.PortMapping"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PortMapping"
                     }
                 },
                 "restart_policy": {
@@ -5273,12 +5273,12 @@ const docTemplate = `{
                 "volume_mappings": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.VolumeMapping"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VolumeMapping"
                     }
                 }
             }
         },
-        "dto.ContainerLogs": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerLogs": {
             "type": "object",
             "properties": {
                 "container_id": {
@@ -5305,7 +5305,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ContainerSizeInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerSizeInfo": {
             "type": "object",
             "properties": {
                 "container_id": {
@@ -5337,7 +5337,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ContainerUpdateInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateInfo": {
             "type": "object",
             "properties": {
                 "container_id": {
@@ -5367,7 +5367,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ContainerUpdateResult": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateResult": {
             "type": "object",
             "properties": {
                 "container_id": {
@@ -5405,13 +5405,13 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ContainerUpdatesResult": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdatesResult": {
             "type": "object",
             "properties": {
                 "containers": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.ContainerUpdateInfo"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ContainerUpdateInfo"
                     }
                 },
                 "timestamp": {
@@ -5427,7 +5427,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.DiskCacheInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskCacheInfo": {
             "type": "object",
             "properties": {
                 "dirty_background_ratio": {
@@ -5448,7 +5448,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.DiskCacheRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskCacheRequest": {
             "type": "object",
             "properties": {
                 "dirty_background_ratio": {
@@ -5469,7 +5469,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.DiskInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskInfo": {
             "type": "object",
             "properties": {
                 "device": {
@@ -5540,7 +5540,7 @@ const docTemplate = `{
                     "description": "Enhanced SMART attributes",
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/definitions/dto.SMARTAttribute"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SMARTAttribute"
                     }
                 },
                 "smart_errors": {
@@ -5599,7 +5599,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.DiskSettings": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskSettings": {
             "type": "object",
             "properties": {
                 "default_filesystem": {
@@ -5627,7 +5627,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.DiskSettingsExtended": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskSettingsExtended": {
             "description": "Extended disk settings with temperature thresholds from Unraid configuration",
             "type": "object",
             "properties": {
@@ -5696,7 +5696,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.DockerAggregateStats": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DockerAggregateStats": {
             "type": "object",
             "properties": {
                 "memory_usage_percent": {
@@ -5732,7 +5732,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.DockerSettings": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DockerSettings": {
             "type": "object",
             "properties": {
                 "custom_networks": {
@@ -5755,7 +5755,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanControlConfig": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlConfig": {
             "type": "object",
             "properties": {
                 "control_enabled": {
@@ -5765,7 +5765,7 @@ const docTemplate = `{
                 "control_method": {
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.FanControlMethod"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlMethod"
                         }
                     ],
                     "example": "hwmon"
@@ -5779,11 +5779,11 @@ const docTemplate = `{
                     "example": 5
                 },
                 "safety": {
-                    "$ref": "#/definitions/dto.FanSafetyConfig"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanSafetyConfig"
                 }
             }
         },
-        "dto.FanControlMethod": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlMethod": {
             "type": "string",
             "enum": [
                 "hwmon",
@@ -5794,7 +5794,7 @@ const docTemplate = `{
                 "FanMethodIPMI"
             ]
         },
-        "dto.FanControlMode": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlMode": {
             "type": "string",
             "enum": [
                 "automatic",
@@ -5807,33 +5807,33 @@ const docTemplate = `{
                 "FanModeOff"
             ]
         },
-        "dto.FanControlStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlStatus": {
             "type": "object",
             "properties": {
                 "config": {
-                    "$ref": "#/definitions/dto.FanControlConfig"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlConfig"
                 },
                 "fans": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.FanDevice"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanDevice"
                     }
                 },
                 "profiles": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.FanProfile"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfile"
                     }
                 },
                 "summary": {
-                    "$ref": "#/definitions/dto.FanControlSummary"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlSummary"
                 },
                 "timestamp": {
                     "type": "string"
                 }
             }
         },
-        "dto.FanControlSummary": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlSummary": {
             "type": "object",
             "properties": {
                 "controllable_fans": {
@@ -5852,7 +5852,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanCurvePoint": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanCurvePoint": {
             "type": "object",
             "properties": {
                 "speed_percent": {
@@ -5865,7 +5865,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanDevice": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanDevice": {
             "type": "object",
             "properties": {
                 "active_profile": {
@@ -5891,7 +5891,7 @@ const docTemplate = `{
                 "mode": {
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.FanControlMode"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanControlMode"
                         }
                     ],
                     "example": "automatic"
@@ -5918,7 +5918,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanInfo": {
             "type": "object",
             "properties": {
                 "name": {
@@ -5931,7 +5931,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanModeRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanModeRequest": {
             "type": "object",
             "properties": {
                 "fan_id": {
@@ -5944,7 +5944,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanProfile": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfile": {
             "type": "object",
             "properties": {
                 "built_in": {
@@ -5954,7 +5954,7 @@ const docTemplate = `{
                 "curve_points": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.FanCurvePoint"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanCurvePoint"
                     }
                 },
                 "description": {
@@ -5967,13 +5967,13 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanProfileCreateRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfileCreateRequest": {
             "type": "object",
             "properties": {
                 "curve_points": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.FanCurvePoint"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanCurvePoint"
                     }
                 },
                 "description": {
@@ -5986,7 +5986,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanProfileRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanProfileRequest": {
             "type": "object",
             "properties": {
                 "fan_id": {
@@ -6003,7 +6003,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanSafetyConfig": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanSafetyConfig": {
             "type": "object",
             "properties": {
                 "critical_temp_celsius": {
@@ -6020,7 +6020,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FanSpeedRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanSpeedRequest": {
             "type": "object",
             "properties": {
                 "fan_id": {
@@ -6033,7 +6033,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.FlashDriveHealth": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FlashDriveHealth": {
             "description": "USB flash boot drive health information",
             "type": "object",
             "properties": {
@@ -6092,7 +6092,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.GPUMetrics": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.GPUMetrics": {
             "type": "object",
             "properties": {
                 "available": {
@@ -6176,31 +6176,31 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.HardwareInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HardwareInfo": {
             "type": "object",
             "properties": {
                 "baseboard": {
-                    "$ref": "#/definitions/dto.BaseboardInfo"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BaseboardInfo"
                 },
                 "bios": {
-                    "$ref": "#/definitions/dto.BIOSInfo"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.BIOSInfo"
                 },
                 "cache": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.CPUCacheInfo"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUCacheInfo"
                     }
                 },
                 "cpu": {
-                    "$ref": "#/definitions/dto.CPUHardwareInfo"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUHardwareInfo"
                 },
                 "memory_array": {
-                    "$ref": "#/definitions/dto.MemoryArrayInfo"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryArrayInfo"
                 },
                 "memory_devices": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.MemoryDeviceInfo"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryDeviceInfo"
                     }
                 },
                 "timestamp": {
@@ -6208,7 +6208,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.HealthCheck": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheck": {
             "type": "object",
             "properties": {
                 "enabled": {
@@ -6247,13 +6247,13 @@ const docTemplate = `{
                     "description": "Type is the probe type: \"http\", \"tcp\", \"container\", or \"ping\".",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.HealthCheckType"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckType"
                         }
                     ]
                 }
             }
         },
-        "dto.HealthCheckEvent": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckEvent": {
             "type": "object",
             "properties": {
                 "check_id": {
@@ -6282,18 +6282,18 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.HealthCheckHistoryResponse": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckHistoryResponse": {
             "type": "object",
             "properties": {
                 "events": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.HealthCheckEvent"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckEvent"
                     }
                 }
             }
         },
-        "dto.HealthCheckStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckStatus": {
             "type": "object",
             "properties": {
                 "check_id": {
@@ -6308,7 +6308,7 @@ const docTemplate = `{
                     "description": "CheckType is the probe type.",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.HealthCheckType"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckType"
                         }
                     ]
                 },
@@ -6342,7 +6342,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.HealthCheckType": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckType": {
             "type": "string",
             "enum": [
                 "http",
@@ -6357,18 +6357,18 @@ const docTemplate = `{
                 "HealthCheckPing"
             ]
         },
-        "dto.HealthChecksStatusResponse": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthChecksStatusResponse": {
             "type": "object",
             "properties": {
                 "checks": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.HealthCheckStatus"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.HealthCheckStatus"
                     }
                 }
             }
         },
-        "dto.InotifyInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.InotifyInfo": {
             "type": "object",
             "properties": {
                 "max_queued_events": {
@@ -6385,7 +6385,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.InotifyLimitsRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.InotifyLimitsRequest": {
             "type": "object",
             "required": [
                 "max_queued_events",
@@ -6407,7 +6407,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.LogFileContent": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.LogFileContent": {
             "type": "object",
             "properties": {
                 "content": {
@@ -6436,7 +6436,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.MQTTPublishRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTPublishRequest": {
             "type": "object",
             "properties": {
                 "payload": {},
@@ -6454,7 +6454,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.MQTTStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTStatus": {
             "type": "object",
             "properties": {
                 "broker": {
@@ -6504,7 +6504,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.MQTTTestResponse": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MQTTTestResponse": {
             "type": "object",
             "properties": {
                 "broker_info": {
@@ -6535,7 +6535,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.MemoryArrayInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryArrayInfo": {
             "type": "object",
             "properties": {
                 "error_correction_type": {
@@ -6555,7 +6555,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.MemoryDeviceInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MemoryDeviceInfo": {
             "type": "object",
             "properties": {
                 "asset_tag": {
@@ -6614,7 +6614,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.MoverSettings": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.MoverSettings": {
             "description": "Mover configuration, schedule, and current status",
             "type": "object",
             "properties": {
@@ -6643,7 +6643,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NICOffloadInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NICOffloadInfo": {
             "type": "object",
             "properties": {
                 "generic_receive_offload": {
@@ -6684,7 +6684,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NICRingBufferInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NICRingBufferInfo": {
             "type": "object",
             "properties": {
                 "rx_current": {
@@ -6705,7 +6705,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NUTConfig": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTConfig": {
             "type": "object",
             "properties": {
                 "battery_level": {
@@ -6753,7 +6753,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NUTDevice": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTDevice": {
             "type": "object",
             "properties": {
                 "available": {
@@ -6767,16 +6767,16 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NUTResponse": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTResponse": {
             "type": "object",
             "properties": {
                 "config": {
-                    "$ref": "#/definitions/dto.NUTConfig"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTConfig"
                 },
                 "devices": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.NUTDevice"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTDevice"
                     }
                 },
                 "installed": {
@@ -6788,14 +6788,14 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "status": {
-                    "$ref": "#/definitions/dto.NUTStatus"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTStatus"
                 },
                 "timestamp": {
                     "type": "string"
                 }
             }
         },
-        "dto.NUTStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NUTStatus": {
             "type": "object",
             "properties": {
                 "alarms": {
@@ -6977,7 +6977,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NetworkAccessURLs": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkAccessURLs": {
             "type": "object",
             "properties": {
                 "timestamp": {
@@ -6986,12 +6986,12 @@ const docTemplate = `{
                 "urls": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.AccessURL"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AccessURL"
                     }
                 }
             }
         },
-        "dto.NetworkConfig": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkConfig": {
             "type": "object",
             "properties": {
                 "bond_slaves": {
@@ -7037,7 +7037,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NetworkInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkInfo": {
             "type": "object",
             "properties": {
                 "advertised_auto_negotiation": {
@@ -7192,7 +7192,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NetworkServiceInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo": {
             "description": "Status information for a single network service",
             "type": "object",
             "properties": {
@@ -7223,7 +7223,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NetworkServicesStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServicesStatus": {
             "description": "Status of all Unraid network services (SMB, NFS, FTP, SSH, etc.)",
             "type": "object",
             "properties": {
@@ -7231,7 +7231,7 @@ const docTemplate = `{
                     "description": "Apple Filing Protocol (via Avahi)",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7239,7 +7239,7 @@ const docTemplate = `{
                     "description": "Discovery Services",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7252,7 +7252,7 @@ const docTemplate = `{
                     "description": "FTP server",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7260,7 +7260,7 @@ const docTemplate = `{
                     "description": "NetBIOS name service",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7268,7 +7268,7 @@ const docTemplate = `{
                     "description": "NFS file sharing",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7276,7 +7276,7 @@ const docTemplate = `{
                     "description": "NTP time sync",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7289,7 +7289,7 @@ const docTemplate = `{
                     "description": "File Sharing Services",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7297,7 +7297,7 @@ const docTemplate = `{
                     "description": "Remote Access Services",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7305,7 +7305,7 @@ const docTemplate = `{
                     "description": "Syslog remote server",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7313,7 +7313,7 @@ const docTemplate = `{
                     "description": "Telnet server",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7329,7 +7329,7 @@ const docTemplate = `{
                     "description": "System Services",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7337,7 +7337,7 @@ const docTemplate = `{
                     "description": "VPN Services",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 },
@@ -7345,13 +7345,13 @@ const docTemplate = `{
                     "description": "Web Services Discovery",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.NetworkServiceInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NetworkServiceInfo"
                         }
                     ]
                 }
             }
         },
-        "dto.Notification": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Notification": {
             "type": "object",
             "properties": {
                 "description": {
@@ -7393,7 +7393,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NotificationCounts": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationCounts": {
             "type": "object",
             "properties": {
                 "alert": {
@@ -7414,41 +7414,41 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.NotificationList": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationList": {
             "type": "object",
             "properties": {
                 "notifications": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.Notification"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Notification"
                     }
                 },
                 "overview": {
-                    "$ref": "#/definitions/dto.NotificationOverview"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationOverview"
                 },
                 "timestamp": {
                     "type": "string"
                 }
             }
         },
-        "dto.NotificationOverview": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationOverview": {
             "type": "object",
             "properties": {
                 "archive": {
-                    "$ref": "#/definitions/dto.NotificationCounts"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationCounts"
                 },
                 "unread": {
-                    "$ref": "#/definitions/dto.NotificationCounts"
+                    "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NotificationCounts"
                 }
             }
         },
-        "dto.ParityCheckHistory": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParityCheckHistory": {
             "type": "object",
             "properties": {
                 "records": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.ParityCheckRecord"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParityCheckRecord"
                     }
                 },
                 "timestamp": {
@@ -7456,7 +7456,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ParityCheckRecord": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParityCheckRecord": {
             "type": "object",
             "properties": {
                 "action": {
@@ -7489,7 +7489,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ParitySchedule": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ParitySchedule": {
             "description": "Parity check schedule configuration",
             "type": "object",
             "properties": {
@@ -7548,7 +7548,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.PluginBulkUpdateResult": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginBulkUpdateResult": {
             "type": "object",
             "properties": {
                 "failed": {
@@ -7558,7 +7558,7 @@ const docTemplate = `{
                 "results": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.PluginUpdateResult"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginUpdateResult"
                     }
                 },
                 "succeeded": {
@@ -7570,7 +7570,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.PluginInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginInfo": {
             "description": "Information about an installed Unraid plugin",
             "type": "object",
             "properties": {
@@ -7620,14 +7620,14 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.PluginList": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginList": {
             "description": "List of installed Unraid plugins",
             "type": "object",
             "properties": {
                 "plugins": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.PluginInfo"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginInfo"
                     }
                 },
                 "timestamp": {
@@ -7643,7 +7643,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.PluginUpdateResult": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginUpdateResult": {
             "type": "object",
             "properties": {
                 "message": {
@@ -7671,7 +7671,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.PortMapping": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PortMapping": {
             "type": "object",
             "properties": {
                 "private_port": {
@@ -7688,7 +7688,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ProcessInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ProcessInfo": {
             "type": "object",
             "properties": {
                 "command": {
@@ -7737,13 +7737,13 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ProcessList": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ProcessList": {
             "type": "object",
             "properties": {
                 "processes": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.ProcessInfo"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ProcessInfo"
                     }
                 },
                 "timestamp": {
@@ -7755,7 +7755,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.Registration": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Registration": {
             "type": "object",
             "properties": {
                 "expiration": {
@@ -7788,7 +7788,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.Response": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.Response": {
             "type": "object",
             "properties": {
                 "data": {},
@@ -7809,7 +7809,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.SMARTAttribute": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SMARTAttribute": {
             "type": "object",
             "properties": {
                 "id": {
@@ -7842,7 +7842,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ServiceStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ServiceStatus": {
             "description": "Docker and VM Manager service enabled status",
             "type": "object",
             "properties": {
@@ -7871,7 +7871,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ShareConfig": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareConfig": {
             "type": "object",
             "properties": {
                 "allocator": {
@@ -7923,7 +7923,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ShareInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ShareInfo": {
             "type": "object",
             "properties": {
                 "cache_pool": {
@@ -8000,7 +8000,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.SystemInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemInfo": {
             "type": "object",
             "properties": {
                 "agent_version": {
@@ -8038,7 +8038,7 @@ const docTemplate = `{
                     "description": "CPU Power State (scaling governor)",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.CPUPowerState"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.CPUPowerState"
                         }
                     ]
                 },
@@ -8069,7 +8069,7 @@ const docTemplate = `{
                     "description": "Additional Metrics",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.FanInfo"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.FanInfo"
                     }
                 },
                 "hostname": {
@@ -8145,7 +8145,7 @@ const docTemplate = `{
                     "description": "All Temperature Sensors",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.TemperatureReading"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TemperatureReading"
                     }
                 },
                 "timestamp": {
@@ -8161,7 +8161,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.SystemSettings": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.SystemSettings": {
             "type": "object",
             "properties": {
                 "date_format": {
@@ -8191,7 +8191,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.TemperatureReading": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TemperatureReading": {
             "type": "object",
             "properties": {
                 "name": {
@@ -8214,14 +8214,14 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.TuningInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TuningInfo": {
             "type": "object",
             "properties": {
                 "disk_cache": {
                     "description": "Disk Cache (vm.dirty_* parameters)",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.DiskCacheInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.DiskCacheInfo"
                         }
                     ]
                 },
@@ -8229,7 +8229,7 @@ const docTemplate = `{
                     "description": "Inotify limits",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.InotifyInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.InotifyInfo"
                         }
                     ]
                 },
@@ -8237,14 +8237,14 @@ const docTemplate = `{
                     "description": "NIC Offload settings per interface",
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/definitions/dto.NICOffloadInfo"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NICOffloadInfo"
                     }
                 },
                 "nic_ring_buffers": {
                     "description": "NIC Ring Buffers per interface",
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/definitions/dto.NICRingBufferInfo"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.NICRingBufferInfo"
                     }
                 },
                 "timestamp": {
@@ -8254,13 +8254,13 @@ const docTemplate = `{
                     "description": "CPU Power Management",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/dto.TurboBoostInfo"
+                            "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TurboBoostInfo"
                         }
                     ]
                 }
             }
         },
-        "dto.TurboBoostInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TurboBoostInfo": {
             "type": "object",
             "properties": {
                 "available": {
@@ -8277,7 +8277,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.TurboBoostRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.TurboBoostRequest": {
             "type": "object",
             "required": [
                 "enabled"
@@ -8289,7 +8289,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UPSStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UPSStatus": {
             "type": "object",
             "properties": {
                 "battery_charge_percent": {
@@ -8329,7 +8329,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UnassignedDevice": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedDevice": {
             "type": "object",
             "properties": {
                 "auto_mount": {
@@ -8354,7 +8354,7 @@ const docTemplate = `{
                     "description": "Partition information",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.UnassignedPartition"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedPartition"
                     }
                 },
                 "pass_through": {
@@ -8392,19 +8392,19 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UnassignedDeviceList": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedDeviceList": {
             "type": "object",
             "properties": {
                 "devices": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.UnassignedDevice"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedDevice"
                     }
                 },
                 "remote_shares": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.UnassignedRemoteShare"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedRemoteShare"
                     }
                 },
                 "timestamp": {
@@ -8412,7 +8412,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UnassignedPartition": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedPartition": {
             "type": "object",
             "properties": {
                 "filesystem": {
@@ -8457,7 +8457,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UnassignedRemoteShare": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UnassignedRemoteShare": {
             "type": "object",
             "properties": {
                 "auto_mount": {
@@ -8523,7 +8523,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UpdateStatus": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UpdateStatus": {
             "description": "Unraid OS and plugin update availability",
             "type": "object",
             "properties": {
@@ -8548,7 +8548,7 @@ const docTemplate = `{
                     "description": "Plugin update status",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.PluginInfo"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.PluginInfo"
                     }
                 },
                 "timestamp": {
@@ -8560,7 +8560,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UserScriptExecuteRequest": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteRequest": {
             "type": "object",
             "properties": {
                 "background": {
@@ -8571,7 +8571,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UserScriptExecuteResponse": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptExecuteResponse": {
             "type": "object",
             "properties": {
                 "error": {
@@ -8591,7 +8591,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.UserScriptInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.UserScriptInfo": {
             "type": "object",
             "properties": {
                 "description": {
@@ -8611,7 +8611,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.VMInfo": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMInfo": {
             "type": "object",
             "properties": {
                 "autostart": {
@@ -8687,7 +8687,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.VMSettings": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSettings": {
             "type": "object",
             "properties": {
                 "default_settings": {
@@ -8716,7 +8716,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.VMSnapshot": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSnapshot": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -8749,7 +8749,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.VMSnapshotList": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSnapshotList": {
             "type": "object",
             "properties": {
                 "count": {
@@ -8759,7 +8759,7 @@ const docTemplate = `{
                 "snapshots": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.VMSnapshot"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VMSnapshot"
                     }
                 },
                 "timestamp": {
@@ -8771,7 +8771,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.VolumeMapping": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.VolumeMapping": {
             "type": "object",
             "properties": {
                 "container_path": {
@@ -8788,7 +8788,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ZFSARCStats": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSARCStats": {
             "type": "object",
             "properties": {
                 "hit_ratio_percent": {
@@ -8866,7 +8866,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ZFSDataset": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSDataset": {
             "type": "object",
             "properties": {
                 "available_bytes": {
@@ -8929,7 +8929,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ZFSDevice": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSDevice": {
             "type": "object",
             "properties": {
                 "checksum_errors": {
@@ -8961,7 +8961,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ZFSPool": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSPool": {
             "type": "object",
             "properties": {
                 "allocated_bytes": {
@@ -9088,7 +9088,7 @@ const docTemplate = `{
                     "description": "VDEVs (Virtual Devices)",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.ZFSVdev"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSVdev"
                     }
                 },
                 "version": {
@@ -9102,7 +9102,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ZFSSnapshot": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSSnapshot": {
             "type": "object",
             "properties": {
                 "creation_time": {
@@ -9134,7 +9134,7 @@ const docTemplate = `{
                 }
             }
         },
-        "dto.ZFSVdev": {
+        "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSVdev": {
             "type": "object",
             "properties": {
                 "checksum_errors": {
@@ -9145,7 +9145,7 @@ const docTemplate = `{
                     "description": "Underlying devices (for mirror/raidz)",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/dto.ZFSDevice"
+                        "$ref": "#/definitions/github_com_ruaan-deysel_unraid-management-agent_daemon_dto.ZFSDevice"
                     }
                 },
                 "name": {
