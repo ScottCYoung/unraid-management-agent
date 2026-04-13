@@ -1,5 +1,5 @@
 #!/bin/bash
-# Watchdog for unraid-management-agent.
+# Watchdog for unraid-agent-dev.
 # Checks if the agent is running and restarts it if not.
 # Invoked by cron; interval/enable controlled by WATCHDOG_ENABLED/WATCHDOG_INTERVAL.
 #
