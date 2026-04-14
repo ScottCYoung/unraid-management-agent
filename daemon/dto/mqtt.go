@@ -22,7 +22,8 @@ type MQTTConfig struct {
 	Password          string `json:"-"` // Never expose password in JSON
 	TopicPrefix       string `json:"topic_prefix" example:"unraid"`
 	QoS               int    `json:"qos" example:"1"`
-	RetainMessages    bool   `json:"retain_messages" example:"true"`
+	RetainMessages     bool   `json:"retain_messages" example:"true"`
+	InsecureSkipVerify bool   `json:"insecure_skip_verify,omitempty" example:"false"`
 	ConnectTimeout    int    `json:"connect_timeout" example:"30"`
 	KeepAlive         int    `json:"keepalive" example:"60"`
 	CleanSession      bool   `json:"clean_session" example:"true"`

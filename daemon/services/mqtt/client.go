@@ -5,6 +5,7 @@ package mqtt
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -91,6 +92,12 @@ func (c *Client) Connect(ctx context.Context) error {
 	}
 	if c.config.Password != "" {
 		opts.SetPassword(c.config.Password)
+	}
+
+	// Wire InsecureSkipVerify when TLS is in use
+	tlsEnabled := strings.HasPrefix(c.config.Broker, "ssl://") || strings.HasPrefix(c.config.Broker, "tls://")
+	if tlsEnabled && c.config.InsecureSkipVerify {
+		opts.SetTLSConfig(&tls.Config{InsecureSkipVerify: true}) //nolint:gosec // user-opted-in
 	}
 
 	// Set will message for availability

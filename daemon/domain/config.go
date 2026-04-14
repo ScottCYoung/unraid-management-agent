@@ -90,6 +90,7 @@ func (c *MQTTConfig) ToDTOConfig() *dto.MQTTConfig {
 		TopicPrefix:           c.TopicPrefix,
 		QoS:                   c.QoS,
 		RetainMessages:        c.RetainMessages,
+		InsecureSkipVerify:    c.InsecureSkipVerify,
 		ConnectTimeout:        30,
 		KeepAlive:             60,
 		CleanSession:          true,
