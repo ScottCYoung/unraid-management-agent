@@ -43,7 +43,10 @@ var validCollectorNames = map[string]bool{
 	"tuning":       true,
 }
 
-var cli struct {
+// cliArgs defines all CLI flags and their defaults.
+// Defaults here must stay in sync with meta/plugin/scripts/start and meta/plugin/unraid-agent-dev.page.
+// TestCLIIntervalDefaults in main_test.go enforces this.
+type cliArgs struct {
 	LogsDir  string `default:"/var/log" help:"directory to store logs"`
 	Port     int    `default:"8043" help:"HTTP server port"`
 	Debug    bool   `default:"false" help:"enable debug mode with stdout logging"`
@@ -80,27 +83,29 @@ var cli struct {
 	// Collection intervals (overridable via environment variables)
 	// Use 0 to disable a collector completely
 	// Maximum interval: 86400 seconds (24 hours)
-	IntervalSystem       int `default:"15" env:"INTERVAL_SYSTEM" help:"system metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalArray        int `default:"60" env:"INTERVAL_ARRAY" help:"array metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalDisk         int `default:"300" env:"INTERVAL_DISK" help:"disk metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalDocker       int `default:"30" env:"INTERVAL_DOCKER" help:"docker metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalVM           int `default:"60" env:"INTERVAL_VM" help:"VM metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalUPS          int `default:"60" env:"INTERVAL_UPS" help:"UPS metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalNUT          int `default:"0" env:"INTERVAL_NUT" help:"NUT plugin metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalGPU          int `default:"60" env:"INTERVAL_GPU" help:"GPU metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalShares       int `default:"60" env:"INTERVAL_SHARES" help:"shares metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalNetwork      int `default:"60" env:"INTERVAL_NETWORK" help:"network metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalHardware     int `default:"600" env:"INTERVAL_HARDWARE" help:"hardware metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalZFS          int `default:"300" env:"INTERVAL_ZFS" help:"ZFS metrics interval (seconds, 0=disabled, max 86400)"`
-	IntervalNotification int `default:"30" env:"INTERVAL_NOTIFICATION" help:"notification interval (seconds, 0=disabled, max 86400)"`
-	IntervalRegistration int `default:"600" env:"INTERVAL_REGISTRATION" help:"registration interval (seconds, 0=disabled, max 86400)"`
-	IntervalUnassigned   int `default:"60" env:"INTERVAL_UNASSIGNED" help:"unassigned devices interval (seconds, 0=disabled, max 86400)"`
-	IntervalFanControl   int `default:"5" env:"INTERVAL_FAN_CONTROL" help:"fan control interval (seconds, 0=disabled, max 86400)"`
-	IntervalTuning       int `default:"120" env:"INTERVAL_TUNING" help:"tuning parameters interval (seconds, 0=disabled, max 86400)"`
+	IntervalSystem       int `default:"30"   env:"INTERVAL_SYSTEM" help:"system metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalArray        int `default:"60"   env:"INTERVAL_ARRAY" help:"array metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalDisk         int `default:"300"  env:"INTERVAL_DISK" help:"disk metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalDocker       int `default:"30"   env:"INTERVAL_DOCKER" help:"docker metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalVM           int `default:"60"   env:"INTERVAL_VM" help:"VM metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalUPS          int `default:"0"    env:"INTERVAL_UPS" help:"UPS metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalNUT          int `default:"0"    env:"INTERVAL_NUT" help:"NUT plugin metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalGPU          int `default:"0"    env:"INTERVAL_GPU" help:"GPU metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalShares       int `default:"300"  env:"INTERVAL_SHARES" help:"shares metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalNetwork      int `default:"30"   env:"INTERVAL_NETWORK" help:"network metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalHardware     int `default:"3600" env:"INTERVAL_HARDWARE" help:"hardware metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalZFS          int `default:"0"    env:"INTERVAL_ZFS" help:"ZFS metrics interval (seconds, 0=disabled, max 86400)"`
+	IntervalNotification int `default:"30"   env:"INTERVAL_NOTIFICATION" help:"notification interval (seconds, 0=disabled, max 86400)"`
+	IntervalRegistration int `default:"3600" env:"INTERVAL_REGISTRATION" help:"registration interval (seconds, 0=disabled, max 86400)"`
+	IntervalUnassigned   int `default:"300"  env:"INTERVAL_UNASSIGNED" help:"unassigned devices interval (seconds, 0=disabled, max 86400)"`
+	IntervalFanControl   int `default:"10"   env:"INTERVAL_FAN_CONTROL" help:"fan control interval (seconds, 0=disabled, max 86400)"`
+	IntervalTuning       int `default:"300"  env:"INTERVAL_TUNING" help:"tuning parameters interval (seconds, 0=disabled, max 86400)"`
 
 	Boot     cmd.Boot     `cmd:"" default:"1" help:"start the management agent"`
 	MCPStdio cmd.MCPStdio `cmd:"mcp-stdio" help:"run MCP server over stdin/stdout for local AI clients"`
 }
+
+var cli cliArgs
 
 // cleanupOldLogs removes old rotated log files from previous versions
 // This is needed because lumberjack's MaxBackups only prevents new backups,

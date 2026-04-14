@@ -333,6 +333,11 @@ $log_tail = preg_replace_callback('/\x1b\[([0-9;]*)m/', function($m) use ($ansi_
 #uma-conn-backdrop { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 999; }
 #uma-conn-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 700px; max-width: 90vw; background: #222; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 16px 20px; z-index: 1000; }
 #uma-conn-modal.open, #uma-conn-backdrop.open { display: block; }
+
+/* ── Reset confirm modal ── */
+#uma-reset-backdrop { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+#uma-reset-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); min-width: 320px; max-width: 480px; background: #222; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 16px 20px; z-index: 1000; }
+#uma-reset-modal.open, #uma-reset-backdrop.open { display: block; }
 .uma-modal-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .uma-modal-title span { font-weight: bold; font-size: 14px; }
 .uma-modal-close { cursor: pointer; font-size: 18px; color: #999; background: none; border: none; padding: 0 4px; }
@@ -542,7 +547,7 @@ Displays the last 20 lines of <code>/var/log/unraid-agent-dev.log</code>. Click 
 <div class="uma-panel" id="tab-collectors">
 <div style="display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:11px;color:var(--text-secondary,#888);">
     <span>Toggle collectors on/off and set polling intervals.</span>
-    <button type="button" onclick="applyCollectorDefaults()" style="font-size:11px;padding:2px 10px;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:3px;color:var(--text-color,#ccc);" title="Reset all collectors to recommended defaults">Apply Defaults</button>
+    <button type="button" onclick="openResetConfirmModal()" style="font-size:11px;padding:2px 10px;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:3px;color:var(--text-color,#ccc);" title="Reset all collectors to recommended defaults">Apply Defaults</button>
     <span style="margin-left:auto;display:flex;align-items:center;gap:16px;font-size:12px;color:var(--text-color,#ddd);">
         <span style="display:flex;align-items:center;gap:6px;">
             <i class="fa fa-ban" style="color:var(--text-secondary,#888);font-size:11px;"></i>
@@ -1060,6 +1065,20 @@ Encrypts the MQTT connection to a remote broker. Default port for TLS is 8883. S
     <p style="font-size:10px;color:var(--text-secondary,#666);margin:10px 0 0;">All connections use the HTTP agent. Claude Code uses CLI setup; Claude Desktop uses JSON config.</p>
 </div>
 
+<!-- ═══ RESET CONFIRM MODAL ════════════════════════════════════════════════ -->
+<div id="uma-reset-backdrop" onclick="closeResetConfirmModal()"></div>
+<div id="uma-reset-modal">
+    <div class="uma-modal-title">
+        <span><i class="fa fa-refresh"></i> Reset to Defaults</span>
+        <button type="button" class="uma-modal-close" onclick="closeResetConfirmModal()">&times;</button>
+    </div>
+    <p style="font-size:13px;color:var(--text-color,#ccc);margin:8px 0 16px;">Reset all collectors to recommended defaults? Your current settings will be overwritten.</p>
+    <div style="display:flex;justify-content:flex-end;gap:8px;">
+        <button type="button" onclick="closeResetConfirmModal()" style="font-size:12px;padding:4px 14px;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:3px;color:var(--text-color,#ccc);">Cancel</button>
+        <button type="button" onclick="closeResetConfirmModal();applyCollectorDefaults()" style="font-size:12px;padding:4px 14px;cursor:pointer;background:rgba(244,67,54,0.15);border:1px solid rgba(244,67,54,0.4);border-radius:3px;color:#f88;">Reset</button>
+    </div>
+</div>
+
 <script>
 // ── Tab switching ──────────────────────────────────────────────────────────
 $(function() {
@@ -1311,6 +1330,15 @@ function setConnModal(open) {
 }
 function openConnModal()  { setConnModal(true); }
 function closeConnModal() { setConnModal(false); }
+
+// ── Reset confirm modal ───────────────────────────────────────────────────
+function setResetConfirmModal(open) {
+    var method = open ? 'add' : 'remove';
+    document.getElementById('uma-reset-modal').classList[method]('open');
+    document.getElementById('uma-reset-backdrop').classList[method]('open');
+}
+function openResetConfirmModal()  { setResetConfirmModal(true); }
+function closeResetConfirmModal() { setResetConfirmModal(false); }
 
 // ── Log refresh ───────────────────────────────────────────────────────────
 // ANSI-to-HTML: escapes all user content first, then only injects hardcoded color spans
