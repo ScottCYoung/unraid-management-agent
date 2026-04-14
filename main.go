@@ -74,7 +74,7 @@ type cliArgs struct {
 	MQTTQoS                int    `default:"0" env:"MQTT_QOS" help:"MQTT QoS level (0, 1, or 2)"`
 	MQTTRetain             bool   `default:"true" env:"MQTT_RETAIN" help:"retain MQTT messages"`
 	MQTTHomeAssistant      bool   `default:"false" env:"MQTT_HOME_ASSISTANT" help:"enable Home Assistant MQTT discovery"`
-	MQTTHAPrefix           string `default:"homeassistant" env:"MQTT_HA_PREFIX" help:"Home Assistant discovery prefix"`
+	MQTTHAPrefix           string `name:"mqtt-ha-prefix" default:"homeassistant" env:"MQTT_HA_PREFIX" help:"Home Assistant discovery prefix"`
 	MQTTEmbeddedBroker         bool   `default:"false" env:"MQTT_EMBEDDED_BROKER" help:"use embedded MQTT broker"`
 	MQTTEmbeddedBrokerPort     int    `default:"1883"  env:"MQTT_EMBEDDED_BROKER_PORT" help:"embedded broker TCP port"`
 	MQTTEmbeddedBrokerBindAll  bool   `default:"false" env:"MQTT_EMBEDDED_BROKER_BIND_ALL" help:"bind embedded broker to all interfaces (LAN access)"`
@@ -132,7 +132,7 @@ func main() {
 	if err != nil {
 		_, _ = fmt.Fprintf(os.Stderr, "WARNING: Failed to load config file: %v\n", err)
 	}
-	applyFileConfig(fileCfg)
+	applyFileConfig(fileCfg, parsedCLIFlags())
 
 	// Set log level based on CLI flag
 	switch strings.ToLower(cli.LogLevel) {
@@ -280,81 +280,95 @@ func main() {
 	ctx.FatalIfErrorf(err)
 }
 
+// parsedCLIFlags returns the set of flag names (kebab-case) explicitly passed
+// on the command line, so applyFileConfig can skip overwriting them.
+func parsedCLIFlags() map[string]bool {
+	flags := make(map[string]bool)
+	for _, arg := range os.Args[1:] {
+		if !strings.HasPrefix(arg, "--") {
+			continue
+		}
+		name := strings.TrimPrefix(arg, "--")
+		if i := strings.IndexByte(name, '='); i >= 0 {
+			name = name[:i]
+		}
+		flags[name] = true
+	}
+	return flags
+}
+
 // applyFileConfig merges config file values into the CLI struct.
-// Only fields not explicitly set via CLI/env are overridden.
-// Kong sets fields to their declared defaults before parsing, so file config
-// values are applied after kong.Parse to fill in non-defaulted values.
-// In practice this means file config acts as a "second default layer":
-// CLI flag > env var > config file > struct default.
-func applyFileConfig(cfg *domain.FileConfig) {
+// Fields that were explicitly set via a CLI flag are left unchanged.
+// Priority order: CLI flag > env var > config file > struct default.
+func applyFileConfig(cfg *domain.FileConfig, explicit map[string]bool) {
 	if cfg == nil {
 		return
 	}
 
-	setInt := func(dst *int, src *int) {
-		if src != nil {
+	setInt := func(dst *int, src *int, flag string) {
+		if src != nil && !explicit[flag] {
 			*dst = *src
 		}
 	}
-	setStr := func(dst *string, src *string) {
-		if src != nil {
+	setStr := func(dst *string, src *string, flag string) {
+		if src != nil && !explicit[flag] {
 			*dst = *src
 		}
 	}
-	setBool := func(dst *bool, src *bool) {
-		if src != nil {
+	setBool := func(dst *bool, src *bool, flag string) {
+		if src != nil && !explicit[flag] {
 			*dst = *src
 		}
 	}
 
 	// Server settings
-	setInt(&cli.Port, cfg.Port)
-	setStr(&cli.LogLevel, cfg.LogLevel)
-	setStr(&cli.LogsDir, cfg.LogsDir)
-	setBool(&cli.Debug, cfg.Debug)
-	setBool(&cli.LowPowerMode, cfg.LowPowerMode)
-	setStr(&cli.DisableCollectors, cfg.DisableCollectors)
-	setStr(&cli.CORSOrigin, cfg.CORSOrigin)
+	setInt(&cli.Port, cfg.Port, "port")
+	setStr(&cli.LogLevel, cfg.LogLevel, "log-level")
+	setStr(&cli.LogsDir, cfg.LogsDir, "logs-dir")
+	setBool(&cli.Debug, cfg.Debug, "debug")
+	setBool(&cli.LowPowerMode, cfg.LowPowerMode, "low-power-mode")
+	setStr(&cli.DisableCollectors, cfg.DisableCollectors, "disable-collectors")
+	setStr(&cli.CORSOrigin, cfg.CORSOrigin, "cors-origin")
 
 	// MQTT
 	if m := cfg.MQTT; m != nil {
-		setBool(&cli.MQTTEnabled, m.Enabled)
-		setStr(&cli.MQTTBroker, m.Broker)
-		setInt(&cli.MQTTPort, m.Port)
-		setStr(&cli.MQTTUsername, m.Username)
-		setStr(&cli.MQTTPassword, m.Password)
-		setStr(&cli.MQTTClientID, m.ClientID)
-		setStr(&cli.MQTTTopicPrefix, m.TopicPrefix)
-		setBool(&cli.MQTTUseTLS, m.UseTLS)
-		setBool(&cli.MQTTInsecureSkipVerify, m.InsecureSkipVerify)
-		setInt(&cli.MQTTQoS, m.QoS)
-		setBool(&cli.MQTTRetain, m.Retain)
-		setBool(&cli.MQTTHomeAssistant, m.HomeAssistant)
-		setStr(&cli.MQTTHAPrefix, m.HAPrefix)
-		setBool(&cli.MQTTEmbeddedBroker, m.EmbeddedBroker)
-		setInt(&cli.MQTTEmbeddedBrokerPort, m.EmbeddedBrokerPort)
-		setBool(&cli.MQTTEmbeddedBrokerBindAll, m.EmbeddedBrokerBindAll)
-		setStr(&cli.MQTTEmbeddedBrokerPassword, m.EmbeddedBrokerPassword)
+		setBool(&cli.MQTTEnabled, m.Enabled, "mqtt-enabled")
+		setStr(&cli.MQTTBroker, m.Broker, "mqtt-broker")
+		setInt(&cli.MQTTPort, m.Port, "mqtt-port")
+		setStr(&cli.MQTTUsername, m.Username, "mqtt-username")
+		setStr(&cli.MQTTPassword, m.Password, "mqtt-password")
+		setStr(&cli.MQTTClientID, m.ClientID, "mqtt-client-id")
+		setStr(&cli.MQTTTopicPrefix, m.TopicPrefix, "mqtt-topic-prefix")
+		setBool(&cli.MQTTUseTLS, m.UseTLS, "mqtt-use-tls")
+		setBool(&cli.MQTTInsecureSkipVerify, m.InsecureSkipVerify, "mqtt-insecure-skip-verify")
+		setInt(&cli.MQTTQoS, m.QoS, "mqtt-qo-s")
+		setBool(&cli.MQTTRetain, m.Retain, "mqtt-retain")
+		setBool(&cli.MQTTHomeAssistant, m.HomeAssistant, "mqtt-home-assistant")
+		setStr(&cli.MQTTHAPrefix, m.HAPrefix, "mqtt-ha-prefix")
+		setBool(&cli.MQTTEmbeddedBroker, m.EmbeddedBroker, "mqtt-embedded-broker")
+		setInt(&cli.MQTTEmbeddedBrokerPort, m.EmbeddedBrokerPort, "mqtt-embedded-broker-port")
+		setBool(&cli.MQTTEmbeddedBrokerBindAll, m.EmbeddedBrokerBindAll, "mqtt-embedded-broker-bind-all")
+		setStr(&cli.MQTTEmbeddedBrokerPassword, m.EmbeddedBrokerPassword, "mqtt-embedded-broker-password")
 	}
 
 	// Intervals
 	if iv := cfg.Intervals; iv != nil {
-		setInt(&cli.IntervalSystem, iv.System)
-		setInt(&cli.IntervalArray, iv.Array)
-		setInt(&cli.IntervalDisk, iv.Disk)
-		setInt(&cli.IntervalDocker, iv.Docker)
-		setInt(&cli.IntervalVM, iv.VM)
-		setInt(&cli.IntervalUPS, iv.UPS)
-		setInt(&cli.IntervalNUT, iv.NUT)
-		setInt(&cli.IntervalGPU, iv.GPU)
-		setInt(&cli.IntervalShares, iv.Shares)
-		setInt(&cli.IntervalNetwork, iv.Network)
-		setInt(&cli.IntervalHardware, iv.Hardware)
-		setInt(&cli.IntervalZFS, iv.ZFS)
-		setInt(&cli.IntervalNotification, iv.Notification)
-		setInt(&cli.IntervalRegistration, iv.Registration)
-		setInt(&cli.IntervalUnassigned, iv.Unassigned)
-		setInt(&cli.IntervalFanControl, iv.FanControl)
-		setInt(&cli.IntervalTuning, iv.Tuning)
+		setInt(&cli.IntervalSystem, iv.System, "interval-system")
+		setInt(&cli.IntervalArray, iv.Array, "interval-array")
+		setInt(&cli.IntervalDisk, iv.Disk, "interval-disk")
+		setInt(&cli.IntervalDocker, iv.Docker, "interval-docker")
+		setInt(&cli.IntervalVM, iv.VM, "interval-vm")
+		setInt(&cli.IntervalUPS, iv.UPS, "interval-ups")
+		setInt(&cli.IntervalNUT, iv.NUT, "interval-nut")
+		setInt(&cli.IntervalGPU, iv.GPU, "interval-gpu")
+		setInt(&cli.IntervalShares, iv.Shares, "interval-shares")
+		setInt(&cli.IntervalNetwork, iv.Network, "interval-network")
+		setInt(&cli.IntervalHardware, iv.Hardware, "interval-hardware")
+		setInt(&cli.IntervalZFS, iv.ZFS, "interval-zfs")
+		setInt(&cli.IntervalNotification, iv.Notification, "interval-notification")
+		setInt(&cli.IntervalRegistration, iv.Registration, "interval-registration")
+		setInt(&cli.IntervalUnassigned, iv.Unassigned, "interval-unassigned")
+		setInt(&cli.IntervalFanControl, iv.FanControl, "interval-fan-control")
+		setInt(&cli.IntervalTuning, iv.Tuning, "interval-tuning")
 	}
 }

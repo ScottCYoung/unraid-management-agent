@@ -250,8 +250,8 @@ func (o *Orchestrator) RunMCPStdio() error {
 	logger.Info("Starting Unraid Management Agent v%s (MCP STDIO mode)", o.ctx.Version)
 
 	var wg sync.WaitGroup
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGTERM, syscall.SIGINT)
+	defer stop()
 
 	// Initialize collector manager and register all collectors
 	o.collectorManager = NewCollectorManager(o.ctx, &wg)
@@ -272,7 +272,7 @@ func (o *Orchestrator) RunMCPStdio() error {
 	// Initialize MCP server
 	mcpServer := mcp.NewServer(o.ctx, apiServer)
 	if err := mcpServer.Initialize(); err != nil {
-		cancel()
+		stop()
 		o.collectorManager.StopAll()
 		apiServer.Stop()
 		wg.Wait()
@@ -342,10 +342,6 @@ func (o *Orchestrator) RunMCPStdio() error {
 		mcpServer.SetTuningController(tuningCtrl)
 		logger.Success("Tuning controller initialized (STDIO mode)")
 	}
-
-	// Cancel context on shutdown signals (SIGTERM, SIGINT)
-	ctx, stop := signal.NotifyContext(ctx, syscall.SIGTERM, syscall.SIGINT)
-	defer stop()
 
 	// Run MCP over STDIO (blocks until context cancelled or pipe closed)
 	logger.Info("MCP STDIO transport ready — waiting for client")

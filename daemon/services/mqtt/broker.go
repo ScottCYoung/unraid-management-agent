@@ -39,7 +39,6 @@ func NewEmbeddedBroker(port int, bindAll bool) (*EmbeddedBroker, error) {
 // If password is non-empty, requires username "unraid" and that password.
 func (b *EmbeddedBroker) Start(_ context.Context, password string) error {
 	b.mu.Lock()
-	defer b.mu.Unlock()
 
 	b.srv = server.New(nil)
 
@@ -52,10 +51,12 @@ func (b *EmbeddedBroker) Start(_ context.Context, password string) error {
 				},
 			},
 		}); err != nil {
+			b.mu.Unlock()
 			return fmt.Errorf("adding auth hook: %w", err)
 		}
 	} else {
 		if err := b.srv.AddHook(new(auth.AllowHook), nil); err != nil {
+			b.mu.Unlock()
 			return fmt.Errorf("adding allow hook: %w", err)
 		}
 	}
@@ -74,6 +75,7 @@ func (b *EmbeddedBroker) Start(_ context.Context, password string) error {
 		Address: bindAddr,
 	})
 	if err := b.srv.AddListener(tcp); err != nil {
+		b.mu.Unlock()
 		return fmt.Errorf("adding TCP listener: %w", err)
 	}
 
@@ -88,14 +90,19 @@ func (b *EmbeddedBroker) Start(_ context.Context, password string) error {
 		}
 	}()
 
+	// Release lock before polling so concurrent Stop/GetStatus calls are not blocked.
+	b.mu.Unlock()
+
 	// Poll until port is dialable (max 5 s)
 	deadline := time.Now().Add(5 * time.Second)
 	for time.Now().Before(deadline) {
 		conn, err := net.DialTimeout("tcp", fmt.Sprintf("127.0.0.1:%d", b.port), 100*time.Millisecond)
 		if err == nil {
 			_ = conn.Close()
-			b.running.Store(true)
+			b.mu.Lock()
 			b.startedAt = time.Now()
+			b.running.Store(true)
+			b.mu.Unlock()
 			return nil
 		}
 		time.Sleep(50 * time.Millisecond)
@@ -113,7 +120,7 @@ func (b *EmbeddedBroker) Stop() {
 	}
 }
 
-// Address returns the paho-compatible broker URL (always loopback).
+// Address returns the paho connection URL (always loopback — clients connect via 127.0.0.1 regardless of bind address).
 func (b *EmbeddedBroker) Address() string {
 	return fmt.Sprintf("tcp://127.0.0.1:%d", b.port)
 }

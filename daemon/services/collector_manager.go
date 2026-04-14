@@ -226,33 +226,40 @@ func (cm *CollectorManager) DisableCollector(name string) error {
 // UpdateInterval updates the collection interval for a collector
 func (cm *CollectorManager) UpdateInterval(name string, intervalSeconds int) error {
 	cm.mu.Lock()
-	defer cm.mu.Unlock()
 
 	mc, exists := cm.collectors[name]
 	if !exists {
+		cm.mu.Unlock()
 		return fmt.Errorf("unknown collector: %s", name)
 	}
 
 	if intervalSeconds < 5 || intervalSeconds > 3600 {
+		cm.mu.Unlock()
 		return fmt.Errorf("invalid interval: must be between 5 and 3600 seconds")
 	}
 
 	wasRunning := mc.Status == "running"
 
-	// Stop the collector if running
+	// Stop the collector if running and update the interval while holding the lock
 	if wasRunning {
 		cm.stopCollectorLocked(mc)
 		mc.Status = "stopped"
-		// Give time for graceful stop
-		time.Sleep(100 * time.Millisecond)
 	}
-
-	// Update interval
 	mc.Interval = intervalSeconds
 
-	// Restart if it was running
+	// Release lock before sleeping so concurrent reads are not blocked
+	cm.mu.Unlock()
+
+	// Restart if it was running — brief sleep lets the old goroutine drain before starting a new one.
+	// Re-check status after re-acquiring to avoid a double-start if a concurrent DisableCollector
+	// or StopAll ran during the sleep window.
 	if wasRunning {
-		cm.startCollectorLocked(name)
+		time.Sleep(100 * time.Millisecond)
+		cm.mu.Lock()
+		if mc.Status == "stopped" && mc.Enabled {
+			cm.startCollectorLocked(name)
+		}
+		cm.mu.Unlock()
 	}
 
 	logger.Info("Updated collector %s interval to %d seconds", name, intervalSeconds)
