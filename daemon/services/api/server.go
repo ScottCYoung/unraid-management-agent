@@ -28,6 +28,7 @@ type CollectorManagerInterface interface {
 	UpdateInterval(name string, intervalSeconds int) error
 	GetStatus(name string) (*dto.CollectorStatus, error)
 	GetAllStatus() dto.CollectorsStatusResponse
+	TriggerCollect(name string) error
 }
 
 // MQTTClientInterface defines the methods required from MQTT client for API integration
@@ -36,6 +37,12 @@ type MQTTClientInterface interface {
 	GetStatus() *dto.MQTTStatus
 	TestConnection() error
 	PublishCustom(topic string, payload any, retain bool) error
+}
+
+// EmbeddedBrokerInterface provides access to the embedded MQTT broker status.
+type EmbeddedBrokerInterface interface {
+	GetStatus() *dto.EmbeddedBrokerStatus
+	IsRunning() bool
 }
 
 // Server represents the HTTP API server that handles REST endpoints and WebSocket connections.
@@ -50,6 +57,7 @@ type Server struct {
 	ready            chan struct{} // closed when subscriptions are fully wired
 	collectorManager CollectorManagerInterface
 	mqttClient       MQTTClientInterface
+	embeddedBroker   EmbeddedBrokerInterface
 	alertEngine      *alerting.Engine
 	alertStore       *alerting.Store
 	watchdogRunner   *watchdog.Runner
@@ -245,6 +253,7 @@ func (s *Server) setupRoutes() {
 
 	// MQTT endpoints
 	api.HandleFunc("/mqtt/status", s.handleMQTTStatus).Methods("GET")
+	api.HandleFunc("/mqtt/broker", s.handleMQTTBrokerStatus).Methods("GET")
 	api.HandleFunc("/mqtt/test", s.handleMQTTTest).Methods("POST")
 	api.HandleFunc("/mqtt/publish", s.handleMQTTPublish).Methods("POST")
 
@@ -500,6 +509,14 @@ func (s *Server) UpdateCollectorInterval(name string, interval int) error {
 	return s.collectorManager.UpdateInterval(name, interval)
 }
 
+// TriggerCollect triggers an immediate on-demand collection for the named collector.
+func (s *Server) TriggerCollect(name string) error {
+	if s.collectorManager == nil {
+		return fmt.Errorf("collector manager not available")
+	}
+	return s.collectorManager.TriggerCollect(name)
+}
+
 // GetRouter returns the HTTP router for external integration.
 func (s *Server) GetRouter() *mux.Router {
 	return s.router
@@ -632,6 +649,23 @@ func (s *Server) GetHealthStatus() map[string]any {
 // SetMQTTClient sets the MQTT client for API integration.
 func (s *Server) SetMQTTClient(client MQTTClientInterface) {
 	s.mqttClient = client
+}
+
+// SetEmbeddedBroker sets the embedded MQTT broker for API integration.
+func (s *Server) SetEmbeddedBroker(broker EmbeddedBrokerInterface) {
+	s.embeddedBroker = broker
+}
+
+// GetMQTTStatus returns the combined MQTT client and embedded broker status.
+func (s *Server) GetMQTTStatus() *dto.MQTTStatus {
+	if s.mqttClient == nil {
+		return &dto.MQTTStatus{Enabled: false}
+	}
+	status := s.mqttClient.GetStatus()
+	if s.embeddedBroker != nil {
+		status.EmbeddedBroker = s.embeddedBroker.GetStatus()
+	}
+	return status
 }
 
 // SetAlertEngine sets the alerting engine and store for alert API endpoints.

@@ -82,9 +82,22 @@ switch ($action) {
         $log_file = "/var/log/$plugin.log";
         $log_lines = [];
         if (file_exists($log_file)) {
-            $log_lines = array_slice(file($log_file, FILE_IGNORE_NEW_LINES), -20);
+            $log_lines = array_reverse(array_slice(file($log_file, FILE_IGNORE_NEW_LINES), -20));
         }
         $response['log'] = !empty($log_lines) ? implode("\n", $log_lines) : 'No log entries yet.';
+        break;
+    case 'mqtt_log':
+        // Return recent log lines mentioning MQTT or broker activity
+        $log_file = "/var/log/$plugin.log";
+        $mqtt_lines = [];
+        if (file_exists($log_file)) {
+            $all = file($log_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [];
+            $filtered = array_filter($all, function($line) {
+                return stripos($line, 'mqtt') !== false || stripos($line, 'broker') !== false;
+            });
+            $mqtt_lines = array_reverse(array_slice(array_values($filtered), -15));
+        }
+        $response['log'] = !empty($mqtt_lines) ? implode("\n", $mqtt_lines) : 'No MQTT log entries yet.';
         break;
     default:
         http_response_code(400);

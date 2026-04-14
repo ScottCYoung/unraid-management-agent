@@ -28,7 +28,7 @@ var commonLogPaths = []string{
 	// Unraid-specific logs
 	"/var/log/docker.log",
 	"/var/log/libvirt/libvirtd.log",
-	"/var/log/unraid-management-agent.log",
+	"/var/log/unraid-agent-dev.log",
 	"/var/log/graphql-api.log",
 	"/var/log/unraid-api.log",
 	"/var/log/recycle.log",

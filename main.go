@@ -64,7 +64,7 @@ var cli struct {
 	MQTTPort               int    `default:"1883" env:"MQTT_PORT" help:"MQTT broker port"`
 	MQTTUsername           string `default:"" env:"MQTT_USERNAME" help:"MQTT username"`
 	MQTTPassword           string `default:"" env:"MQTT_PASSWORD" help:"MQTT password"`
-	MQTTClientID           string `default:"unraid-management-agent" env:"MQTT_CLIENT_ID" help:"MQTT client ID"`
+	MQTTClientID           string `default:"unraid-agent-dev" env:"MQTT_CLIENT_ID" help:"MQTT client ID"`
 	MQTTTopicPrefix        string `default:"unraid" env:"MQTT_TOPIC_PREFIX" help:"MQTT topic prefix"`
 	MQTTUseTLS             bool   `default:"false" env:"MQTT_USE_TLS" help:"use TLS for MQTT connection"`
 	MQTTInsecureSkipVerify bool   `default:"false" env:"MQTT_INSECURE_SKIP_VERIFY" help:"skip TLS certificate verification"`
@@ -72,6 +72,10 @@ var cli struct {
 	MQTTRetain             bool   `default:"true" env:"MQTT_RETAIN" help:"retain MQTT messages"`
 	MQTTHomeAssistant      bool   `default:"false" env:"MQTT_HOME_ASSISTANT" help:"enable Home Assistant MQTT discovery"`
 	MQTTHAPrefix           string `default:"homeassistant" env:"MQTT_HA_PREFIX" help:"Home Assistant discovery prefix"`
+	MQTTEmbeddedBroker         bool   `default:"false" env:"MQTT_EMBEDDED_BROKER" help:"use embedded MQTT broker"`
+	MQTTEmbeddedBrokerPort     int    `default:"1883"  env:"MQTT_EMBEDDED_BROKER_PORT" help:"embedded broker TCP port"`
+	MQTTEmbeddedBrokerBindAll  bool   `default:"false" env:"MQTT_EMBEDDED_BROKER_BIND_ALL" help:"bind embedded broker to all interfaces (LAN access)"`
+	MQTTEmbeddedBrokerPassword string `default:""      env:"MQTT_EMBEDDED_BROKER_PASSWORD" help:"embedded broker password (empty = no auth)"`
 
 	// Collection intervals (overridable via environment variables)
 	// Use 0 to disable a collector completely
@@ -143,10 +147,10 @@ func main() {
 	if isStdio {
 		// STDIO mode: stdout is reserved for MCP JSON-RPC protocol.
 		// Log to file + stderr so MCP communication is not corrupted.
-		cleanupOldLogs(cli.LogsDir, "unraid-management-agent")
+		cleanupOldLogs(cli.LogsDir, "unraid-agent-dev")
 
 		fileLogger := &lumberjack.Logger{
-			Filename:   filepath.Join(cli.LogsDir, "unraid-management-agent.log"),
+			Filename:   filepath.Join(cli.LogsDir, "unraid-agent-dev.log"),
 			MaxSize:    5,
 			MaxBackups: 1,
 			MaxAge:     1,
@@ -162,12 +166,12 @@ func main() {
 		log.Println("Debug mode enabled - logging to stdout")
 	} else {
 		// Clean up old rotated log files from previous versions
-		cleanupOldLogs(cli.LogsDir, "unraid-management-agent")
+		cleanupOldLogs(cli.LogsDir, "unraid-agent-dev")
 
 		// Production mode: log rotation with 5MB max size
 		// MaxAge=1 ensures old backup files are deleted after 1 day
 		fileLogger := &lumberjack.Logger{
-			Filename:   filepath.Join(cli.LogsDir, "unraid-management-agent.log"),
+			Filename:   filepath.Join(cli.LogsDir, "unraid-agent-dev.log"),
 			MaxSize:    5,     // 5 MB max file size
 			MaxBackups: 1,     // Keep only 1 backup file
 			MaxAge:     1,     // Delete backups older than 1 day
@@ -237,9 +241,13 @@ func main() {
 			TopicPrefix:         cli.MQTTTopicPrefix,
 			QoS:                 cli.MQTTQoS,
 			RetainMessages:      cli.MQTTRetain,
-			HomeAssistantMode:   cli.MQTTHomeAssistant,
-			HomeAssistantPrefix: cli.MQTTHAPrefix,
-			DiscoveryEnabled:    cli.MQTTHomeAssistant, // Enable discovery when HA mode is enabled
+			HomeAssistantMode:      cli.MQTTHomeAssistant,
+			HomeAssistantPrefix:    cli.MQTTHAPrefix,
+			DiscoveryEnabled:       cli.MQTTHomeAssistant, // Enable discovery when HA mode is enabled
+			EmbeddedBrokerEnabled:  cli.MQTTEmbeddedBroker,
+			EmbeddedBrokerPort:     cli.MQTTEmbeddedBrokerPort,
+			EmbeddedBrokerBindAll:  cli.MQTTEmbeddedBrokerBindAll,
+			EmbeddedBrokerPassword: cli.MQTTEmbeddedBrokerPassword,
 		},
 		Intervals: domain.Intervals{
 			System:       getInterval("system", cli.IntervalSystem),
@@ -318,6 +326,10 @@ func applyFileConfig(cfg *domain.FileConfig) {
 		setBool(&cli.MQTTRetain, m.Retain)
 		setBool(&cli.MQTTHomeAssistant, m.HomeAssistant)
 		setStr(&cli.MQTTHAPrefix, m.HAPrefix)
+		setBool(&cli.MQTTEmbeddedBroker, m.EmbeddedBroker)
+		setInt(&cli.MQTTEmbeddedBrokerPort, m.EmbeddedBrokerPort)
+		setBool(&cli.MQTTEmbeddedBrokerBindAll, m.EmbeddedBrokerBindAll)
+		setStr(&cli.MQTTEmbeddedBrokerPassword, m.EmbeddedBrokerPassword)
 	}
 
 	// Intervals

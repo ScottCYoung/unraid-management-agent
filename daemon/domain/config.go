@@ -30,6 +30,12 @@ type MQTTConfig struct {
 	HomeAssistantMode   bool   `json:"home_assistant_mode"`
 	HomeAssistantPrefix string `json:"home_assistant_prefix"`
 	DiscoveryEnabled    bool   `json:"discovery_enabled"`
+
+	// Embedded broker settings
+	EmbeddedBrokerEnabled  bool   `json:"embedded_broker_enabled"`
+	EmbeddedBrokerPort     int    `json:"embedded_broker_port"`
+	EmbeddedBrokerBindAll  bool   `json:"embedded_broker_bind_all"`
+	EmbeddedBrokerPassword string `json:"-"`
 }
 
 // Config holds the application configuration settings.
@@ -56,6 +62,7 @@ func DefaultMQTTConfig() MQTTConfig {
 		HomeAssistantMode:   false,
 		HomeAssistantPrefix: "homeassistant",
 		DiscoveryEnabled:    true,
+		EmbeddedBrokerPort:  1883,
 	}
 }
 
@@ -63,7 +70,10 @@ func DefaultMQTTConfig() MQTTConfig {
 func (c *MQTTConfig) ToDTOConfig() *dto.MQTTConfig {
 	// Build broker URL with protocol and port
 	broker := c.Broker
-	if broker != "" && c.Port > 0 {
+	if c.EmbeddedBrokerEnabled {
+		// Paho connects to the embedded broker on loopback
+		broker = fmt.Sprintf("tcp://127.0.0.1:%d", c.EmbeddedBrokerPort)
+	} else if broker != "" && c.Port > 0 {
 		protocol := "tcp"
 		if c.UseTLS {
 			protocol = "ssl"
@@ -72,19 +82,22 @@ func (c *MQTTConfig) ToDTOConfig() *dto.MQTTConfig {
 	}
 
 	return &dto.MQTTConfig{
-		Enabled:           c.Enabled,
-		Broker:            broker,
-		ClientID:          c.ClientID,
-		Username:          c.Username,
-		Password:          c.Password,
-		TopicPrefix:       c.TopicPrefix,
-		QoS:               c.QoS,
-		RetainMessages:    c.RetainMessages,
-		ConnectTimeout:    30,
-		KeepAlive:         60,
-		CleanSession:      true,
-		AutoReconnect:     true,
-		HomeAssistantMode: c.HomeAssistantMode,
-		HADiscoveryPrefix: c.HomeAssistantPrefix,
+		Enabled:               c.Enabled || c.EmbeddedBrokerEnabled,
+		Broker:                broker,
+		ClientID:              c.ClientID,
+		Username:              c.Username,
+		Password:              c.Password,
+		TopicPrefix:           c.TopicPrefix,
+		QoS:                   c.QoS,
+		RetainMessages:        c.RetainMessages,
+		ConnectTimeout:        30,
+		KeepAlive:             60,
+		CleanSession:          true,
+		AutoReconnect:         true,
+		HomeAssistantMode:     c.HomeAssistantMode,
+		HADiscoveryPrefix:     c.HomeAssistantPrefix,
+		EmbeddedBrokerEnabled: c.EmbeddedBrokerEnabled,
+		EmbeddedBrokerPort:    c.EmbeddedBrokerPort,
+		EmbeddedBrokerBindAll: c.EmbeddedBrokerBindAll,
 	}
 }

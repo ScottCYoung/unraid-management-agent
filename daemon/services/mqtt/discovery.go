@@ -35,14 +35,45 @@ type haEntityOpts struct {
 // discoveryTracker tracks published per-item HA discovery entities
 // so that removed items can have their discovery configs cleaned up.
 type discoveryTracker struct {
-	mu       sync.Mutex
-	entities map[string]map[string]bool // category -> set of entity IDs
+	mu        sync.Mutex
+	entities  map[string]map[string]bool // category -> set of entity IDs
+	published map[string]bool            // globally published HA entity IDs (skip re-publish)
 }
 
 func newDiscoveryTracker() *discoveryTracker {
 	return &discoveryTracker{
-		entities: make(map[string]map[string]bool),
+		entities:  make(map[string]map[string]bool),
+		published: make(map[string]bool),
 	}
+}
+
+// known returns true if the entity ID has already been published for this category.
+// Used to skip re-publishing HA discovery configs for unchanged entities each cycle.
+func (t *discoveryTracker) known(category, id string) bool {
+	t.mu.Lock()
+	defer t.mu.Unlock()
+	return t.entities[category] != nil && t.entities[category][id]
+}
+
+// isPublished returns true if the HA discovery config for this entity ID has already been sent.
+func (t *discoveryTracker) isPublished(id string) bool {
+	t.mu.Lock()
+	defer t.mu.Unlock()
+	return t.published[id]
+}
+
+// markPublished records that the HA discovery config for this entity ID has been sent.
+func (t *discoveryTracker) markPublished(id string) {
+	t.mu.Lock()
+	defer t.mu.Unlock()
+	t.published[id] = true
+}
+
+// forgetPublished removes the entity ID from the published set so it will be re-sent if needed.
+func (t *discoveryTracker) forgetPublished(id string) {
+	t.mu.Lock()
+	defer t.mu.Unlock()
+	delete(t.published, id)
 }
 
 // update records the current set of entity IDs for a category and returns
@@ -68,7 +99,11 @@ func (t *discoveryTracker) update(category string, currentIDs []string) []string
 }
 
 // publishHAEntity publishes a single Home Assistant discovery config.
+// Skips re-publishing for entities already sent this session (HA retains them).
 func (c *Client) publishHAEntity(opts haEntityOpts) {
+	if c.tracker.isPublished(opts.id) {
+		return
+	}
 	hostID := strings.ReplaceAll(c.hostname, " ", "_")
 
 	discoveryTopic := fmt.Sprintf("%s/%s/%s/%s/config",
@@ -165,7 +200,9 @@ func (c *Client) publishHAEntity(opts haEntityOpts) {
 
 	if err := c.publishJSON(discoveryTopic, config); err != nil {
 		logger.Warning("MQTT: Failed to publish HA discovery for %s: %v", opts.id, err)
+		return
 	}
+	c.tracker.markPublished(opts.id)
 }
 
 // removeHAEntity removes a Home Assistant discovery entity by publishing empty payload.
@@ -181,6 +218,7 @@ func (c *Client) removeHAEntity(entityType, id string) {
 	if err := c.publish(discoveryTopic, "", true); err != nil {
 		logger.Debug("MQTT: Failed to remove HA entity %s: %v", id, err)
 	}
+	c.tracker.forgetPublished(id)
 }
 
 // removeHAEntities removes HA discovery entities across all possible entity types.

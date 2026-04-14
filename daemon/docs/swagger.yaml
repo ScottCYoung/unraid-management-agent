@@ -1,5 +1,20 @@
 basePath: /api/v1
 definitions:
+  dto.EmbeddedBrokerStatus:
+    properties:
+      address:
+        type: string
+      client_count:
+        type: integer
+      enabled:
+        type: boolean
+      running:
+        type: boolean
+      started_at:
+        type: string
+      uptime_seconds:
+        type: integer
+    type: object
   github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AccessURL:
     properties:
       ipv4:
@@ -1302,6 +1317,8 @@ definitions:
       connected:
         example: true
         type: boolean
+      embedded_broker:
+        $ref: '#/definitions/dto.EmbeddedBrokerStatus'
       enabled:
         example: true
         type: boolean
@@ -4733,6 +4750,19 @@ paths:
       summary: Prometheus metrics endpoint
       tags:
       - Monitoring
+  /mqtt/broker:
+    get:
+      description: Retrieve the status of the embedded MQTT broker
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Embedded broker status
+          schema:
+            $ref: '#/definitions/dto.EmbeddedBrokerStatus'
+      summary: Get embedded MQTT broker status
+      tags:
+      - MQTT
   /mqtt/publish:
     post:
       consumes:

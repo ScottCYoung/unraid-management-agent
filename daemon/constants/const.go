@@ -98,10 +98,13 @@ const (
 	// Increased from 5s to 15s - sensors command is CPU intensive
 	IntervalSystem = 15
 	// IntervalArray is the collection interval for array metrics in seconds.
-	// Increased from 10s to 30s - array status rarely changes
-	IntervalArray = 30
+	// Set to 3600s — enrichWithArraySize calls syscall.Statfs("/mnt/user") which spins up
+	// sleeping HDD array disks. MCP tools trigger on-demand collection instead of polling.
+	IntervalArray = 3600
 	// IntervalDisk is the collection interval for disk metrics in seconds.
-	IntervalDisk = 30
+	// Set to 3600s — enrichDisks calls syscall.Statfs("/mnt/diskN") for each array disk,
+	// spinning up sleeping HDDs. MCP tools trigger on-demand collection instead.
+	IntervalDisk = 3600
 	// IntervalDocker is the collection interval for Docker metrics in seconds.
 	// Increased from 10s to 30s - docker stats is very CPU intensive with many containers
 	IntervalDocker = 30

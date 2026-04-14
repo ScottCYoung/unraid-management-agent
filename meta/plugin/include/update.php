@@ -19,3 +19,13 @@ if (isset($_POST['MQTT_PASSWORD']) && $_POST['MQTT_PASSWORD'] === '') {
         }
     }
 }
+
+// Preserve embedded broker password using the same logic.
+if (isset($_POST['MQTT_EMBEDDED_BROKER_PASSWORD']) && $_POST['MQTT_EMBEDDED_BROKER_PASSWORD'] === '') {
+    if (is_file($cfg_path)) {
+        $existing = $existing ?? parse_ini_file($cfg_path, false, INI_SCANNER_RAW);
+        if (!empty($existing['MQTT_EMBEDDED_BROKER_PASSWORD'])) {
+            $_POST['MQTT_EMBEDDED_BROKER_PASSWORD'] = $existing['MQTT_EMBEDDED_BROKER_PASSWORD'];
+        }
+    }
+}

@@ -15,7 +15,12 @@ $config_file = "/boot/config/plugins/$plugin/config.cfg";
 
 $config = [];
 if (file_exists($config_file)) {
-    $config = parse_ini_file($config_file, false, INI_SCANNER_RAW);
+    $raw = parse_ini_file($config_file, false, INI_SCANNER_RAW);
+    // Unraid's update.php writes disabled form fields as empty strings.
+    // Remove them so the ?? defaults below apply correctly.
+    if ($raw !== false) {
+        $config = array_filter($raw, function($v) { return $v !== ''; });
+    }
 }
 
 // ── Core ──────────────────────────────────────────────────────────────────────
@@ -36,7 +41,7 @@ $mqtt_broker               = $config['MQTT_BROKER']               ?? '';
 $mqtt_port                 = $config['MQTT_PORT']                 ?? '1883';
 $mqtt_username             = $config['MQTT_USERNAME']             ?? '';
 $mqtt_password             = $config['MQTT_PASSWORD']             ?? '';
-$mqtt_client_id            = $config['MQTT_CLIENT_ID']            ?? 'unraid-management-agent';
+$mqtt_client_id            = $config['MQTT_CLIENT_ID']            ?? 'unraid-agent-dev';
 $mqtt_topic_prefix         = $config['MQTT_TOPIC_PREFIX']         ?? 'unraid';
 $mqtt_ha_enabled           = $config['MQTT_HOME_ASSISTANT']       ?? 'false';
 $mqtt_ha_prefix            = $config['MQTT_HA_PREFIX']            ?? 'homeassistant';
@@ -45,24 +50,31 @@ $mqtt_insecure_skip_verify = $config['MQTT_INSECURE_SKIP_VERIFY'] ?? 'false';
 $mqtt_qos                  = $config['MQTT_QOS']                  ?? '0';
 $mqtt_retain               = $config['MQTT_RETAIN']               ?? 'true';
 
+// ── MQTT Embedded Broker ──────────────────────────────────────────────────────
+$mqtt_embedded_broker      = $config['MQTT_EMBEDDED_BROKER']          ?? 'false';
+$mqtt_embedded_broker_port = $config['MQTT_EMBEDDED_BROKER_PORT']     ?? '1883';
+$mqtt_embedded_broker_bind = $config['MQTT_EMBEDDED_BROKER_BIND_ALL'] ?? 'false';
+// MQTT_EMBEDDED_BROKER_PASSWORD is a secret — never echo it; only track whether one is set
+$mqtt_embedded_broker_has_pw = !empty($config['MQTT_EMBEDDED_BROKER_PASSWORD']);
+
 // ── Collection intervals ──────────────────────────────────────────────────────
-$interval_system       = $config['INTERVAL_SYSTEM']       ?? '15';
+$interval_system       = $config['INTERVAL_SYSTEM']       ?? '30';
 $interval_array        = $config['INTERVAL_ARRAY']        ?? '60';
 $interval_disk         = $config['INTERVAL_DISK']         ?? '300';
-$interval_network      = $config['INTERVAL_NETWORK']      ?? '60';
+$interval_network      = $config['INTERVAL_NETWORK']      ?? '30';
 $interval_docker       = $config['INTERVAL_DOCKER']       ?? '30';
 $interval_vm           = $config['INTERVAL_VM']           ?? '60';
-$interval_gpu          = $config['INTERVAL_GPU']          ?? '60';
-$interval_ups          = $config['INTERVAL_UPS']          ?? '60';
+$interval_gpu          = $config['INTERVAL_GPU']          ?? '0';
+$interval_ups          = $config['INTERVAL_UPS']          ?? '0';
 $interval_nut          = $config['INTERVAL_NUT']          ?? '0';
-$interval_hardware     = $config['INTERVAL_HARDWARE']     ?? '600';
-$interval_shares       = $config['INTERVAL_SHARES']       ?? '60';
+$interval_hardware     = $config['INTERVAL_HARDWARE']     ?? '3600';
+$interval_shares       = $config['INTERVAL_SHARES']       ?? '300';
 $interval_zfs          = $config['INTERVAL_ZFS']          ?? '0';
-$interval_unassigned   = $config['INTERVAL_UNASSIGNED']   ?? '60';
+$interval_unassigned   = $config['INTERVAL_UNASSIGNED']   ?? '300';
 $interval_notification = $config['INTERVAL_NOTIFICATION'] ?? '30';
-$interval_registration = $config['INTERVAL_REGISTRATION'] ?? '600';
-$interval_fan_control  = $config['INTERVAL_FAN_CONTROL']  ?? '5';
-$interval_tuning       = $config['INTERVAL_TUNING']       ?? '120';
+$interval_registration = $config['INTERVAL_REGISTRATION'] ?? '3600';
+$interval_fan_control  = $config['INTERVAL_FAN_CONTROL']  ?? '10';
+$interval_tuning       = $config['INTERVAL_TUNING']       ?? '300';
 
 // ── Service status ────────────────────────────────────────────────────────────
 exec("pidof $plugin 2>/dev/null", $pid_arr, $pid_rc);
@@ -208,7 +220,7 @@ function intervalOptions($selected, $type = 'standard') {
                  '600'=>'10 minutes','900'=>'15 minutes','1800'=>'30 minutes'];
     }
     $html = '';
-    foreach (array_merge($base, $extended) as $val => $label) {
+    foreach ($base + $extended as $val => $label) {
         $sel   = ((string)$selected === (string)$val) ? ' selected' : '';
         $html .= "<option value=\"{$val}\"{$sel}>{$label}</option>";
     }
@@ -217,6 +229,7 @@ function intervalOptions($selected, $type = 'standard') {
 
 // ── Log tail ──────────────────────────────────────────────────────────────────
 exec("tail -20 /var/log/$plugin.log 2>/dev/null", $log_lines);
+$log_lines = array_reverse($log_lines);
 $log_raw = !empty($log_lines) ? implode("\n", $log_lines) : 'No log entries yet.';
 // Convert ANSI color codes to HTML spans, escape everything else
 $log_escaped = htmlspecialchars($log_raw, ENT_QUOTES, 'UTF-8');
@@ -245,7 +258,7 @@ $log_tail = preg_replace_callback('/\x1b\[([0-9;]*)m/', function($m) use ($ansi_
 .uma-toggle input:checked + .uma-toggle-slider:before { transform: translateX(18px); }
 
 /* ── Dashboard wrapper ── */
-#uma-dashboard { display: flex; flex-direction: column; height: calc(100vh - 120px); min-height: 500px; overflow: hidden; }
+#uma-dashboard { display: flex; flex-direction: column; }
 
 /* ── Header bar ── */
 #uma-header { display: flex; align-items: center; gap: 16px; padding: 8px 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; margin-bottom: 8px; flex-shrink: 0; }
@@ -270,7 +283,7 @@ $log_tail = preg_replace_callback('/\x1b\[([0-9;]*)m/', function($m) use ($ansi_
 .uma-tab.active::after { content:''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: var(--content-bg,#1c1b1b); }
 
 /* ── Tab content ── */
-.uma-panel { display: none; flex: 1; overflow-y: auto; padding: 12px 4px; }
+.uma-panel { display: none; padding: 12px 4px 80px; }
 .uma-panel.active { display: block; }
 
 /* ── Two-column layout ── */
@@ -312,7 +325,7 @@ $log_tail = preg_replace_callback('/\x1b\[([0-9;]*)m/', function($m) use ($ansi_
 .uma-crash-warn { color: var(--red-500,#f44); }
 
 /* ── Log panel (inline on dashboard) ── */
-.uma-log-pre { background: #111; color: #ccc; font-family: monospace; font-size: 10px; padding: 8px; border-radius: 4px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; border: 1px solid #333; margin: 0; max-height: 280px; flex: 1; }
+.uma-log-pre { background: #111; color: #ccc; font-family: monospace; font-size: 10px; padding: 8px; border-radius: 4px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; border: 1px solid #333; margin: 0; max-height: 400px; }
 .uma-log-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
 .uma-log-header span { font-weight: bold; font-size: 12px; }
 
@@ -352,7 +365,7 @@ $log_tail = preg_replace_callback('/\x1b\[([0-9;]*)m/', function($m) use ($ansi_
     <i id="uma-status-orb" class="fa fa-circle uma-orb <?= $running ? 'on' : 'off' ?>"></i>
     <span id="uma-status-text" class="uma-hdr-status <?= $running ? 'running' : 'stopped' ?>" title="<?= $running ? 'The agent is serving the REST API, WebSocket, MCP, and Prometheus endpoints on port '.$port_esc : 'The agent process is not running. Click Start to launch it.' ?>"><?= $running ? 'RUNNING' : 'STOPPED' ?></span>
     <?php if ($running): ?>
-        <span style="font-size:10px;color:var(--text-secondary,#888);">port <?= $port_esc ?> &middot; <?= count(array_filter($interval_map, function($v) { return $v !== '0'; })) ?> collectors</span>
+        <span style="font-size:10px;color:var(--text-secondary,#888);">port <?= $port_esc ?> &middot; <?= count(array_filter($interval_map, function($v) { return $v !== '0'; })) ?>/<?= count($interval_map) ?> polling</span>
     <?php endif; ?>
 
     <div id="uma-hdr-meta" class="uma-hdr-meta" style="display:<?= $running ? 'flex' : 'none' ?>;">
@@ -382,7 +395,7 @@ $log_tail = preg_replace_callback('/\x1b\[([0-9;]*)m/', function($m) use ($ansi_
 </div>
 
 <!-- ═══ CONFIGURATION FORM (wraps all tabs) ══════════════════════════════ -->
-<form markdown="1" id="agentConfigForm" method="POST" action="/update.php" target="progressFrame" style="flex:1;display:flex;flex-direction:column;overflow:hidden;margin:0;">
+<form markdown="1" id="agentConfigForm" method="POST" action="/update.php" target="progressFrame" style="display:flex;flex-direction:column;margin:0;">
 <input type="hidden" name="#file"    value="<?= $plugin ?>/config.cfg">
 <input type="hidden" name="#include" value="plugins/<?= $plugin ?>/include/update.php">
 <input type="hidden" name="#command" value="/usr/local/emhttp/plugins/<?= $plugin ?>/scripts/apply">
@@ -464,11 +477,31 @@ $log_tail = preg_replace_callback('/\x1b\[([0-9;]*)m/', function($m) use ($ansi_
             <code class="uma-endpoint-code"><?= $base_url ?>/metrics</code>
             <span style="font-size:10px;color:var(--text-secondary,#777);">Grafana, alerting</span>
         </div>
+        <?php if ($mqtt_enabled === 'true'): ?>
+        <div class="uma-row uma-endpoint-row">
+            <span class="uma-lbl">MQTT</span>
+            <?php if ($mqtt_embedded_broker === 'true'): ?>
+                <code class="uma-endpoint-code">mqtt://<?= ($mqtt_embedded_broker_bind === 'true') ? $addr_esc : '127.0.0.1' ?>:<?= htmlspecialchars($mqtt_embedded_broker_port, ENT_QUOTES, 'UTF-8') ?></code>
+                <span style="font-size:10px;color:var(--text-secondary,#777);">embedded broker &bull; <span id="mqtt-ep-clients" style="display:none;"><span id="mqtt-ep-clients-val">0</span> client(s)</span></span>
+            <?php else: ?>
+                <code class="uma-endpoint-code">tcp://<?= htmlspecialchars($mqtt_broker ?: '(not configured)', ENT_QUOTES, 'UTF-8') ?>:<?= htmlspecialchars($mqtt_port, ENT_QUOTES, 'UTF-8') ?></code>
+                <span style="font-size:10px;color:var(--text-secondary,#777);">remote broker</span>
+            <?php endif; ?>
+            <span id="mqtt-ep-badge" style="font-size:10px;padding:1px 6px;border-radius:10px;background:rgba(255,255,255,0.06);display:none;"></span>
+        </div>
+        <?php endif; ?>
     </div>
     <div style="margin-top:6px;padding:5px 8px;border-radius:3px;font-size:11px;background:rgba(<?= $running?'76,175,80':'244,67,54' ?>,0.08);color:var(--text-color,#ccc);">
         <i class="fa fa-<?= $running?'check-circle':'exclamation-triangle' ?>" style="color:<?= $running?'var(--green-500,#4CAF50)':'var(--red-500,#f44)' ?>;"></i>
         <?= htmlspecialchars($agent_health_msg, ENT_QUOTES, 'UTF-8') ?>
     </div>
+    <?php if ($mqtt_enabled === 'true'): ?>
+    <div id="mqtt-health-row" style="margin-top:4px;padding:5px 8px;border-radius:3px;font-size:11px;background:rgba(255,255,255,0.03);color:var(--text-color,#ccc);display:none;">
+        <i class="fa fa-comments" style="color:#6cf;margin-right:4px;"></i>
+        MQTT: <span id="mqtt-health-badge">checking…</span>
+        <span id="mqtt-health-detail" style="color:var(--text-secondary,#888);margin-left:6px;"></span>
+    </div>
+    <?php endif; ?>
 </div>
 
 </div><!-- /uma-2col -->
@@ -492,13 +525,13 @@ $log_tail = preg_replace_callback('/\x1b\[([0-9;]*)m/', function($m) use ($ansi_
 <div style="columns:3;column-gap:24px;font-size:12px;line-height:1.5;">
 
 <p><strong>Watchdog</strong><br>
-Monitors the agent process via cron. If the agent stops unexpectedly, the watchdog restarts it automatically. Crash events are logged to <code>/var/log/unraid-management-agent-crash.log</code>. A throttle prevents infinite restart loops (max 5 restarts per 5 minutes).</p>
+Monitors the agent process via cron. If the agent stops unexpectedly, the watchdog restarts it automatically. Crash events are logged to <code>/var/log/unraid-agent-dev-crash.log</code>. A throttle prevents infinite restart loops (max 5 restarts per 5 minutes).</p>
 
 <p><strong>Endpoints</strong><br>
-Shows the live URLs for the REST API, WebSocket, MCP, and Prometheus metrics endpoints. These are only available when the agent is running. Use the <strong>Connect</strong> button in the header for ready-to-paste integration snippets.</p>
+Shows the live URLs for the REST API, WebSocket, MCP, Prometheus metrics, and MQTT broker endpoints. These are only available when the agent is running. The MQTT row appears only when MQTT is enabled on the Advanced tab. Use the <strong>Connect</strong> button in the header for ready-to-paste integration snippets.</p>
 
 <p><strong>Recent Log</strong><br>
-Displays the last 20 lines of <code>/var/log/unraid-management-agent.log</code>. Click <strong>Refresh</strong> to reload without navigating away. Change the log verbosity on the Advanced tab.</p>
+Displays the last 20 lines of <code>/var/log/unraid-agent-dev.log</code>. Click <strong>Refresh</strong> to reload without navigating away. Change the log verbosity on the Advanced tab.</p>
 
 </div>
 </blockquote>
@@ -507,15 +540,27 @@ Displays the last 20 lines of <code>/var/log/unraid-management-agent.log</code>.
 
 <!-- ══ TAB 2: COLLECTORS ═══════════════════════════════════════════════════ -->
 <div class="uma-panel" id="tab-collectors">
-<div style="display:flex;align-items:center;gap:16px;margin:0 0 8px;font-size:11px;color:var(--text-secondary,#888);">
+<div style="display:flex;align-items:center;gap:10px;margin:0 0 8px;font-size:11px;color:var(--text-secondary,#888);">
     <span>Toggle collectors on/off and set polling intervals.</span>
-    <span style="margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-color,#ddd);">
-        <i class="fa fa-bolt" style="color:var(--text-secondary,#888);"></i> Low Power (4x intervals)
-        <label class="uma-toggle">
-            <input type="checkbox" <?= ($low_power_mode==='true')?'checked':'' ?> onchange="document.getElementById('low_power_val').value=this.checked?'true':'false'">
-            <span class="uma-toggle-slider"></span>
-        </label>
-        <input type="hidden" name="LOW_POWER_MODE" id="low_power_val" value="<?= htmlspecialchars($low_power_mode, ENT_QUOTES, 'UTF-8') ?>">
+    <button type="button" onclick="applyCollectorDefaults()" style="font-size:11px;padding:2px 10px;cursor:pointer;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:3px;color:var(--text-color,#ccc);" title="Reset all collectors to recommended defaults">Apply Defaults</button>
+    <span style="margin-left:auto;display:flex;align-items:center;gap:16px;font-size:12px;color:var(--text-color,#ddd);">
+        <span style="display:flex;align-items:center;gap:6px;">
+            <i class="fa fa-ban" style="color:var(--text-secondary,#888);font-size:11px;"></i>
+            <span style="font-size:11px;" title="Turn off all collectors at once. Toggle off to restore previous settings.">Disable All</span>
+            <label class="uma-toggle">
+                <input type="checkbox" id="disable_all_cb" onchange="toggleDisableAll(this)">
+                <span class="uma-toggle-slider"></span>
+            </label>
+        </span>
+        <span style="display:flex;align-items:center;gap:6px;">
+            <i class="fa fa-bolt" style="color:var(--text-secondary,#888);font-size:11px;"></i>
+            <span style="font-size:11px;" title="Polls 4x less often. A 30-second interval becomes 120 seconds. Reduces CPU usage without changing individual settings.">Relaxed Polling</span>
+            <label class="uma-toggle">
+                <input type="checkbox" <?= ($low_power_mode==='true')?'checked':'' ?> onchange="document.getElementById('low_power_val').value=this.checked?'true':'false'">
+                <span class="uma-toggle-slider"></span>
+            </label>
+            <input type="hidden" name="LOW_POWER_MODE" id="low_power_val" value="<?= htmlspecialchars($low_power_mode, ENT_QUOTES, 'UTF-8') ?>">
+        </span>
     </span>
 </div>
 <div class="uma-3col">
@@ -725,7 +770,7 @@ CPU frequency scaling and disk tunable parameters. Disable if you run standard U
 <div class="uma-card" style="margin-bottom:0;">
     <div class="uma-card-title"><i class="fa fa-terminal"></i> MCP stdio</div>
     <div class="uma-info-box">
-        Launch as <code>unraid-management-agent mcp-stdio</code> for direct Claude Desktop integration without the HTTP server. Click <strong>Connect</strong> above for the config snippet.
+        Launch as <code>unraid-agent-dev mcp-stdio</code> for local MCP access over stdin/stdout without the HTTP server. Only needed when running Claude Desktop directly on the Unraid box.
     </div>
     <div class="uma-info-box" style="margin-top:8px;border-left-color:#ff8c00;">
         The agent has no built-in authentication. For external access, use a reverse proxy with Basic Auth or SSO.
@@ -737,6 +782,8 @@ CPU frequency scaling and disk tunable parameters. Disable if you run standard U
 <!-- Bottom: MQTT full width -->
 <div class="uma-card" style="margin-bottom:0;">
     <div class="uma-card-title"><i class="fa fa-comments"></i> MQTT Integration</div>
+
+    <!-- Enable toggle -->
     <div class="uma-row">
         <span class="uma-lbl">Enable MQTT</span>
         <label class="uma-toggle">
@@ -747,25 +794,98 @@ CPU frequency scaling and disk tunable parameters. Disable if you run standard U
     </div>
 
     <div id="mqtt_fields" style="display:<?= ($mqtt_enabled==='true')?'block':'none' ?>;">
-    <div class="uma-3col" style="gap:4px 30px;">
-        <div>
-            <div class="uma-row">
-                <span class="uma-lbl">Broker</span>
-                <input type="text" name="MQTT_BROKER" value="<?= htmlspecialchars($mqtt_broker, ENT_QUOTES, 'UTF-8') ?>" placeholder="192.168.1.100">
+
+    <!-- ── Broker section ─────────────────────────────────────────────── -->
+    <div class="uma-section-header" style="margin-top:10px;">Broker</div>
+
+    <!-- Mode selector -->
+    <div class="uma-row" style="margin-bottom:6px;">
+        <span class="uma-lbl">Mode</span>
+        <label style="display:flex;align-items:center;gap:5px;margin-right:18px;cursor:pointer;font-size:12px;">
+            <input type="radio" name="mqtt_broker_mode_radio" id="mqtt_mode_embedded"
+                   value="embedded" onchange="toggleMQTTBrokerMode('embedded')"
+                   <?= ($mqtt_embedded_broker==='true')?'checked':'' ?>>
+            Local (embedded)
+        </label>
+        <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:12px;">
+            <input type="radio" name="mqtt_broker_mode_radio" id="mqtt_mode_remote"
+                   value="remote" onchange="toggleMQTTBrokerMode('remote')"
+                   <?= ($mqtt_embedded_broker!=='true')?'checked':'' ?>>
+            Remote
+        </label>
+        <input type="hidden" name="MQTT_EMBEDDED_BROKER" id="mqtt_embedded_val" value="<?= htmlspecialchars($mqtt_embedded_broker, ENT_QUOTES, 'UTF-8') ?>">
+    </div>
+
+    <!-- Embedded broker fields -->
+    <div id="mqtt_broker_embedded_fields" style="display:<?= ($mqtt_embedded_broker==='true')?'block':'none' ?>;">
+        <div class="uma-info-box" style="margin-bottom:8px;">
+            The agent runs a built-in MQTT broker on this Unraid box. No external broker required.
+            Migrate to Remote at any time by switching the mode above.
+        </div>
+        <div class="uma-2col" style="gap:4px 30px;">
+            <div>
+                <div class="uma-row">
+                    <span class="uma-lbl">Port</span>
+                    <input type="number" name="MQTT_EMBEDDED_BROKER_PORT" value="<?= htmlspecialchars($mqtt_embedded_broker_port, ENT_QUOTES, 'UTF-8') ?>" class="narrow" min="1" max="65535">
+                </div>
+                <div class="uma-row">
+                    <span class="uma-lbl">Bind to LAN</span>
+                    <label class="uma-toggle">
+                        <input type="checkbox" id="mqtt_eb_bind_cb" <?= ($mqtt_embedded_broker_bind==='true')?'checked':'' ?>
+                               onchange="document.getElementById('mqtt_eb_bind_val').value=this.checked?'true':'false'; toggleMQTTEBBindWarning(this.checked)">
+                        <span class="uma-toggle-slider"></span>
+                    </label>
+                    <input type="hidden" name="MQTT_EMBEDDED_BROKER_BIND_ALL" id="mqtt_eb_bind_val" value="<?= htmlspecialchars($mqtt_embedded_broker_bind, ENT_QUOTES, 'UTF-8') ?>">
+                </div>
+                <div id="mqtt_eb_bind_warning" style="display:<?= ($mqtt_embedded_broker_bind==='true')?'flex':'none' ?>;align-items:flex-start;gap:6px;margin:4px 0 0 0;padding:5px 8px;background:rgba(255,140,0,0.1);border-left:3px solid #ff8c00;border-radius:0 4px 4px 0;font-size:11px;">
+                    <i class="fa fa-exclamation-triangle" style="color:#ff8c00;margin-top:1px;flex-shrink:0;"></i>
+                    Broker is accessible from your LAN. Set a password to prevent unauthorized access.
+                </div>
             </div>
-            <div class="uma-row">
-                <span class="uma-lbl">Port</span>
-                <input type="number" name="MQTT_PORT" value="<?= htmlspecialchars($mqtt_port, ENT_QUOTES, 'UTF-8') ?>" class="narrow" min="1" max="65535">
-            </div>
-            <div class="uma-row">
-                <span class="uma-lbl">Username</span>
-                <input type="text" name="MQTT_USERNAME" value="<?= htmlspecialchars($mqtt_username, ENT_QUOTES, 'UTF-8') ?>" placeholder="optional" autocomplete="off">
-            </div>
-            <div class="uma-row">
-                <span class="uma-lbl">Password</span>
-                <input type="password" name="MQTT_PASSWORD" value="" placeholder="<?= empty($mqtt_password) ? 'optional' : '••••••••' ?>" autocomplete="new-password">
+            <div>
+                <div class="uma-row">
+                    <span class="uma-lbl">Password</span>
+                    <input type="password" name="MQTT_EMBEDDED_BROKER_PASSWORD" value=""
+                           placeholder="<?= $mqtt_embedded_broker_has_pw ? '••••••••' : 'no auth (open)' ?>"
+                           autocomplete="new-password">
+                </div>
+                <div style="font-size:10px;color:var(--text-secondary,#888);margin:3px 0 0 130px;">
+                    Username is <code>unraid</code> when a password is set.
+                    Leave blank to allow anonymous connections.
+                </div>
             </div>
         </div>
+    </div><!-- /mqtt_broker_embedded_fields -->
+
+    <!-- Remote broker fields -->
+    <div id="mqtt_broker_remote_fields" style="display:<?= ($mqtt_embedded_broker!=='true')?'block':'none' ?>;">
+        <div class="uma-2col" style="gap:4px 30px;">
+            <div>
+                <div class="uma-row">
+                    <span class="uma-lbl">Broker</span>
+                    <input type="text" name="MQTT_BROKER" value="<?= htmlspecialchars($mqtt_broker, ENT_QUOTES, 'UTF-8') ?>" placeholder="192.168.1.100">
+                </div>
+                <div class="uma-row">
+                    <span class="uma-lbl">Port</span>
+                    <input type="number" name="MQTT_PORT" value="<?= htmlspecialchars($mqtt_port, ENT_QUOTES, 'UTF-8') ?>" class="narrow" min="1" max="65535">
+                </div>
+            </div>
+            <div>
+                <div class="uma-row">
+                    <span class="uma-lbl">Username</span>
+                    <input type="text" name="MQTT_USERNAME" value="<?= htmlspecialchars($mqtt_username, ENT_QUOTES, 'UTF-8') ?>" placeholder="optional" autocomplete="off">
+                </div>
+                <div class="uma-row">
+                    <span class="uma-lbl">Password</span>
+                    <input type="password" name="MQTT_PASSWORD" value="" placeholder="<?= empty($mqtt_password) ? 'optional' : '••••••••' ?>" autocomplete="new-password">
+                </div>
+            </div>
+        </div>
+    </div><!-- /mqtt_broker_remote_fields -->
+
+    <!-- ── Publishing section ─────────────────────────────────────────── -->
+    <div class="uma-section-header" style="margin-top:10px;">Publishing</div>
+    <div class="uma-3col" style="gap:4px 30px;">
         <div>
             <div class="uma-row">
                 <span class="uma-lbl">Client ID</span>
@@ -775,6 +895,8 @@ CPU frequency scaling and disk tunable parameters. Disable if you run standard U
                 <span class="uma-lbl">Topic Prefix</span>
                 <input type="text" name="MQTT_TOPIC_PREFIX" value="<?= htmlspecialchars($mqtt_topic_prefix, ENT_QUOTES, 'UTF-8') ?>">
             </div>
+        </div>
+        <div>
             <div class="uma-row">
                 <span class="uma-lbl">QoS</span>
                 <select name="MQTT_QOS">
@@ -826,7 +948,29 @@ CPU frequency scaling and disk tunable parameters. Disable if you run standard U
                 </div>
             </div>
         </div>
-    </div><!-- /uma-3col -->
+    </div><!-- /uma-3col publishing -->
+
+    <!-- ── Status section ─────────────────────────────────────────────── -->
+    <div class="uma-section-header" style="margin-top:10px;">
+        Status
+        <input type="button" value="↻ Refresh" onclick="refreshMQTTStatus()" style="font-size:10px;padding:1px 8px;margin-left:8px;">
+    </div>
+    <div id="mqtt-status-content" style="font-size:11px;color:var(--text-secondary,#999);padding:4px 0;">
+        <?= $running ? 'Loading…' : '<span style="color:var(--text-secondary,#888)">Agent is not running — start the agent to see live MQTT status.</span>' ?>
+    </div>
+
+    <!-- ── Recent MQTT Logs ───────────────────────────────────────────── -->
+    <div class="uma-section-header" style="margin-top:10px;">
+        Recent MQTT Logs
+        <label style="font-size:10px;font-weight:normal;margin-left:8px;">
+            <input type="checkbox" id="mqtt-log-auto" style="vertical-align:middle;"> Auto-refresh
+        </label>
+    </div>
+    <pre id="mqtt-log-content" class="uma-log-pre" style="max-height:160px;"><?= htmlspecialchars(implode("\n", array_reverse(array_slice(array_values(array_filter(
+        file("/var/log/$plugin.log", FILE_IGNORE_NEW_LINES) ?: [],
+        fn($l) => stripos($l,'mqtt')!==false || stripos($l,'broker')!==false
+    )), -15))), ENT_QUOTES, 'UTF-8') ?: 'No MQTT log entries yet.' ?></pre>
+
     </div><!-- /mqtt_fields -->
 </div>
 
@@ -843,13 +987,19 @@ TCP port the REST API listens on (default 8043). Change if another service confl
 Disables all write/control endpoints (Docker start/stop, array commands). Use for monitoring-only setups.</p>
 
 <p><strong>Log Level</strong><br>
-Verbosity of <code>/var/log/unraid-management-agent.log</code>. Use <em>debug</em> when troubleshooting, <em>info</em> for normal operation.</p>
+Verbosity of <code>/var/log/unraid-agent-dev.log</code>. Use <em>debug</em> when troubleshooting, <em>info</em> for normal operation.</p>
 
 <p><strong>MCP stdio</strong><br>
-An alternative launch mode for Claude Desktop. The binary acts as a local MCP server over stdin/stdout without starting an HTTP server.</p>
+An alternative launch mode for local MCP access. The binary acts as a local MCP server over stdin/stdout without starting an HTTP server. Only needed when running an MCP client directly on the Unraid box.</p>
 
-<p><strong>MQTT Broker</strong><br>
-Publishes system metrics to an MQTT broker for Home Assistant or other consumers. Requires a running broker (e.g., Mosquitto).</p>
+<p><strong>MQTT — Local (embedded)</strong><br>
+The agent runs a built-in MQTT broker (mochi-mqtt) on this Unraid box. No external broker required — ideal for getting started or Home Assistant setups. Migrate to a remote broker at any time by switching the mode.</p>
+
+<p><strong>MQTT — Remote</strong><br>
+Publishes system metrics to an existing MQTT broker (e.g., Mosquitto). Enter the broker host and port. Credentials are optional if the broker allows anonymous connections.</p>
+
+<p><strong>Embedded Broker — Bind to LAN</strong><br>
+By default the embedded broker only accepts connections from localhost (127.0.0.1). Enabling Bind to LAN exposes port 1883 to your network. Always set a password when Bind to LAN is on.</p>
 
 <p><strong>QoS Level</strong><br>
 0 = fire-and-forget, 1 = acknowledged delivery, 2 = exactly-once. Use 0 for metrics; 1 or 2 for critical alerts.</p>
@@ -861,7 +1011,7 @@ Retained messages are stored by the broker and delivered immediately to new subs
 Publishes MQTT auto-discovery messages so entities appear automatically in Home Assistant without manual configuration.</p>
 
 <p><strong>TLS</strong><br>
-Encrypts the MQTT connection. Default port for TLS is 8883. Skip Verify only with self-signed certificates.</p>
+Encrypts the MQTT connection to a remote broker. Default port for TLS is 8883. Skip Verify only with self-signed certificates. TLS is not applicable to the embedded broker.</p>
 
 </div>
 </blockquote>
@@ -894,7 +1044,7 @@ Encrypts the MQTT connection. Default port for TLS is 8883. Skip Verify only wit
     </div>
     <div class="uma-conn-row">
         <span class="uma-conn-label">Claude Desktop</span>
-        <code id="cc-desktop" class="uma-conn-code">{"mcpServers":{"unraid":{"command":"/usr/local/emhttp/plugins/unraid-agent-dev/unraid-agent-dev","args":["mcp-stdio"]}}}</code>
+        <code id="cc-desktop" class="uma-conn-code">{"mcpServers":{"unraid":{"url":"<?= $base_url ?>/mcp"}}}</code>
         <input type="button" class="uma-copy-btn" value="Copy" onclick="umaCopy('cc-desktop',this)">
     </div>
     <div class="uma-conn-row">
@@ -907,7 +1057,7 @@ Encrypts the MQTT connection. Default port for TLS is 8883. Skip Verify only wit
         <code id="cc-prom" class="uma-conn-code">- job_name: 'unraid'  static_configs:  - targets: ['<?= $addr_esc ?>:<?= $port_esc ?>']  metrics_path: '/metrics'</code>
         <input type="button" class="uma-copy-btn" value="Copy" onclick="umaCopy('cc-prom',this)">
     </div>
-    <p style="font-size:10px;color:var(--text-secondary,#666);margin:10px 0 0;">Claude Desktop uses <code>mcp-stdio</code> mode (no HTTP). Claude Code and Prometheus require the agent running in HTTP mode.</p>
+    <p style="font-size:10px;color:var(--text-secondary,#666);margin:10px 0 0;">All connections use the HTTP agent. Claude Code uses CLI setup; Claude Desktop uses JSON config.</p>
 </div>
 
 <script>
@@ -971,6 +1121,163 @@ function toggleWatchdog()   { toggleSection('watchdog_cb',     'watchdog_enabled
 function toggleMQTTFields() { toggleSection('mqtt_enabled_cb', 'mqtt_enabled_val',     'mqtt_fields'); }
 function toggleMQTTHA()     { toggleSection('mqtt_ha_cb',      'mqtt_ha_val',          'mqtt_ha_fields'); }
 function toggleMQTTTLS()    { toggleSection('mqtt_tls_cb',     'mqtt_tls_val',         'mqtt_tls_fields'); }
+
+function toggleMQTTBrokerMode(mode) {
+    var isEmbedded = (mode === 'embedded');
+    document.getElementById('mqtt_embedded_val').value = isEmbedded ? 'true' : 'false';
+    document.getElementById('mqtt_broker_embedded_fields').style.display = isEmbedded ? 'block' : 'none';
+    document.getElementById('mqtt_broker_remote_fields').style.display   = isEmbedded ? 'none'  : 'block';
+}
+
+function toggleMQTTEBBindWarning(on) {
+    document.getElementById('mqtt_eb_bind_warning').style.display = on ? 'flex' : 'none';
+}
+
+// ── MQTT live status ──────────────────────────────────────────────────────────
+function fmtSecs(s) {
+    s = parseInt(s) || 0;
+    if (s <= 0) return '—';
+    var d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60);
+    return (d > 0 ? d + 'd ' : '') + (h > 0 ? h + 'h ' : '') + m + 'm';
+}
+
+// Build a stat cell using DOM methods — no innerHTML for data values
+function mqttStatCell(label, value, color) {
+    var cell = document.createElement('div');
+    var lbl  = document.createElement('div');
+    lbl.style.cssText = 'font-size:10px;color:var(--text-secondary,#888)';
+    lbl.textContent = label;
+    var val  = document.createElement('div');
+    val.style.cssText = 'font-size:12px' + (color ? ';color:' + color : '');
+    val.textContent = value;
+    cell.appendChild(lbl);
+    cell.appendChild(val);
+    return cell;
+}
+
+function renderMQTTStatus(d) {
+    var connColor = d.connected ? 'var(--green-500,#4CAF50)' : 'var(--red-500,#f44)';
+    var connText  = d.connected ? 'Connected' : 'Disconnected';
+
+    // ── Dashboard: endpoint badge ─────────────────────────────────────────
+    var badge = document.getElementById('mqtt-ep-badge');
+    if (badge) {
+        badge.textContent  = d.connected ? 'connected' : 'disconnected';
+        badge.style.color  = connColor;
+        badge.style.display = 'inline';
+    }
+    var clientsWrap = document.getElementById('mqtt-ep-clients');
+    var clientsVal  = document.getElementById('mqtt-ep-clients-val');
+    if (d.embedded_broker && d.embedded_broker.enabled && clientsWrap && clientsVal) {
+        clientsVal.textContent   = d.embedded_broker.client_count || 0;
+        clientsWrap.style.display = 'inline';
+    }
+
+    // ── Dashboard: health row ─────────────────────────────────────────────
+    var healthRow    = document.getElementById('mqtt-health-row');
+    var healthBadge  = document.getElementById('mqtt-health-badge');
+    var healthDetail = document.getElementById('mqtt-health-detail');
+    if (healthRow) healthRow.style.display = 'block';
+    if (healthBadge) {
+        healthBadge.textContent = connText;
+        healthBadge.style.cssText = 'font-weight:bold;color:' + connColor;
+    }
+    if (healthDetail) {
+        var parts = [];
+        if (d.messages_sent)   parts.push(parseInt(d.messages_sent).toLocaleString() + ' msgs');
+        if (d.messages_errors) parts.push(d.messages_errors + ' errors');
+        if (d.uptime_seconds)  parts.push('up ' + fmtSecs(d.uptime_seconds));
+        healthDetail.textContent = parts.join(' · ');
+        if (d.messages_errors) healthDetail.style.color = 'var(--red-500,#f44)';
+    }
+
+    // ── Advanced tab: full status panel ──────────────────────────────────
+    var panel = document.getElementById('mqtt-status-content');
+    if (!panel) return;
+
+    var grid = document.createElement('div');
+    grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:6px 16px;';
+
+    var errColor = (d.messages_errors > 0) ? 'var(--red-500,#f44)' : null;
+    var stats = [
+        [connText, connColor],
+        [d.broker || '—',                                           null],
+        [fmtSecs(d.uptime_seconds),                                 null],
+        [(parseInt(d.messages_sent) || 0).toLocaleString() + ' sent', null],
+        [(d.messages_errors || 0) + ' errors',                      errColor],
+    ];
+    var labels = ['Status', 'Broker', 'Uptime', 'Messages', 'Errors'];
+    labels.forEach(function(lbl, i) { grid.appendChild(mqttStatCell(lbl, stats[i][0], stats[i][1])); });
+    if (d.last_error) grid.appendChild(mqttStatCell('Last Error', d.last_error, 'var(--red-500,#f44)'));
+
+    panel.textContent = '';
+    panel.appendChild(grid);
+
+    // Embedded broker sub-section
+    if (d.embedded_broker && d.embedded_broker.enabled) {
+        var eb    = d.embedded_broker;
+        var ebC   = eb.running ? 'var(--green-500,#4CAF50)' : 'var(--red-500,#f44)';
+        var sep   = document.createElement('div');
+        sep.style.cssText = 'margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.07)';
+        var secHdr = document.createElement('div');
+        secHdr.style.cssText = 'font-size:10px;font-weight:bold;color:var(--text-secondary,#888);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px';
+        secHdr.textContent = 'Embedded Broker';
+        var ebGrid = document.createElement('div');
+        ebGrid.style.cssText = 'display:grid;grid-template-columns:repeat(4,1fr);gap:6px 16px';
+        var ebStats = [
+            ['Status',  eb.running ? 'Running' : 'Stopped', ebC],
+            ['Address', eb.address || '—',                  null],
+            ['Clients', String(eb.client_count || 0),       null],
+            ['Uptime',  fmtSecs(eb.uptime_seconds),         null],
+        ];
+        ebStats.forEach(function(s) { ebGrid.appendChild(mqttStatCell(s[0], s[1], s[2])); });
+        sep.appendChild(secHdr);
+        sep.appendChild(ebGrid);
+        panel.appendChild(sep);
+    }
+}
+
+function refreshMQTTStatus() {
+    fetch(<?= json_encode($base_url) ?> + '/api/v1/mqtt/status', {signal: AbortSignal.timeout(5000)})
+        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+        .then(function(d) { renderMQTTStatus(d); })
+        .catch(function() {
+            var panel = document.getElementById('mqtt-status-content');
+            if (panel) {
+                panel.textContent = 'Unable to reach agent — check that it is running.';
+                panel.style.color = 'var(--text-secondary,#888)';
+            }
+        });
+}
+
+function refreshMQTTLog() {
+    $.post('/plugins/<?= $plugin ?>/include/exec.php', {action: 'mqtt_log'}, function(data) {
+        if (data && data.log !== undefined) {
+            var el = document.getElementById('mqtt-log-content');
+            // ansiToHtml escapes all HTML entities before injecting safe color spans — same pattern as main log
+            if (el) el.innerHTML = ansiToHtml(data.log);
+        }
+    }, 'json');
+}
+
+// Auto-refresh MQTT status + log when Advanced tab is active
+(function() {
+    setInterval(function() {
+        var advPanel = document.getElementById('tab-advanced');
+        if (!advPanel || !advPanel.classList.contains('active')) return;
+        refreshMQTTStatus();
+        var autoCb = document.getElementById('mqtt-log-auto');
+        if (autoCb && autoCb.checked) refreshMQTTLog();
+    }, 15000);
+
+    // Seed status on initial page load if agent is running
+    <?php if ($running): ?>
+    setTimeout(function() {
+        refreshMQTTStatus();
+        refreshMQTTLog();
+    }, 900);
+    <?php endif; ?>
+})();
 
 // ── Collector toggles → DISABLE_COLLECTORS ────────────────────────────────
 function rebuildDisableCollectors() {
@@ -1069,11 +1376,80 @@ function refreshLog() {
     }, 10000);
 })();
 
+// ── Collector defaults ──────────────────────────────────────────────────────
+// Used by Apply Defaults button and to restore intervals when re-enabling a toggle.
+var recommendedDefaults = {
+    system:     {enabled: true,  interval: '30'},
+    array:      {enabled: true,  interval: '60'},
+    disk:       {enabled: true,  interval: '300'},
+    network:    {enabled: true,  interval: '30'},
+    docker:     {enabled: true,  interval: '30'},
+    vm:         {enabled: true,  interval: '60'},
+    gpu:        {enabled: false, interval: '60'},
+    ups:        {enabled: false, interval: '30'},
+    nut:        {enabled: false, interval: '60'},
+    hardware:   {enabled: true,  interval: '3600'},
+    shares:     {enabled: true,  interval: '300'},
+    zfs:        {enabled: false, interval: '300'},
+    unassigned: {enabled: true,  interval: '300'},
+};
+var internalDefaults = {
+    INTERVAL_NOTIFICATION: '30',
+    INTERVAL_REGISTRATION: '3600',
+    INTERVAL_FAN_CONTROL:  '10',
+    INTERVAL_TUNING:       '300',
+};
+
+function applyCollectorDefaults() {
+    document.querySelectorAll('.collector-toggle').forEach(function(cb) {
+        var def = recommendedDefaults[cb.dataset.collector];
+        if (!def) return;
+        var sel = cb.closest('.uma-collector-row').querySelector('select');
+        cb.checked = def.enabled;
+        if (sel) { sel.disabled = !def.enabled; sel.value = def.enabled ? def.interval : '0'; }
+    });
+    Object.keys(internalDefaults).forEach(function(name) {
+        var sel = document.querySelector('select[name="' + name + '"]');
+        if (sel) sel.value = internalDefaults[name];
+    });
+    document.getElementById('disable_all_cb').checked = false;
+    rebuildDisableCollectors();
+    $('input[name="#apply"]').prop('disabled', false);
+}
+
+function toggleDisableAll(cb) {
+    if (cb.checked) {
+        // Save current state then disable everything
+        document.querySelectorAll('.collector-toggle').forEach(function(toggle) {
+            var sel = toggle.closest('.uma-collector-row').querySelector('select');
+            toggle.dataset.savedChecked   = toggle.checked ? '1' : '0';
+            toggle.dataset.savedInterval  = sel ? sel.value : '0';
+            toggle.checked = false;
+            if (sel) { sel.disabled = true; sel.value = '0'; }
+        });
+    } else {
+        // Restore saved state (falls back to recommended defaults)
+        document.querySelectorAll('.collector-toggle').forEach(function(toggle) {
+            var def = recommendedDefaults[toggle.dataset.collector] || {enabled: true, interval: '60'};
+            var wasChecked   = toggle.dataset.savedChecked !== undefined ? toggle.dataset.savedChecked === '1' : def.enabled;
+            var wasInterval  = toggle.dataset.savedInterval || def.interval;
+            var sel = toggle.closest('.uma-collector-row').querySelector('select');
+            toggle.checked = wasChecked;
+            if (sel) { sel.disabled = !wasChecked; sel.value = wasChecked ? wasInterval : '0'; }
+        });
+    }
+    rebuildDisableCollectors();
+    $('input[name="#apply"]').prop('disabled', false);
+}
+
 // ── Init ───────────────────────────────────────────────────────────────────
 $(function() {
+    // Reflect Disable All slider if all collector toggles are off on load
+    var allOff = Array.from(document.querySelectorAll('.collector-toggle')).every(function(cb) { return !cb.checked; });
+    if (allOff) document.getElementById('disable_all_cb').checked = true;
+
     // Toggle unchecked → disable select + set interval to 0
-    // Toggle checked → enable select + set interval to default if it was 0
-    var defaultIntervals = {system:'15',array:'60',disk:'300',network:'60',docker:'30',vm:'60',gpu:'60',ups:'60',nut:'60',hardware:'600',shares:'60',zfs:'60',unassigned:'60'};
+    // Toggle checked → enable select + set interval to recommended default if it was 0
     document.querySelectorAll('.collector-toggle').forEach(function(cb) {
         cb.addEventListener('change', function() {
             var sel = this.closest('.uma-collector-row').querySelector('select');
@@ -1082,7 +1458,8 @@ $(function() {
                 if (!this.checked) {
                     sel.value = '0';
                 } else if (sel.value === '0') {
-                    sel.value = defaultIntervals[this.dataset.collector] || '60';
+                    var def = recommendedDefaults[this.dataset.collector];
+                    sel.value = (def && def.interval) ? def.interval : '60';
                 }
             }
             rebuildDisableCollectors();

@@ -19,6 +19,13 @@ type Collector interface {
 	Start(ctx context.Context, interval time.Duration)
 }
 
+// TriggerableCollector is optionally implemented by collectors that support on-demand collection.
+// Calling TriggerCollect() runs a full collection synchronously, blocking until complete.
+// Implementations must be safe to call concurrently with the periodic ticker.
+type TriggerableCollector interface {
+	TriggerCollect()
+}
+
 // CollectorFactory is a function that creates a new collector instance
 type CollectorFactory func(ctx *domain.Context) Collector
 
@@ -38,6 +45,7 @@ type ManagedCollector struct {
 	factory   CollectorFactory
 	domainCtx *domain.Context
 	wg        *sync.WaitGroup
+	instance  Collector // running instance; nil when stopped
 }
 
 // CollectorManager manages runtime enable/disable of collectors
@@ -54,6 +62,7 @@ func (cm *CollectorManager) stopCollectorLocked(mc *ManagedCollector) {
 		mc.cancel = nil
 	}
 	mc.ctx = nil
+	mc.instance = nil
 }
 
 // NewCollectorManager creates a new collector manager
@@ -121,8 +130,9 @@ func (cm *CollectorManager) startCollectorLocked(name string) {
 	mc.ctx = ctx
 	mc.cancel = cancel
 
-	// Create collector instance
+	// Create collector instance and store it for on-demand triggering
 	collector := mc.factory(mc.domainCtx)
+	mc.instance = collector
 	interval := time.Duration(mc.Interval) * time.Second
 
 	// Start the collector goroutine
@@ -320,6 +330,28 @@ func (cm *CollectorManager) GetAllStatus() dto.CollectorsStatusResponse {
 	}
 }
 
+// TriggerCollect performs an immediate on-demand collection for the named collector.
+// It delegates to the collector's TriggerCollect() method if supported, blocking until complete.
+// Returns an error if the collector is unknown, not running, or does not support on-demand collection.
+func (cm *CollectorManager) TriggerCollect(name string) error {
+	cm.mu.RLock()
+	mc, exists := cm.collectors[name]
+	cm.mu.RUnlock()
+
+	if !exists {
+		return fmt.Errorf("unknown collector: %s", name)
+	}
+	if mc.instance == nil {
+		return fmt.Errorf("collector %s is not running", name)
+	}
+	tc, ok := mc.instance.(TriggerableCollector)
+	if !ok {
+		return fmt.Errorf("collector %s does not support on-demand collection", name)
+	}
+	tc.TriggerCollect()
+	return nil
+}
+
 // GetCollectorNames returns all registered collector names
 func (cm *CollectorManager) GetCollectorNames() []string {
 	cm.mu.RLock()
@@ -362,8 +394,8 @@ func (cm *CollectorManager) buildStateEvent(name string, enabled bool) dto.Colle
 func (cm *CollectorManager) getDefaultInterval(name string) int {
 	defaults := map[string]int{
 		"system":       5,
-		"array":        10,
-		"disk":         30,
+		"array":        3600,
+		"disk":         3600,
 		"docker":       10,
 		"vm":           10,
 		"ups":          10,

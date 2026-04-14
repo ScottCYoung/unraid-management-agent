@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
 
@@ -22,6 +23,7 @@ type DiskCollector struct {
 	ctx             *domain.Context
 	prevIOTicks     map[string]uint64 // previous io_ticks per device for delta calculation
 	prevCollectTime time.Time         // timestamp of the previous collection
+	mu              sync.Mutex        // serialises Collect() calls to prevent concurrent Statfs on /mnt/diskN
 }
 
 // NewDiskCollector creates a new disk information collector with the given context.
@@ -97,9 +99,23 @@ func (c *DiskCollector) Start(ctx context.Context, interval time.Duration) {
 	}
 }
 
+// TriggerCollect performs an immediate on-demand collection, blocking until complete.
+// Safe to call concurrently with the periodic ticker.
+func (c *DiskCollector) TriggerCollect() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.collect()
+}
+
 // Collect gathers detailed disk information and publishes it to the event bus.
 // It collects data from multiple sources including lsblk, smartctl, and Unraid configuration files.
 func (c *DiskCollector) Collect() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.collect()
+}
+
+func (c *DiskCollector) collect() {
 	logger.Debug("Collecting disk data...")
 
 	// Collect disk information

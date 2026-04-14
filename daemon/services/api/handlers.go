@@ -2514,8 +2514,23 @@ func (s *Server) handleMQTTStatus(w http.ResponseWriter, _ *http.Request) {
 		return
 	}
 
-	status := s.mqttClient.GetStatus()
-	respondJSON(w, http.StatusOK, status)
+	respondJSON(w, http.StatusOK, s.GetMQTTStatus())
+}
+
+// handleMQTTBrokerStatus godoc
+//
+//	@Summary		Get embedded MQTT broker status
+//	@Description	Retrieve the status of the embedded MQTT broker
+//	@Tags			MQTT
+//	@Produce		json
+//	@Success		200	{object}	dto.EmbeddedBrokerStatus	"Embedded broker status"
+//	@Router			/mqtt/broker [get]
+func (s *Server) handleMQTTBrokerStatus(w http.ResponseWriter, _ *http.Request) {
+	if s.embeddedBroker == nil {
+		respondJSON(w, http.StatusOK, &dto.EmbeddedBrokerStatus{Enabled: false})
+		return
+	}
+	respondJSON(w, http.StatusOK, s.embeddedBroker.GetStatus())
 }
 
 // handleMQTTTest godoc

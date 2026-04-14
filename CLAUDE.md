@@ -15,8 +15,12 @@ make test                     # Run all tests
 make pre-commit-run           # Lint + security checks
 make swagger                  # Regenerate Swagger docs
 
-# Deploy to Unraid hardware (Ansible — preferred)
-ansible-playbook -i ansible/inventory.yml ansible/deploy.yml
+# Deploy to Unraid hardware
+# Use: /deploy (slash command) or manually:
+make package
+ssh root@192.168.1.50 "/usr/local/emhttp/plugins/unraid-agent-dev/scripts/stop"
+scp build/unraid-agent-dev root@192.168.1.50:/usr/local/emhttp/plugins/unraid-agent-dev/unraid-agent-dev
+ssh root@192.168.1.50 "/usr/local/emhttp/plugins/unraid-agent-dev/scripts/start"
 ```
 
 ## Key Paths

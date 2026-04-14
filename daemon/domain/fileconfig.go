@@ -8,7 +8,7 @@ import (
 )
 
 // DefaultConfigPath is the standard location for the config file on Unraid.
-const DefaultConfigPath = "/boot/config/plugins/unraid-management-agent/config.yml"
+const DefaultConfigPath = "/boot/config/plugins/unraid-agent-dev/config.yml"
 
 // FileConfig represents the YAML configuration file structure.
 // Values set in the config file serve as defaults that can be overridden
@@ -49,6 +49,11 @@ type FileConfigMQTT struct {
 	Retain             *bool   `yaml:"retain,omitempty"`
 	HomeAssistant      *bool   `yaml:"home_assistant,omitempty"`
 	HAPrefix           *string `yaml:"ha_prefix,omitempty"`
+
+	EmbeddedBroker         *bool   `yaml:"embedded_broker,omitempty"`
+	EmbeddedBrokerPort     *int    `yaml:"embedded_broker_port,omitempty"`
+	EmbeddedBrokerBindAll  *bool   `yaml:"embedded_broker_bind_all,omitempty"`
+	EmbeddedBrokerPassword *string `yaml:"embedded_broker_password,omitempty"`
 }
 
 // FileConfigIntervals holds collection interval overrides from the config file.

@@ -137,9 +137,14 @@ func (c *DockerCollector) Collect() {
 		shortID := apiContainer.ID[:12]
 		state := strings.ToLower(string(apiContainer.State))
 
+		name := shortID
+		if len(apiContainer.Names) > 0 {
+			name = strings.TrimPrefix(apiContainer.Names[0], "/")
+		}
+
 		cont := &dto.ContainerInfo{
 			ID:        shortID,
-			Name:      strings.TrimPrefix(apiContainer.Names[0], "/"),
+			Name:      name,
 			Image:     apiContainer.Image,
 			State:     state,
 			Status:    apiContainer.Status,

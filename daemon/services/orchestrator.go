@@ -28,6 +28,7 @@ type Orchestrator struct {
 	ctx              *domain.Context
 	collectorManager *CollectorManager
 	mqttClient       *mqtt.Client
+	embeddedBroker   *mqtt.EmbeddedBroker
 	fanController    *controllers.FanController
 	cpuController    *controllers.CPUController
 	tuningController *controllers.TuningController
@@ -75,8 +76,9 @@ func (o *Orchestrator) Run() error {
 	<-apiServer.Ready()
 	logger.Success("API server subscriptions ready")
 
-	// Initialize MQTT client if enabled
-	if o.ctx.MQTTConfig.Enabled {
+	// Initialize MQTT client if enabled or if embedded broker is requested
+	// (embedded_broker: true implies the user wants MQTT publishing without needing enabled: true)
+	if o.ctx.MQTTConfig.Enabled || o.ctx.MQTTConfig.EmbeddedBrokerEnabled {
 		o.initializeMQTT(ctx, &wg, apiServer)
 	}
 
@@ -213,19 +215,25 @@ func (o *Orchestrator) Run() error {
 		logger.Info("Tuning controller shut down")
 	}
 
-	// 4. Stop MQTT client if running
+	// 4. Stop MQTT client (sends "offline" LWT before broker closes)
 	if o.mqttClient != nil {
 		o.mqttClient.Disconnect()
 		logger.Info("MQTT client disconnected")
 	}
 
-	// 5. Stop all collectors via manager
+	// 5. Stop embedded broker (after paho disconnects cleanly)
+	if o.embeddedBroker != nil {
+		o.embeddedBroker.Stop()
+		logger.Info("Embedded MQTT broker stopped")
+	}
+
+	// 7. Stop all collectors via manager
 	o.collectorManager.StopAll()
 
-	// 6. Stop API server (which also cancels its internal goroutines)
+	// 8. Stop API server (which also cancels its internal goroutines)
 	apiServer.Stop()
 
-	// 7. Wait for all goroutines to complete
+	// 9. Wait for all goroutines to complete
 	logger.Info("Waiting for all goroutines to complete...")
 	wg.Wait()
 
@@ -358,6 +366,25 @@ func (o *Orchestrator) RunMCPStdio() error {
 
 // initializeMQTT sets up the MQTT client and starts publishing events.
 func (o *Orchestrator) initializeMQTT(ctx context.Context, wg *sync.WaitGroup, apiServer *api.Server) {
+	// Start embedded broker if configured (must happen before paho connects)
+	if o.ctx.MQTTConfig.EmbeddedBrokerEnabled {
+		broker, err := mqtt.NewEmbeddedBroker(
+			o.ctx.MQTTConfig.EmbeddedBrokerPort,
+			o.ctx.MQTTConfig.EmbeddedBrokerBindAll,
+		)
+		if err != nil {
+			logger.Error("Invalid embedded MQTT broker config: %v", err)
+			return
+		}
+		if err := broker.Start(ctx, o.ctx.MQTTConfig.EmbeddedBrokerPassword); err != nil {
+			logger.Error("Failed to start embedded MQTT broker: %v", err)
+			return
+		}
+		o.embeddedBroker = broker
+		apiServer.SetEmbeddedBroker(broker)
+		logger.Success("Embedded MQTT broker started on %s", broker.Address())
+	}
+
 	// Get hostname for MQTT client
 	hostname, err := os.Hostname()
 	if err != nil {
@@ -366,6 +393,12 @@ func (o *Orchestrator) initializeMQTT(ctx context.Context, wg *sync.WaitGroup, a
 
 	// Convert domain config to DTO config
 	mqttConfig := o.ctx.MQTTConfig.ToDTOConfig()
+
+	// Validate broker address before attempting connection
+	if mqttConfig.Broker == "" {
+		logger.Error("MQTT enabled but no broker address configured — set 'broker' + 'port' in config, or enable 'embedded_broker: true'")
+		return
+	}
 
 	// Create MQTT client
 	o.mqttClient = mqtt.NewClient(mqttConfig, hostname, o.ctx.Version, o.ctx)

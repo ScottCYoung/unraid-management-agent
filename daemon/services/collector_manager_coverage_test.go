@@ -19,8 +19,8 @@ func TestGetDefaultInterval_AllNames(t *testing.T) {
 		expected int
 	}{
 		{"system", 5},
-		{"array", 10},
-		{"disk", 30},
+		{"array", 3600},
+		{"disk", 3600},
 		{"docker", 10},
 		{"vm", 10},
 		{"ups", 10},

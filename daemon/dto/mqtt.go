@@ -3,6 +3,16 @@ package dto
 
 import "time"
 
+// EmbeddedBrokerStatus reports the state of the built-in MQTT broker.
+type EmbeddedBrokerStatus struct {
+	Enabled       bool       `json:"enabled"`
+	Running       bool       `json:"running"`
+	Address       string     `json:"address"`
+	ClientCount   int        `json:"client_count"`
+	UptimeSeconds int64      `json:"uptime_seconds"`
+	StartedAt     *time.Time `json:"started_at,omitempty"`
+}
+
 // MQTTConfig represents the MQTT client configuration.
 type MQTTConfig struct {
 	Enabled           bool   `json:"enabled" example:"true"`
@@ -19,6 +29,10 @@ type MQTTConfig struct {
 	AutoReconnect     bool   `json:"auto_reconnect" example:"true"`
 	HomeAssistantMode bool   `json:"homeassistant_mode" example:"true"`
 	HADiscoveryPrefix string `json:"ha_discovery_prefix" example:"homeassistant"`
+
+	EmbeddedBrokerEnabled bool `json:"embedded_broker_enabled" example:"false"`
+	EmbeddedBrokerPort    int  `json:"embedded_broker_port" example:"1883"`
+	EmbeddedBrokerBindAll bool `json:"embedded_broker_bind_all" example:"false"`
 }
 
 // MQTTStatus represents the current status of the MQTT client.
@@ -35,6 +49,8 @@ type MQTTStatus struct {
 	MessagesErrors int64      `json:"messages_errors" example:"0"`
 	Uptime         int64      `json:"uptime_seconds" example:"3600"`
 	Timestamp      time.Time  `json:"timestamp"`
+
+	EmbeddedBroker *EmbeddedBrokerStatus `json:"embedded_broker,omitempty"`
 }
 
 // MQTTMessage represents a message to be published via MQTT.

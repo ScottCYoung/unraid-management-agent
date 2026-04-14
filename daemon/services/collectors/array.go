@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
 
@@ -23,6 +24,7 @@ var watchedArrayFiles = []string{constants.VarIni, constants.DisksIni}
 // It publishes array status updates to the event bus at regular intervals.
 type ArrayCollector struct {
 	ctx *domain.Context
+	mu  sync.Mutex // serialises Collect() calls to prevent concurrent Statfs on /mnt/user
 }
 
 // NewArrayCollector creates a new array status collector with the given context.
@@ -95,9 +97,23 @@ func (c *ArrayCollector) Start(ctx context.Context, interval time.Duration) {
 	}
 }
 
+// TriggerCollect performs an immediate on-demand collection, blocking until complete.
+// Safe to call concurrently with the periodic ticker.
+func (c *ArrayCollector) TriggerCollect() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.collect()
+}
+
 // Collect gathers current array status information and publishes it to the event bus.
 // It reads array state from Unraid's mdcmd command and var.ini configuration file.
 func (c *ArrayCollector) Collect() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.collect()
+}
+
+func (c *ArrayCollector) collect() {
 	logger.Debug("Collecting array data...")
 	logger.Debug("TRACE: About to call collectArrayStatus()")
 

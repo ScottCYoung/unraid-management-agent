@@ -66,6 +66,10 @@ type CacheProvider interface {
 	// Network and Health
 	GetNetworkAccessURLs() *dto.NetworkAccessURLs
 	GetHealthStatus() map[string]any
+	// On-demand collection — triggers a synchronous collect for spin-up-causing collectors
+	TriggerCollect(name string) error
+	// MQTT
+	GetMQTTStatus() *dto.MQTTStatus
 }
 
 // ptr returns a pointer to the given value. Used for optional ToolAnnotations fields.
@@ -119,6 +123,7 @@ func (s *Server) Initialize() error {
 	s.registerFanControlTools()
 	s.registerCPUControlTools()
 	s.registerTuningTools()
+	s.registerMQTTTools()
 
 	// Create the Streamable HTTP handler (implements MCP 2025-06-18 transport)
 	// CrossOriginProtection bypass is needed because MCP clients (Claude Code,
@@ -234,6 +239,9 @@ func (s *Server) registerMonitoringTools() {
 		Description: "Get Unraid array status including state, capacity, parity information, and disk assignments",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
 	}, func(_ context.Context, _ *mcp.CallToolRequest, _ dto.MCPEmptyArgs) (*mcp.CallToolResult, any, error) {
+		if err := s.cacheProvider.TriggerCollect("array"); err != nil {
+			logger.Debug("get_array_status: on-demand collect skipped: %v", err)
+		}
 		status := s.cacheProvider.GetArrayCache()
 		if status == nil {
 			return textResult("Array status not available yet"), nil, nil
@@ -247,6 +255,9 @@ func (s *Server) registerMonitoringTools() {
 		Description: "List all disks in the Unraid server including array disks, cache, and unassigned devices with their health status",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
 	}, func(_ context.Context, _ *mcp.CallToolRequest, _ dto.MCPDiskArgs) (*mcp.CallToolResult, any, error) {
+		if err := s.cacheProvider.TriggerCollect("disk"); err != nil {
+			logger.Debug("list_disks: on-demand collect skipped: %v", err)
+		}
 		disks := s.cacheProvider.GetDisksCache()
 		if disks == nil {
 			return textResult("Disk information not available yet"), nil, nil
@@ -260,6 +271,9 @@ func (s *Server) registerMonitoringTools() {
 		Description: "Get detailed information about a specific disk including SMART data and health status",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
 	}, func(_ context.Context, _ *mcp.CallToolRequest, args dto.MCPDiskArgs) (*mcp.CallToolResult, any, error) {
+		if err := s.cacheProvider.TriggerCollect("disk"); err != nil {
+			logger.Debug("get_disk_info: on-demand collect skipped: %v", err)
+		}
 		disks := s.cacheProvider.GetDisksCache()
 		if disks == nil {
 			return textResult("Disk information not available yet"), nil, nil
@@ -2349,6 +2363,18 @@ func textResult(text string) *mcp.CallToolResult {
 }
 
 // jsonResult creates a tool result with JSON-formatted text content.
+// registerMQTTTools registers MCP tools for MQTT status.
+func (s *Server) registerMQTTTools() {
+	type noArgs struct{}
+	mcp.AddTool(s.mcpServer, &mcp.Tool{
+		Name:        "get_mqtt_status",
+		Description: "Get the MQTT client connection status and embedded broker status if enabled.",
+		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true},
+	}, func(_ context.Context, _ *mcp.CallToolRequest, _ noArgs) (*mcp.CallToolResult, any, error) {
+		return jsonResult(s.cacheProvider.GetMQTTStatus())
+	})
+}
+
 func jsonResult(data any) (*mcp.CallToolResult, any, error) {
 	jsonData, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {

@@ -2271,6 +2271,26 @@ const docTemplate = `{
                 }
             }
         },
+        "/mqtt/broker": {
+            "get": {
+                "description": "Retrieve the status of the embedded MQTT broker",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "MQTT"
+                ],
+                "summary": "Get embedded MQTT broker status",
+                "responses": {
+                    "200": {
+                        "description": "Embedded broker status",
+                        "schema": {
+                            "$ref": "#/definitions/dto.EmbeddedBrokerStatus"
+                        }
+                    }
+                }
+            }
+        },
         "/mqtt/publish": {
             "post": {
                 "description": "Publish a custom message to a specific MQTT topic",
@@ -4648,6 +4668,29 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "dto.EmbeddedBrokerStatus": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "client_count": {
+                    "type": "integer"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "running": {
+                    "type": "boolean"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "uptime_seconds": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_ruaan-deysel_unraid-management-agent_daemon_dto.AccessURL": {
             "type": "object",
             "properties": {
@@ -6468,6 +6511,9 @@ const docTemplate = `{
                 "connected": {
                     "type": "boolean",
                     "example": true
+                },
+                "embedded_broker": {
+                    "$ref": "#/definitions/dto.EmbeddedBrokerStatus"
                 },
                 "enabled": {
                     "type": "boolean",

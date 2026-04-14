@@ -143,6 +143,10 @@ func (m *MockCacheProvider) GetHealthStatus() map[string]any {
 		"array_state": "Started",
 	}
 }
+func (m *MockCacheProvider) TriggerCollect(_ string) error { return nil }
+func (m *MockCacheProvider) GetMQTTStatus() *dto.MQTTStatus {
+	return &dto.MQTTStatus{Enabled: false}
+}
 
 func newMockCacheProvider() *MockCacheProvider {
 	return &MockCacheProvider{

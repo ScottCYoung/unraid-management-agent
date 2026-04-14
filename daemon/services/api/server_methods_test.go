@@ -118,6 +118,8 @@ func (m *mockCollectorManager) GetAllStatus() dto.CollectorsStatusResponse {
 	}
 }
 
+func (m *mockCollectorManager) TriggerCollect(_ string) error { return nil }
+
 // ===== Mock MQTTClient =====
 
 type mockMQTTClient struct {
